@@ -4,7 +4,7 @@
 <script>
 import tabBar from '@/components/tabBar/tabBar'
 export default {
-  name: 'ser',
+  name: 'user',
   components:{
     tabBar
   },

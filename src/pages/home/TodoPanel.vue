@@ -1,11 +1,9 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
-  </div>
+
 </template>
 <script>
 export default {
-  name: 'HelloWorld',
+  name: 'todo-panel',
   data() {
     return {
       msg: 'Welcome to Your Vue.js App'
@@ -16,5 +14,6 @@ export default {
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+
 
 </style>
