@@ -4,6 +4,9 @@ import 'font-awesome/css/font-awesome.css'
 import '@/assets/iconfont/iconfont.css';
 //引入样式
 import '@/style/common.css';
+// import 'swiper/dist/css/swiper.css';
+import animate from 'animate.css';
+
 //引入组件
 import Router from 'vue-router'
 //引入页面
@@ -13,6 +16,7 @@ import timeline from '@/pages/timeline'
 import management from '@/pages/management'
 import user from '@/pages/user'
 
+// Vue.use(animate)
 Vue.use(Router)
 
 
@@ -21,8 +25,8 @@ export default new Router({
   linkExactActiveClass: 'active',
   routes: [{
       path: '/',
-      name: 'helloWorld',
-      component: helloWorld
+      name: 'home',
+      component: home
     },
     {
       path: '/home',
