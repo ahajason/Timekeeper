@@ -2,40 +2,50 @@
   <div class="page">
     <div class="main-content">
       <section class="create-task">
-        <div class="start-btn">
+        <div class="start-btn" @click="show=!show">
           <div class="slogan">
             开始你的任务
           </div><i class="fa fa-paper-plane" aria-hidden="true">
           </i>
         </div>
       </section>
-      <transition class="todo">
-        <div class="headr">
-          2
-        </div>
-        <div class="body">
-          1
-        </div>
+      <transition enter-active-class="animated slideInUp" leave-active-class="animated slideOutDown">
+        <section class="todo" v-if="show">
+          <div class="headr ">
+            2
+          </div>
+          <div class="body">
+            1
+          </div>
+
+        </section>
       </transition>
+
     </div>
     <tab-bar></tab-bar>
   </div>
 </template>
 <script>
-  import tabBar from '../components/tabBar/tabBar'
-  import TimingPanel from './home/TimingPanel'
-  import TodoList from '@/pages/home/TodoList'
+  import tabBar from '@/components/tabBar/tabBar.vue'
+  import TimingPanel from './TimingPanel'
+  import TodoList from './TodoList'
   export default {
     name: 'home',
     components: {
       tabBar,
       TimingPanel,
-
+      
     },
     data() {
       return {
-        msg: 'Welcome to Your Vue.js App'
+        msg: 'Welcome to Your Vue.js App',
+        show: true
       }
+    },
+    methods:{
+      // showTodo(){
+        
+      // }
     },
   }
 
@@ -89,6 +99,7 @@
     min-height: 100%;
     flex-direction: column;
     display: flex;
+    pointer-events: none;
   }
 
   .warpper {

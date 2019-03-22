@@ -4,8 +4,8 @@ import 'font-awesome/css/font-awesome.css'
 import '@/assets/iconfont/iconfont.css';
 //引入样式
 import '@/style/common.css';
-// import 'swiper/dist/css/swiper.css';
-import animate from 'animate.css';
+import 'swiper/dist/css/swiper.css';
+import animate from 'animate.css/animate.min.css';
 
 //引入组件
 import Router from 'vue-router'
@@ -16,7 +16,7 @@ import timeline from '@/pages/timeline'
 import management from '@/pages/management'
 import user from '@/pages/user'
 
-// Vue.use(animate)
+Vue.use(animate)
 Vue.use(Router)
 
 

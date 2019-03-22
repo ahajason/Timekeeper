@@ -3,6 +3,7 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+
 const FastClick = require('fastclick');
 FastClick.attach(document.body);
 Vue.config.productionTip = false;
