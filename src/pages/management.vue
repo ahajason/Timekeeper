@@ -1,12 +1,11 @@
 <template>
-  <tab-bar></tab-bar>
+    <div></div>
 </template>
 <script>
-import tabBar from '@/components/tabBar/tabBar'
 export default {
   name: 'management',
   components:{
-    tabBar
+
   },
   data() {
     return {

@@ -57,15 +57,13 @@ export default {
 }
 
 .list {
-  display: -webkit-flex;
-  /* Safari */
   display: flex;
 }
 
 .item {
-  padding: 6px 0;
+  padding: 3px 0;
   text-align: center;
-  flex: 1 1 0;
+  flex: 1 1 auto;
   color: #ADADAD;
 }
 
@@ -77,8 +75,5 @@ export default {
   font-size: 20px;
 }
 
-.text {
-  padding: 6px 0 0 0;
-}
 
 </style>

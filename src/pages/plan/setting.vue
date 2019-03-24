@@ -1,22 +1,18 @@
 <template>
-
   <div class="page">
-
-
-    <section class="bottom flex-box ">
+    <section class="bottom flex-box">
       <div class="l">
-        <i class="fa fa-angle-left" aria-hidden="true" @click="goback"></i>
+        <i class="fa fa-arrow-left" aria-hidden="true"></i>
       </div>
       <div class="c">
         <input type="text" ref="input-name" placeholder="请输入计划名称…">
       </div>
       <div class="r">
-        <i class="fa fa-angle-right" aria-hidden="true"></i>
+        <i class="fa fa-arrow-right" aria-hidden="true"></i>
       </div>
-    </section>
 
+    </section>
   </div>
-         
 </template>
 <script>
   export default {
@@ -28,11 +24,6 @@
     },
     mounted(){
       this.$refs['input-name'].focus()
-    },
-    methods:{
-      goback(){
-        this.$router.back()
-      }
     },
   }
 
@@ -52,9 +43,8 @@
       border-top: 1px dashed rgb(255, 255, 255, 0.2);
       font-size: 18px;
       padding: 10px 0;
-      .l,.r{
-        padding: 10px;
-        font-size: 30px;
+      .l{
+        padding: 15px;
       }
       .c{
         input{
@@ -64,7 +54,7 @@
           border: 2px solid #fff;
           color: #fff;
           padding: 15px;
-          font-size: 16px;
+          font-size: 18px;
           line-height: 1;
           vertical-align: middle;
           &::placeholder{
@@ -74,6 +64,9 @@
             outline: none;
           }
         }
+      }
+      .r{
+        padding: 15px;
       }
     }
   }

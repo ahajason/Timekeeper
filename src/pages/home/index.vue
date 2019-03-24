@@ -1,19 +1,18 @@
 <template>
-  <div class="page">
-    <div class="main-content">
+    <div class="content">
       <transition enter-active-class="animated slideInUp" leave-active-class="animated slideOutDown">
         <section class="todo" v-if="show">
           <div class="headr ">
             <h2>待办清单</h2>
           </div>
           <div class="body">
-            <div class="plan flex-box" v-for="item in [1,2,3,4,5,6,7,8,9,10,11]" :key="item">
+            <div class="plan flex-box" v-for="(item, index) in [1,2,3,4,5,6,7,8,9,10,11]" :key="index">
               <div class="l">
                 <i v-if='true' class="fa fa-square-o" aria-hidden="true">
                 </i>
                 <i v-if='false' class="fa fa-check-square-o" aria-hidden="true">
                 </i>
-                
+
               </div>
               <div class="c">
                 <h3 class="name-line">name{{item}}</h3>
@@ -34,15 +33,13 @@
             制定一个计划
           </div>
           <div class="r">
-<i class="fa fa-paper-plane" aria-hidden="true">
-</i>
+            <i class="fa fa-paper-plane" aria-hidden="true">
+            </i>
           </div>
-          
+
         </div>
       </section>
     </div>
-    <tab-bar></tab-bar>
-  </div>
 </template>
 <script>
   import tabBar from '@/components/tabBar/tabBar'
@@ -65,8 +62,13 @@
       // showTodo(){
 
       // }
-      navToCreatePlan(){
-        this.$router.push({name: 'createPlan',params:{ id:'1'}})
+      navToCreatePlan() {
+        this.$router.push({
+          name: 'createPlan',
+          params: {
+            pSyncKey: '1'
+          }
+        })
       }
     },
   }
@@ -74,10 +76,7 @@
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang='less' scoped>
-  .page {
-    background: #343434;
-
-    .main-content {
+    .content {
       height: 100%;
 
       .create-task {
@@ -87,7 +86,6 @@
         position: absolute;
 
         .start-btn {
-          display: flex;
           margin: 15px;
           padding: 15px;
           border-radius: 50px;
@@ -124,6 +122,7 @@
           width: 100%;
           border-radius: 10px 10px 0 0;
           border-bottom: 1px dashed rgb(52, 52, 52, 0.2);
+
           h2 {
             line-height: 2;
             text-indent: 20px;
@@ -138,21 +137,22 @@
             text-align: center;
             padding: 5px 0;
             font-size: 25px;
+
             .l {
               padding: 10px;
             }
+
             .c {
               font-size: 16px;
               text-align: left;
             }
+
             .r {
-             padding: 10px;
+              padding: 10px;
             }
           }
         }
       }
-
     }
-  }
 
 </style>

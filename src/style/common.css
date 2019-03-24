@@ -17,13 +17,25 @@
 
  html,
  body,
- #app,
- .page{
+ #app {
    height: 100%;
    width: 100%;
    background-color: #F5F5F5;
    font-size: 16px;
-   font-family: "仿宋"
+   font-family: "楷书","仿宋",
+   "FangSong",
+   "SimSun ";
+   background: #343434;
+
+ }
+
+ .page {
+   min-height: 100%;
+   width: 100%;
+   background: #343434;
+   position: absolute;
+   top: 0;
+   left: 0;
  }
 
 
@@ -63,7 +75,7 @@
    white-space: nowrap;
  }
 
- .flex-box{
+ .flex-box {
    display: flex;
    align-items: center;
  }
@@ -78,4 +90,14 @@
 
  .flex-box .l {
    flex: 0 0 auto;
+ }
+
+ .fade-enter-active,
+ .fade-leave-active {
+   transition: opacity .5s ease;
+ }
+
+ .fade-enter,
+ .fade-leave-active {
+   opacity: 0;
  }
