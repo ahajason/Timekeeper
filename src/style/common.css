@@ -62,3 +62,20 @@
    text-overflow: ellipsis;
    white-space: nowrap;
  }
+
+ .flex-box{
+   display: flex;
+   align-items: center;
+ }
+
+ .flex-box .r {
+   flex: 0 0 auto;
+ }
+
+ .flex-box .c {
+   flex: 1 1 auto;
+ }
+
+ .flex-box .l {
+   flex: 0 0 auto;
+ }

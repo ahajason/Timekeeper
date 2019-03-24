@@ -1,7 +1,7 @@
 <template>
   <div id="tab-bar">
     <ul class="list">
-      <router-link class="item" tag="li" :to="{ name: item.pageName }" v-for="item in list" :key="item.id">
+      <router-link class="item" tag="li" :to="{ name: item.pageName }" v-for="item in list" :key="item.id" exact>
         <i class="iconfont" :class="item.iconClass"></i>
         <div class="text">{{item.text}}</div>
       </router-link>

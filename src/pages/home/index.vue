@@ -1,32 +1,51 @@
 <template>
   <div class="page">
     <div class="main-content">
-      <section class="create-task">
-        <div class="start-btn" @click="show=!show">
-          <div class="slogan">
-            开始你的任务
-          </div><i class="fa fa-paper-plane" aria-hidden="true">
-          </i>
-        </div>
-      </section>
       <transition enter-active-class="animated slideInUp" leave-active-class="animated slideOutDown">
         <section class="todo" v-if="show">
           <div class="headr ">
-            2
+            <h2>待办清单</h2>
           </div>
           <div class="body">
-            1
+            <div class="plan flex-box" v-for="item in [1,2,3,4,5,6,7,8,9,10,11]" :key="item">
+              <div class="l">
+                <i v-if='true' class="fa fa-square-o" aria-hidden="true">
+                </i>
+                <i v-if='false' class="fa fa-check-square-o" aria-hidden="true">
+                </i>
+                
+              </div>
+              <div class="c">
+                <h3 class="name-line">name{{item}}</h3>
+                <h5 class="level-line">name{{item}}</h5>
+                <h5 class="category-line">name{{item}}</h5>
+              </div>
+              <div class="r">
+                <i class="fa fa-play" aria-hidden="true">
+                </i>
+              </div>
+            </div>
           </div>
-
         </section>
       </transition>
-
+      <section class="create-task">
+        <div class="start-btn flex-box" @click="navToCreatePlan">
+          <div class="slogan">
+            制定一个计划
+          </div>
+          <div class="r">
+<i class="fa fa-paper-plane" aria-hidden="true">
+</i>
+          </div>
+          
+        </div>
+      </section>
     </div>
     <tab-bar></tab-bar>
   </div>
 </template>
 <script>
-  import tabBar from '@/components/tabBar/tabBar.vue'
+  import tabBar from '@/components/tabBar/tabBar'
   import TimingPanel from './TimingPanel'
   import TodoList from './TodoList'
   export default {
@@ -34,7 +53,7 @@
     components: {
       tabBar,
       TimingPanel,
-      
+
     },
     data() {
       return {
@@ -42,82 +61,98 @@
         show: true
       }
     },
-    methods:{
+    methods: {
       // showTodo(){
-        
+
       // }
+      navToCreatePlan(){
+        this.$router.push({name: 'createPlan',params:{ id:'1'}})
+      }
     },
   }
 
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-  .main-content {
-    overflow-y: auto;
-    height: 100%;
-  }
-
-  .create-task {
+<style lang='less' scoped>
+  .page {
     background: #343434;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    position: absolute;
-  }
 
-  .start-btn {
-    display: flex;
-    margin: 15px;
-    height: 50px;
-    padding: 15px;
-    border-radius: 50px;
-    border: 2px solid #fff;
-    align-items: center;
-  }
+    .main-content {
+      height: 100%;
 
-  .start-btn .slogan {
-    color: #fff;
-    flex: 1 0 50px;
-    line-height: 1;
-    font-size: 20px;
-    vertical-align: middle;
-  }
+      .create-task {
+        left: 0;
+        top: 0;
+        width: 100%;
+        position: absolute;
 
-  .start-btn i {
-    color: #fff;
-    flex: 0 0 50px;
-    line-height: 1;
-    font-size: 20px;
-    text-align: right;
-    vertical-align: middle;
-  }
+        .start-btn {
+          display: flex;
+          margin: 15px;
+          padding: 15px;
+          border-radius: 50px;
+          border: 2px solid #fff;
+          color: #fff;
+          line-height: 1;
+          font-size: 18px;
+          vertical-align: middle;
 
-  .todo {
-    padding-top: 100px;
-    min-height: 100%;
-    flex-direction: column;
-    display: flex;
-    pointer-events: none;
-  }
+          .slogan {
+            text-align: left;
+            flex: 1 0 auto;
+            line-height: 1;
+            font-size: 18px;
+            vertical-align: middle;
+          }
 
-  .warpper {
-    height: 100%;
-  }
+          i {
+            flex: 0 0 auto;
+          }
+        }
+      }
 
-  .headr {
-    background: #F5F5F5;
-    height: 40px;
-    flex: 0 0 40px;
-    width: 100%;
-    border-radius: 10px 10px 0 0;
-    border-bottom: 1px dashed rgb(52, 52, 52, 0.2);
-  }
+      .todo {
+        padding-top: 100px;
+        padding-bottom: 60px;
+        min-height: 100%;
+        flex-direction: column;
+        display: flex;
 
-  .body {
-    flex: 1 0 auto;
-    background: #F5F5F5
+        .headr {
+          background: #F5F5F5;
+          flex: 0 0 auto;
+          width: 100%;
+          border-radius: 10px 10px 0 0;
+          border-bottom: 1px dashed rgb(52, 52, 52, 0.2);
+          h2 {
+            line-height: 2;
+            text-indent: 20px;
+          }
+        }
+
+        .body {
+          flex: 1 0 auto;
+          background: #F5F5F5;
+
+          .plan {
+            text-align: center;
+            padding: 5px 0;
+            font-size: 25px;
+            .l {
+              padding: 10px;
+            }
+            .c {
+              font-size: 16px;
+              text-align: left;
+            }
+            .r {
+             padding: 10px;
+            }
+          }
+        }
+      }
+
+    }
   }
 
 </style>

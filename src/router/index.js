@@ -15,6 +15,7 @@ import home from '@/pages/home'
 import timeline from '@/pages/timeline'
 import management from '@/pages/management'
 import user from '@/pages/user'
+import createPlan from '@/pages/plan/create'
 
 Vue.use(animate)
 Vue.use(Router)
@@ -47,6 +48,11 @@ export default new Router({
       path: '/user',
       name: 'user',
       component: user
+    },
+    {
+      path: '/plan/create',
+      name: 'createPlan',
+      component: createPlan,
     },
   ]
 })
