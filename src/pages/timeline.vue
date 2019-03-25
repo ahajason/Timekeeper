@@ -32,7 +32,7 @@
     },
     methods: {
       time() {
-        return dateFormat(new Date(), 'M/DD HH:mm')
+        return dateFormat(new Date(), 'MM/DD HH:mm')
       }
     }
   }
@@ -52,7 +52,7 @@
         flex: 0 0 auto;
         font-size: 12px;
         line-height: 30px;
-        padding: 5px 10px 0 0 ;
+        padding: 3px 10px 0 0 ;
       }
 
       .dialog {
@@ -63,23 +63,24 @@
           position: absolute;
           content: '';
           top: -10px;
-          left: 12px;
+          left: 15px;
           bottom: -100px;
-          width: 5px;
+          width: 4px;
           background: #fff;
         }
 
         .icon {
           position: absolute;
-          top: 5px;
+          top: 3px;
           left: 0;
-          width: 30px;
-          height: 30px;
+          width: 35px;
+          height: 35px;
           display: table;
           background: #4026b4;
           border: 3px solid #fff;
           border-radius: 50%;
           i {
+            font-size: 16px;
             vertical-align: middle;
             text-align: center;
             display: table-cell;
@@ -94,7 +95,7 @@
           border-width: 15px 20px 20px 0;
           border-style: solid;
           border-color: transparent #F5F5F5 transparent transparent;
-          top: 5px;
+          top: 4px;
           left: 40px;
         }
 

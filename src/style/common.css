@@ -21,10 +21,16 @@
    height: 100%;
    width: 100%;
    background-color: #F5F5F5;
-   font-size: 16px;
-   font-family: "楷书","仿宋",
-   "FangSong",
-   "SimSun ";
+   color: #343434;
+   font: 18px/150% "仿宋",
+     "FangSong",
+     "FZFangSong",
+     "楷书",
+     Arial,
+     Tahoma,
+     "Hiragino Sans GB",
+     "NSimSun",
+     sans-serif;
    background: #343434;
 
  }
@@ -94,7 +100,7 @@
 
  .fade-enter-active,
  .fade-leave-active {
-   transition: opacity .5s ease;
+   transition: opacity .3s ease;
  }
 
  .fade-enter,

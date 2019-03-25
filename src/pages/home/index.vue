@@ -2,8 +2,8 @@
     <div class="content">
       <transition enter-active-class="animated slideInUp" leave-active-class="animated slideOutDown">
         <section class="todo" v-if="show">
-          <div class="headr ">
-            <h2>待办清单</h2>
+          <div class="headr">
+            <div class="title">待办清单</div>
           </div>
           <div class="body">
             <div class="plan flex-box" v-for="(item, index) in [1,2,3,4,5,6,7,8,9,10,11]" :key="index">
@@ -15,9 +15,9 @@
 
               </div>
               <div class="c">
-                <h3 class="name-line">name{{item}}</h3>
-                <h5 class="level-line">name{{item}}</h5>
-                <h5 class="category-line">name{{item}}</h5>
+                <div class="name-line">name{{item}}</div>
+                <div class="level-line">name{{item}}</div>
+                <div class="category-line">name{{item}}</div>
               </div>
               <div class="r">
                 <i class="fa fa-play" aria-hidden="true">
@@ -123,8 +123,9 @@
           border-radius: 10px 10px 0 0;
           border-bottom: 1px dashed rgb(52, 52, 52, 0.2);
 
-          h2 {
+          .title {
             line-height: 2;
+            font-size: 22px;
             text-indent: 20px;
           }
         }
@@ -135,7 +136,7 @@
 
           .plan {
             text-align: center;
-            padding: 5px 0;
+            padding: 6px 0;
             font-size: 25px;
 
             .l {
@@ -143,8 +144,16 @@
             }
 
             .c {
-              font-size: 16px;
+
               text-align: left;
+              .name-line{
+                font-size: 18px;
+              }
+              .level-line,.category-line{
+                font-size: 16px;
+                line-height: 1.1;
+                color: rgba(52, 52, 52, 0.6);
+              }
             }
 
             .r {
