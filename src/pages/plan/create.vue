@@ -3,9 +3,9 @@
   <div class="page">
 
 
-    <section class="bottom flex-box ">
-      <div class="l">
-        <i class="fa fa-angle-left" aria-hidden="true" @click="goback"></i>
+    <section class="bottom flex-box">
+      <div class="l" @click="goback">
+        <i class="fa fa-angle-left" aria-hidden="true"></i>
       </div>
       <div class="c">
         <input type="text" ref="input-name" placeholder="请输入计划名称…">

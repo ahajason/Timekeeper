@@ -19,6 +19,7 @@ import management from '@/pages/management'
 import user from '@/pages/user'
 import createPlan from '@/pages/plan/create'
 import settingPlan from '@/pages/plan/setting'
+import tomato from '@/pages/tomato'
 Vue.use(animate)
 Vue.use(Router)
 
@@ -63,10 +64,16 @@ export default new Router({
            component: settingPlan,
         },
         {
+          path: '/tomato',
+          name: 'tomato',
+          component: tomato,
+        },
+        {
           path: '/timeing',
           name: 'timeing',
           // component: timeing,
         },
+        
       ]
     }
   ]
