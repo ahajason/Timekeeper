@@ -1,20 +1,12 @@
 <template>
   <div class="page">
-    <section class="bottom flex-box">
-      <div class="l">
-        <i class="fa fa-arrow-left" aria-hidden="true"></i>
-      </div>
-      <div class="c">
-        <input type="text" ref="input-name" placeholder="请输入计划名称…">
-      </div>
-      <div class="r">
-        <i class="fa fa-arrow-right" aria-hidden="true"></i>
-      </div>
-
-    </section>
+    <Label v-bind:active="false" textActive="紧急"></Label>
+    <Label size='sm' text="重要"></Label>
+    <Label text="小鸭子"></Label>
   </div>
 </template>
 <script>
+  import Label from '@/components/common/Label.vue'
   export default {
     name: 'HelloWorld',
     data() {
@@ -22,8 +14,11 @@
         msg: 'Welcome to Your Vue.js App'
       }
     },
-    mounted(){
-      this.$refs['input-name'].focus()
+    components: {
+      Label
+    },
+    mounted() {
+
     },
   }
 
@@ -43,11 +38,13 @@
       border-top: 1px dashed rgb(255, 255, 255, 0.2);
       font-size: 18px;
       padding: 10px 0;
-      .l{
+
+      .l {
         padding: 15px;
       }
-      .c{
-        input{
+
+      .c {
+        input {
           background: none;
           width: 100%;
           border-radius: 50px;
@@ -57,15 +54,18 @@
           font-size: 18px;
           line-height: 1;
           vertical-align: middle;
-          &::placeholder{
+
+          &::placeholder {
             color: rgba(255, 255, 255, 0.5);
           }
-          &:focus{
+
+          &:focus {
             outline: none;
           }
         }
       }
-      .r{
+
+      .r {
         padding: 15px;
       }
     }

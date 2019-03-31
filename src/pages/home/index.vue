@@ -43,13 +43,10 @@
 </template>
 <script>
   import tabBar from '@/components/tabBar/tabBar'
-  import TimingPanel from './TimingPanel'
-  import TodoList from './TodoList'
   export default {
     name: 'home',
     components: {
       tabBar,
-      TimingPanel,
 
     },
     data() {
