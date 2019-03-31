@@ -15,9 +15,9 @@
 
               </div>
               <div class="c">
-                <div class="name-line">name{{item}}</div>
-                <div class="level-line">name{{item}}</div>
-                <div class="category-line">name{{item}}</div>
+                <div class="name-line">事务{{item}}</div>
+                <div class="level-line">事务{{item}}</div>
+                <div class="category-line">事务{{item}}</div>
               </div>
               <div class="r">
                 <i class="fa fa-play" aria-hidden="true">
@@ -30,7 +30,7 @@
       <section class="create-task">
         <div class="start-btn flex-box" @click="navToCreatePlan">
           <div class="slogan">
-            制定一个计划
+            开始一个事务
           </div>
           <div class="r">
             <i class="fa fa-paper-plane" aria-hidden="true">
@@ -121,7 +121,7 @@
           flex: 0 0 auto;
           width: 100%;
           border-radius: 10px 10px 0 0;
-          border-bottom: 1px dashed rgb(52, 52, 52, 0.2);
+          border-bottom: 1px dashed rgba(52, 52, 52, 0.2);
 
           .title {
             line-height: 2;

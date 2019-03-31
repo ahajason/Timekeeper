@@ -1,8 +1,6 @@
 <template>
 
   <div class="page">
-
-
     <section class="bottom flex-box">
       <div class="l" @click="goback">
         <i class="fa fa-angle-left" aria-hidden="true"></i>
@@ -14,7 +12,6 @@
         <i class="fa fa-angle-right" aria-hidden="true"></i>
       </div>
     </section>
-
   </div>
          
 </template>
@@ -49,7 +46,7 @@
       left: 0;
       display: flex;
       color: #fff;
-      border-top: 1px dashed rgb(255, 255, 255, 0.2);
+      border-top: 1px dashed rgba(255, 255, 255, 0.2);
       font-size: 18px;
       padding: 10px 0;
       .l,.r{
