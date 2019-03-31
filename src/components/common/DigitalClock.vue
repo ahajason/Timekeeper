@@ -1,11 +1,32 @@
 <template>
   <div id="DigitalClock">
-    <div class="column" :class="'column-' + column1">
+    <div v-if="hasHour" class="column" :class="column1 | columnClass">
       <div class="num num-0">0</div>
       <div class="num num-1">1</div>
       <div class="num num-2">2</div>
     </div>
-    <div class="column" :class="'column-' + column2">
+    <div v-if="hasHour" class="column" :class="column2 | columnClass">
+      <div class="num num-0">0</div>
+      <div class="num num-1">1</div>
+      <div class="num num-2">2</div>
+      <div class="num num-3">3</div>
+      <div class="num num-4">4</div>
+      <div class="num num-5">5</div>
+      <div class="num num-6">6</div>
+      <div class="num num-7">7</div>
+      <div class="num num-8">8</div>
+      <div class="num num-9">9</div>
+    </div>
+    <div v-if="hasHour" class="colon">:</div>
+    <div class="column" :class="column3 | columnClass">
+      <div class="num num-0">0</div>
+      <div class="num num-1">1</div>
+      <div class="num num-2">2</div>
+      <div class="num num-3">3</div>
+      <div class="num num-4">4</div>
+      <div class="num num-5">5</div>
+    </div>
+    <div class="column" :class="column4 | columnClass">
       <div class="num num-0">0</div>
       <div class="num num-1">1</div>
       <div class="num num-2">2</div>
@@ -18,7 +39,7 @@
       <div class="num num-9">9</div>
     </div>
     <div class="colon">:</div>
-    <div class="column" :class="'column-' + column3">
+    <div class="column" :class="column5 | columnClass">
       <div class="num num-0">0</div>
       <div class="num num-1">1</div>
       <div class="num num-2">2</div>
@@ -26,28 +47,7 @@
       <div class="num num-4">4</div>
       <div class="num num-5">5</div>
     </div>
-    <div class="column" :class="'column-' + column4">
-      <div class="num num-0">0</div>
-      <div class="num num-1">1</div>
-      <div class="num num-2">2</div>
-      <div class="num num-3">3</div>
-      <div class="num num-4">4</div>
-      <div class="num num-5">5</div>
-      <div class="num num-6">6</div>
-      <div class="num num-7">7</div>
-      <div class="num num-8">8</div>
-      <div class="num num-9">9</div>
-    </div>
-    <div class="colon">:</div>
-    <div class="column" :class="'column-' + column5">
-      <div class="num num-0">0</div>
-      <div class="num num-1">1</div>
-      <div class="num num-2">2</div>
-      <div class="num num-3">3</div>
-      <div class="num num-4">4</div>
-      <div class="num num-5">5</div>
-    </div>
-    <div class="column" :class="'column-' + column6">
+    <div class="column" :class="column6 | columnClass">
       <div class="num num-0">0</div>
       <div class="num num-1">1</div>
       <div class="num num-2">2</div>
@@ -65,30 +65,60 @@
   export default {
     name: 'DigitalClock',
     data() {
-      return {
-        column1: 0,
-        column2: 0,
-        column3: 0,
-        column4: 0,
-        column5: 0,
-        column6: 0,
-      }
+      return {};
     },
-    mounted() {
-      const that = this;
-      setInterval(function () {
-        let time = new Date();
-        let Hour = time.getHours(); //获取当前小时数(0-23)
-        let Minute = time.getMinutes(); //获取当前分钟数(0-59)
-        let Second = time.getSeconds(); //获取当前秒数(0-59)
-        that.column1 = parseInt(Hour / 10);
-        that.column2 = Hour % 10;
-        that.column3 = parseInt(Minute / 10);
-        that.column4 = Minute % 10;
-        that.column5 = parseInt(Second / 10);
-        that.column6 = Second % 10;
-      }, 1000)
+    props: {
+      hasHour: {
+        type: Boolean,
+        default: true,
+      },
+      column1: {
+        type: Number,
+        default: 0,
+        validator: function (value) {
+          return value >= 0 && value <= 2
+        },
+      },
+      column2: {
+        type: Number,
+        default: 0,
+        validator: function (value) {
+          return value >= 0 && value <= 9
+        },
+      },
+      column3: {
+        type: Number,
+        default: 0,
+        validator: function (value) {
+          return value >= 0 && value <= 5
+        },
+      },
+      column4: {
+        type: Number,
+        default: 0,
+        validator: function (value) {
+          return value >= 0 && value <= 9
+        },
+      },
+      column5: {
+        type: Number,
+        default: 0,
+        validator: function (value) {
+          return value >= 0 && value <= 5
+        },
+      },
+      column6: {
+        type: Number,
+        default: 0,
+        validator: function (value) {
+          return value >= 0 && value <= 9
+        },
+      },
     },
+    mounted() {},
+    filters: {
+      columnClass: (column) => 'column-' + column
+    }
   }
 
 </script>
