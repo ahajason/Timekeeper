@@ -41,8 +41,8 @@
         <div class="c">
         </div>
         <div class="r">
-          <i class="fa fa-stop-circle-o" aria-hidden="true"></i>
           <div class="text">结束</div>
+          <i class="fa fa-stop-circle-o" aria-hidden="true"></i>
         </div>
       </section>
     </div>

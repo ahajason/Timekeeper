@@ -83,7 +83,7 @@
         position: absolute;
 
         .start-btn {
-          margin: 15px;
+          margin: 30px 15px 15px;
           padding: 15px;
           border-radius: 50px;
           border: 2px solid #fff;
@@ -107,7 +107,7 @@
       }
 
       .todo {
-        padding-top: 100px;
+        padding-top: 120px;
         padding-bottom: 60px;
         min-height: 100%;
         flex-direction: column;

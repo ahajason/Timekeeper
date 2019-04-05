@@ -1,6 +1,6 @@
 <template>
-  <div class="wrapper">
-    <div class="Label" :class="size" v-text="active?textActive:text" :style="active?labelActiveStyle:labelStyle">
+  <div class="wrapper" :class="size" @click="onClick">
+    <div class="Label" v-text="active?textActive:text" :style="active?labelActiveStyle:labelStyle">
     </div>
   </div>
 
@@ -36,7 +36,7 @@
       },
       background: {
         type: String,
-        default: "#b3b3b3",
+        default: "#ccc",
       },
       backgroundActive: {
         type: String,
@@ -61,6 +61,11 @@
     mounted() {},
     filters: {
       columnClass: (column) => 'column-' + column
+    },
+    methods: {
+      onClick() {
+        this.$emit('on-active')
+      },
     }
   }
 
@@ -69,37 +74,46 @@
 <style scoped lang='less'>
   .wrapper {
     display: inline-block;
-  }
-
-  .Label {
-    display: inline-block;
-    font-family: 'STHupo', 'STXingkai', 'STLiti', 'STXinwei', "仿宋", "FangSong", "FZFangSong", "楷书", sans-serif;
     text-align: center;
-    vertical-align: middle;
-    transform: rotate(-20deg)
+    .Label {
+      display: inline-block;
+      font-family: 'STHupo', 'STXingkai', 'STLiti', 'STXinwei', "仿宋", "FangSong", "FZFangSong", "楷书", sans-serif;
+      text-align: center;
+      vertical-align: middle;
+      transform: rotate(-15deg);
+      transition: all .1s ease;
+    }
+
   }
 
-  .Label.lg {
-    padding: 0 6px;
-    margin: 10px 0;
-    line-height: 20px;
-    border-radius: 20px;
+  .lg {
+    width: 120px;
+    .Label {
+      padding: 0 6px;
+      line-height: 20px;
+      border-radius: 20px;
+      font-size: 20px;
+    }
   }
 
-  .Label.md {
-    padding: 0 6px;
-    margin: 10px 0;
-    line-height: 20px;
-    border-radius: 20px;
-    font-size: 18px;
+  .md {
+    width: 80px;
+    .Label {
+      padding: 0 6px;
+      line-height: 20px;
+      border-radius: 20px;
+      font-size: 18px;
+    }
   }
 
-  .Label.sm {
-    padding: 0 4px;
-    margin: 5px 0;
-    line-height: 15px;
-    border-radius: 15px;
-    font-size: 14px;
+  .sm {
+    width: 60px;
+    .Label {
+      padding: 0 4px;
+      line-height: 15px;
+      border-radius: 15px;
+      font-size: 14px;
+    }
   }
 
 </style>
