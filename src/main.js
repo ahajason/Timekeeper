@@ -3,6 +3,17 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+//引入字体
+import 'font-awesome/css/font-awesome.css'
+import '@/assets/iconfont/iconfont.css';
+//引入样式
+import '@/style/common.css';
+import 'swiper/dist/css/swiper.css';
+import animate from 'animate.css/animate.min.css';
+//引入公共方法
+// import Common from '@/script/common.js';
+
+Vue.use(animate)
 
 const FastClick = require('fastclick');
 FastClick.attach(document.body);

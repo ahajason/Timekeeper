@@ -1,12 +1,4 @@
 import Vue from 'vue'
-//引入字体
-import 'font-awesome/css/font-awesome.css'
-import '@/assets/iconfont/iconfont.css';
-//引入样式
-import '@/style/common.css';
-import 'swiper/dist/css/swiper.css';
-import animate from 'animate.css/animate.min.css';
-
 //引入组件
 import Router from 'vue-router'
 //引入页面
@@ -23,7 +15,7 @@ import tomato from '@/pages/tomato'
 
 import login from '@/pages/user/login'
 import register from '@/pages/user/register'
-Vue.use(animate)
+
 Vue.use(Router)
 
 
@@ -58,7 +50,7 @@ export default new Router({
       component: subpage,
       children: [
          {
-           path: '/create/:pSyncKey',
+           path: '/create',
            name: 'createPlan',
            component: createPlan,
          }, {

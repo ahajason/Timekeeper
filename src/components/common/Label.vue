@@ -3,8 +3,6 @@
     <div class="Label" v-text="active?textActive:text" :style="active?labelActiveStyle:labelStyle">
     </div>
   </div>
-
-
 </template>
 <script>
   export default {
@@ -70,7 +68,7 @@
   }
 
 </script>
-<!-- Add "scoped" attribute to limit CSS to this component only -->
+
 <style scoped lang='less'>
   .wrapper {
     display: inline-block;
