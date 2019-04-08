@@ -20,6 +20,9 @@ import user from '@/pages/user'
 import createPlan from '@/pages/plan/create'
 import settingPlan from '@/pages/plan/setting'
 import tomato from '@/pages/tomato'
+
+import login from '@/pages/user/login'
+import register from '@/pages/user/register'
 Vue.use(animate)
 Vue.use(Router)
 
@@ -73,6 +76,17 @@ export default new Router({
           name: 'timeing',
           // component: timeing,
         },
+        {
+          path: '/login',
+          name: 'login',
+          component: login,
+        },
+        {
+          path: '/register',
+          name: 'register',
+          component: register,
+        },
+        
         
       ]
     }
