@@ -17,6 +17,8 @@ export default {
 
 <style scoped lang='less'>
 .from-item {
+  padding: 10px 30px;
+
   input,
   button {
     width: 100%;

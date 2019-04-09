@@ -38,9 +38,6 @@ export default {
       padding: 20px 0;
       line-height: 150%;
     }
-    .form-item {
-      padding: 10px 30px;
-    }
   }
 }
 </style>

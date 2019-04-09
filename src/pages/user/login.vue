@@ -56,6 +56,9 @@ export default {
     FormFooter,
   },
   methods: {
+    
+  },mounted(){
+    console.log(process.env)
   }
 };
 </script>
