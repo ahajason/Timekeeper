@@ -46,7 +46,7 @@
       v-model="showToast"
       type="text"
       :text="toastText"
-      :position="top"
+      position="top"
     ></toast>
   </div>
 </template>
@@ -55,6 +55,8 @@ import { Toast } from 'vux'
 import Form from '@/components/common/Form';
 import FormItem from '@/components/common/FormItem';
 import FormFooter from '@/components/common/FormFooter';
+import axios from 'axios';
+import {ApiRoot} from '@/api/config';
 export default {
   name: "Register",
   components: {
@@ -74,12 +76,12 @@ export default {
   },
   methods: {
     register: function () {
-
+      let params = {}
       axios.post(
-        ApiRoot + '/user/register', { params }
-      ).then(function (response) {
+        ApiRoot + '/user/register', params
+      ).then((response) => {
         console.log(response);
-      }).catch(function (error) {
+      }).catch((error) => {
         console.log(error);
       });
     },
