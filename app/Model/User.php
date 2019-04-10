@@ -2,6 +2,7 @@
 
 namespace App\Model;
 
+use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -28,9 +29,11 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Model\User whereUserUpdatedAt($value)
  * @mixin \Eloquent
  */
-class User extends Model
+class User extends Model implements Authenticatable
 {
-    protected $hidden = [
-        'password'
-    ];
+    use \Illuminate\Auth\Authenticatable;
+    protected $fillable = ['user_account', 'user_password', 'portrait_id'];
+    protected $hidden = ['user_password'];
+    const CREATED_AT = 'user_created_at';
+    const UPDATED_AT = 'user_updated_at';
 }
