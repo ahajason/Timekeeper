@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Manager\PortraitManager;
+use App\Manager\UserManager;
 use App\Model\User;
 use Exception;
+use Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -12,20 +15,41 @@ class UseController extends Controller
     /**
      * @param Request $request
      * @return array
-     * @throws Exception
+     * @throws \Throwable
      */
     public function register(Request $request)
     {
         $request->validate([
-            'account' => 'required|unique:users,user_account|max:50|min:3',
+            'account' => 'required|max:50|min:3|unique:users,user_account',
             'password' => 'required|max:50|min:3',
         ]);
-
-        User::create([
+        $user = User::create([
             'user_account' => $request['account'],
             'user_password' => $request['password'],
-            'portrait_id' => 0
+            'user_nickname' => $request['account'],
         ]);
-        return  ['success' => true];
+        PortraitManager::generatePortrait($user->user_id, $user->user_nickname);
+        $userId = $user->user_id;
+        $token = UserManager::createLoginSession($userId);
+        return  ['success' => true, 'data' => ['user_id' => $userId, 'token' => $token]];
+    }
+    public function login(Request $request)
+    {
+        $request->validate([
+            'account' => 'required|max:50|min:3',
+            'password' => 'required|max:50|min:3',
+        ]);
+        $userAccount = $request['account'];
+        $userPassword = $request['password'];
+        $user = User::whereUserAccount($userAccount)->whereUserPassword($userPassword)->first();
+        if(empty($user)){
+            $user = User::whereUserEmail($userAccount)->whereUserPassword($userPassword)->first();
+        }
+        if(empty($user)){
+            throw new Exception('账号或密码错误');
+        }
+        $userId = $user->user_id;
+        $token = UserManager::createLoginSession($userId);
+        return  ['success' => true, 'data' => ['user_id' => $userId, 'token' => $token]];
     }
 }

@@ -14,3 +14,5 @@
 Route::get('/', function () {
     return 'welcome';
 });
+
+Route::get('/portrait', 'FileController@portrait');

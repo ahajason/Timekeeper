@@ -50,8 +50,8 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-        //如果路由中含有“api/”，则说明是一个 api 的接口请求
-        if($request->is("api/*")) {
+//        //如果路由中含有“api/”，则说明是一个 api 的接口请求
+//        if($request->is("api/*")) {
             //如果错误是 ValidationException的一个实例，说明是一个验证的错误
             if ($exception instanceof ValidationException) {
                 $result = [
@@ -70,7 +70,7 @@ class Handler extends ExceptionHandler
                 ];
                 return response()->json($result)->setEncodingOptions(JSON_UNESCAPED_UNICODE);
             }
-        }
+//        }
         return parent::render($request, $exception);
     }
 }

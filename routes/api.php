@@ -17,6 +17,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request;
 });
 Route::get('/test', function (Request $request) {
-    return $request->get('a','a');
+    \App\Manager\PortraitManager::generatePortrait(1,3222);
 });
+
 Route::match(['get','post'],'/user/register','API\UseController@register');
+Route::match(['get','post'],'/user/login','API\UseController@login');
