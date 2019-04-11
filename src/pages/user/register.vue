@@ -19,7 +19,7 @@
       </FormItem>
       <FormItem>
         <input
-          type="repassword"
+          type="password"
           placeholder="确认密码"
           v-model="repassword"
           maxlength="20"
@@ -42,50 +42,71 @@
         </router-link>
       </FormFooter>
     </Form>
-    <toast
-      v-model="showToast"
-      type="text"
-      :text="toastText"
-      position="top"
-    ></toast>
   </div>
 </template>
 <script>
-import { Toast } from 'vux'
 import Form from '@/components/common/Form';
 import FormItem from '@/components/common/FormItem';
 import FormFooter from '@/components/common/FormFooter';
 import axios from 'axios';
-import {ApiRoot} from '@/api/config';
+import { ApiRoot } from '@/api/config';
+import { md5 } from 'vux'
 export default {
   name: "Register",
   components: {
     Form,
     FormItem,
     FormFooter,
-    Toast,
   },
   data() {
     return {
       account: '',
       password: '',
       repassword: '',
-      toastText: '',
-      showToast: false,
     };
   },
   methods: {
     register: function () {
-      let params = {}
+      const { account, password, repassword } = this;
+      if (!account) {
+        this.$vux.toast.text('请输入账号', 'top')
+        return;
+      }
+      if (!password) {
+        this.$vux.toast.text('请输入密码', 'top')
+        return;
+      }
+      if (!repassword) {
+        this.$vux.toast.text('请确认密码', 'top')
+        return;
+      }
+      if (password != repassword) {
+        this.$vux.toast.text('两次密码不一致', 'top')
+        return;
+      }
+      this.$vux.loading.show({
+        text: '正在注册'
+      })
+      const params = {
+        account,
+        password: md5(password)
+      }
       axios.post(
         ApiRoot + '/user/register', params
-      ).then((response) => {
-        console.log(response);
+      ).then((res) => {
+        this.$vux.loading.hide()
+        const response = res.data
+        if (response.success) {
+          this.$vux.toast.text('注册成功', 'top')
+          this.$router.push('/');
+        } else {
+          this.$vux.toast.text(response.msg, 'top')
+        }
       }).catch((error) => {
-        console.log(error);
+        this.$vux.loading.hide()
+        this.$vux.toast.text('网络错误', 'top')
       });
     },
-
   },
 };
 </script>

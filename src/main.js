@@ -12,6 +12,11 @@ import 'swiper/dist/css/swiper.css';
 import animate from 'animate.css/animate.min.css';
 //引入公共方法
 // import Common from '@/script/common.js';
+//引入弹窗
+import  { LoadingPlugin,ToastPlugin  } from 'vux'
+Vue.use(LoadingPlugin)
+Vue.use(ToastPlugin)
+
 
 Vue.use(animate)
 

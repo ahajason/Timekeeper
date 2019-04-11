@@ -5,16 +5,20 @@
         <input
           type="text"
           placeholder="账号/邮箱"
+          v-model="account"
+          maxlength="50"
         >
       </FormItem>
       <FormItem>
         <input
           type="password"
           placeholder="密码"
+          v-model="password"
+          maxlength="20"
         >
       </FormItem>
       <FormItem>
-        <button>立即登录</button>
+        <button @click="login">立即登录</button>
       </FormItem>
       <FormFooter>
         <router-link
@@ -22,7 +26,8 @@
           tag="div"
           :to="{ name: 'ForgetPassword' }"
           exact
-        ><div class="item">忘记密码&nbsp;?</div>
+        >
+          <div class="item">忘记密码&nbsp;?</div>
         </router-link>
         <div class="item">|</div>
         <router-link
@@ -43,23 +48,57 @@
 import Form from '@/components/common/Form';
 import FormItem from '@/components/common/FormItem';
 import FormFooter from '@/components/common/FormFooter';
+import axios from 'axios';
+import { ApiRoot } from '@/api/config';
+import { md5 } from 'vux'
 export default {
-  name: "HelloWorld",
-  data() {
-    return {
-      msg: "Welcome to Your Vue.js App"
-    };
-  },
+  name: "login",
   components: {
     Form,
     FormItem,
     FormFooter,
   },
+  data() {
+    return {
+      account: '',
+      password: '',
+    };
+  },
   methods: {
-    
-  },mounted(){
-    console.log(process.env)
-  }
+    login: function () {
+      const { account, password} = this;
+      if (!account) {
+        this.$vux.toast.text('请输入账号', 'top')
+        return;
+      }
+      if (!password) {
+        this.$vux.toast.text('请输入密码', 'top')
+        return;
+      }
+      this.$vux.loading.show({
+        text: '正在登录'
+      })
+      const params = {
+        account,
+        password: md5(password)
+      }
+      axios.post(
+        ApiRoot + '/user/login', params
+      ).then((res) => {
+        this.$vux.loading.hide()
+        const response = res.data
+        if (response.success) {
+          this.$vux.toast.text('登录成功', 'top')
+          this.$router.push('/');
+        } else {
+          this.$vux.toast.text(response.msg, 'top')
+        }
+      }).catch((error) => {
+        this.$vux.loading.hide()
+        this.$vux.toast.text('网络错误', 'top')
+      });
+    },
+  },
 };
 </script>
 <style scoped lang='less'>

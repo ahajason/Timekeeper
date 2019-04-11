@@ -13,6 +13,7 @@
     "animate.css": "^3.7.0",
     "axios": "^0.18.0",
     "better-scroll": "^0.1.15",
+    "blueimp-md5": "^2.10.0",
     "font-awesome": "^4.7.0",
     "less": "^3.9.0",
     "less-loader": "^4.1.0",
