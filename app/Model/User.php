@@ -26,6 +26,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Model\User whereUserPassword($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Model\User whereUserUpdatedAt($value)
  * @mixin \Eloquent
+ * @property-read \App\Model\Portrait $portrait
  */
 class User extends Model implements Authenticatable
 {
