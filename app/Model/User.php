@@ -37,4 +37,10 @@ class User extends Model implements Authenticatable
     protected $primaryKey = 'user_id';
     const CREATED_AT = 'user_created_at';
     const UPDATED_AT = 'user_updated_at';
+
+    public function portrait(){
+        return $this
+            ->hasOne(Portrait::class, 'user_id', 'user_id')
+            ->wherePortraitIsActive(true);
+    }
 }

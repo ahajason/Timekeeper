@@ -32,7 +32,7 @@ class Portrait extends Model
     const PORTRAIT_TYPE_TEXT = 1;
     const PORTRAIT_TYPE_UPLOAD = 2;
     protected $primaryKey = 'portrait_id';
-
+    protected $appends = ['portrait_url'];
     protected $fillable = [
         'user_id',
         'portrait_path',
@@ -41,10 +41,10 @@ class Portrait extends Model
     ];
     const CREATED_AT = 'portrait_created_at';
     const UPDATED_AT = 'portrait_updated_at';
-
-
-
-
+    protected function getPortraitUrlAttribute()
+    {
+        return env('IMG_URL_PREFIX','/portrait?file=').$this->portrait_path;
+    }
 
 
 }

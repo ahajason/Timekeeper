@@ -10,22 +10,6 @@ namespace App\Utils;
 
 class ClientInfoUtil
 {
-    /**
-     * 获取用户真实ip
-     */
-    public static function getIpAddress()
-    {
-
-        if (getenv("HTTP_CLIENT_IP"))
-            $ip = getenv("HTTP_CLIENT_IP");
-        elseif (getenv("HTTP_X_FORWARDED_FOR"))
-            $ip = getenv("HTTP_X_FORWARDED_FOR");
-        elseif (getenv("REMOTE_ADDR"))
-            $ip = getenv("REMOTE_ADDR");
-        else $ip = "Unknow";
-        return $ip;
-    }
-
     public static function getClientInfo($agent = '')
     {
         return array_merge(

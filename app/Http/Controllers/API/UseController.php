@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Manager\PortraitManager;
 use App\Manager\UserManager;
+use App\Model\Portrait;
 use App\Model\User;
 use Exception;
 use Auth;
@@ -52,4 +53,12 @@ class UseController extends Controller
         $token = UserManager::createLoginSession($userId);
         return  ['success' => true, 'data' => ['user_id' => $userId, 'token' => $token]];
     }
+    public function getUserInfo(Request $request)
+    {
+        $user = Auth::user();
+        $user->load('portrait');
+
+        return  ['success' => true, 'data' => ['user_info' => $user]];
+    }
+
 }
