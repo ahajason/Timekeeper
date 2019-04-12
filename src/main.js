@@ -3,6 +3,7 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import store from './store/'
 //引入字体
 import 'font-awesome/css/font-awesome.css'
 import '@/assets/iconfont/iconfont.css';
@@ -10,15 +11,13 @@ import '@/assets/iconfont/iconfont.css';
 import '@/style/common.css';
 import 'swiper/dist/css/swiper.css';
 import animate from 'animate.css/animate.min.css';
+Vue.use(animate)
 //引入公共方法
 // import Common from '@/script/common.js';
 //引入弹窗
 import  { LoadingPlugin,ToastPlugin  } from 'vux'
 Vue.use(LoadingPlugin)
 Vue.use(ToastPlugin)
-
-
-Vue.use(animate)
 
 const FastClick = require('fastclick');
 FastClick.attach(document.body);
@@ -28,6 +27,7 @@ Vue.config.productionTip = false;
 new Vue({
   el: '#app',
   router,
+  store,
   components: { App },
   template: '<App/>'
 });

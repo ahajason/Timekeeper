@@ -21,7 +21,7 @@
         <button @click="login">立即登录</button>
       </FormItem>
       <FormFooter>
-        <router-link
+        <!-- <router-link
           class="item"
           tag="div"
           :to="{ name: 'ForgetPassword' }"
@@ -29,7 +29,7 @@
         >
           <div class="item">忘记密码&nbsp;?</div>
         </router-link>
-        <div class="item">|</div>
+        <div class="item">|</div> -->
         <router-link
           class="item"
           tag="div"
@@ -51,6 +51,8 @@ import FormFooter from '@/components/common/FormFooter';
 import axios from 'axios';
 import { ApiRoot } from '@/api/config';
 import { md5 } from 'vux'
+import { mapMutations } from 'vuex'
+import { SAVE_TOKEN_INFO } from '@/store/mutation-types'
 export default {
   name: "login",
   components: {
@@ -62,11 +64,14 @@ export default {
     return {
       account: '',
       password: '',
+
     };
+  },
+  mounted() {
   },
   methods: {
     login: function () {
-      const { account, password} = this;
+      const { account, password } = this;
       if (!account) {
         this.$vux.toast.text('请输入账号', 'top')
         return;
@@ -88,6 +93,8 @@ export default {
         this.$vux.loading.hide()
         const response = res.data
         if (response.success) {
+          const { user_id, token } = response.data;
+          this.SAVE_TOKEN_INFO({ userId: user_id, token });
           this.$vux.toast.text('登录成功', 'top')
           this.$router.push('/');
         } else {
@@ -98,6 +105,9 @@ export default {
         this.$vux.toast.text('网络错误', 'top')
       });
     },
+    ...mapMutations([
+      SAVE_TOKEN_INFO,
+    ]),
   },
 };
 </script>

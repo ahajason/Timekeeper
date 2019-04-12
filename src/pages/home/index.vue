@@ -70,12 +70,12 @@
   </div>
 </template>
 <script>
+import { startRequest } from '@/api'
 import tabBar from '@/components/tabBar/tabBar'
 export default {
   name: 'home',
   components: {
     tabBar,
-
   },
   data() {
     return {
@@ -85,6 +85,13 @@ export default {
   },
   methods: {
   },
+  computed: {
+
+  },
+  mounted(){
+    // startRequest(this,'/test',{},()=>{},()=>{})
+  }
+
 }
 
 </script>
