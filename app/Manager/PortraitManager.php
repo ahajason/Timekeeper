@@ -11,9 +11,19 @@ use Laravolt\Avatar\Avatar;
 use Storage;
 use App\Model\Portrait;
 
+/**
+ * Class PortraitManager
+ * @package App\Manager
+ */
 class PortraitManager
 {
 
+    /**
+     * generatePortrait
+     * @param int $userId
+     * @param string $userNickname
+     * @return int|mixed
+     */
     public static function generatePortrait(int $userId, string $userNickname)
     {
         $imgName = uniqid().'.png';

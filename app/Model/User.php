@@ -39,9 +39,15 @@ class User extends Model implements Authenticatable
     const CREATED_AT = 'user_created_at';
     const UPDATED_AT = 'user_updated_at';
 
-    public function portrait(){
+    public function portrait()
+    {
         return $this
             ->hasOne(Portrait::class, 'user_id', 'user_id')
             ->wherePortraitIsActive(true);
+    }
+
+    public function category()
+    {
+        return $this->hasMany(Category::class, 'user_id', 'user_id');
     }
 }

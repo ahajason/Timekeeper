@@ -11,9 +11,17 @@ namespace App\Manager;
 use App\Model\LoginSession;
 use App\Utils\ClientInfoUtil;
 
+/**
+ * Class UserManager
+ * @package App\Manager
+ */
 class UserManager
 {
-
+    /**
+     * createLoginSession
+     * @param int $userId
+     * @return string
+     */
     public static function createLoginSession(int $userId)
     {
         $ip = $_SERVER['REMOTE_ADDR'];

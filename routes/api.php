@@ -13,14 +13,22 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request;
-});
-
 Route::get('/test', function (Request $request) {
-    \App\Manager\PortraitManager::generatePortrait(1,3222);
+    return 'test';
 });
 
-Route::match(['get','post'],'/user/register','API\UseController@register');
-Route::match(['get','post'],'/user/login','API\UseController@login');
-Route::middleware('user')->match(['get','post'], '/user/getUserInfo','API\UseController@getUserInfo');
+Route::prefix('user')->group(function () {
+    Route::match(['get','post'],'register','API\UseController@register');
+    Route::match(['get','post'],'login','API\UseController@login');
+});
+
+Route::middleware('user')->group(function () {
+    Route::prefix('user')->group(function () {
+        Route::match(['get','post'], 'getUserInfo','API\UseController@getUserInfo');
+    });
+    Route::prefix('item')->group(function () {
+        Route::match(['get','post'], 'createItem','API\ItemController@createItem');
+        Route::match(['get','post'], 'getTodayTodoList','API\ItemController@getTodayTodoList');
+        Route::match(['get','post'], 'getTodoList','API\ItemController@getTodoList');
+    });
+});
