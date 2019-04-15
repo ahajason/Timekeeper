@@ -27,13 +27,13 @@ class ItemController extends Controller
         Category::whereUserId($userId)->firstOrCreate(['user_id' => $userId]);
         //该类别不存在或不属于该用户，则抛出异常
         Category::whereUserId($userId)->findOrFail($request['category_id']);
-        Item::updateOrCreate(['item_sync_key' => $request['sync_key']], [
+        $item = Item::updateOrCreate(['item_sync_key' => $request['sync_key']], [
             'item_name' => $request['name'],
             'item_emergency_level' => $request['emergency_level'],
             'item_importance_level' => $request['importance_level'],
             'category_id' => $request['category_id'],
         ]);
-        return ['success' => true];
+        return ['success' => true, 'data' => $item];
     }
 
     public function getTodayTodoList(Request $request)
@@ -60,7 +60,8 @@ class ItemController extends Controller
             ->whereIn('category_id', $Categories)
             ->with('category')
             ->get();
-        return ['success' => true, 'data' => $items];
+        $itemList  = $items->keyBy('item_sync_key');
+        return ['success' => true, 'data' => $itemList];
     }
 
 }

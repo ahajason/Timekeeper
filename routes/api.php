@@ -31,4 +31,7 @@ Route::middleware('user')->group(function () {
         Route::match(['get','post'], 'getTodayTodoList','API\ItemController@getTodayTodoList');
         Route::match(['get','post'], 'getTodoList','API\ItemController@getTodoList');
     });
+    Route::prefix('category')->group(function () {
+        Route::match(['get','post'], 'getCategoryList','API\CategoryController@getCategoryList');
+    });
 });

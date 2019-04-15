@@ -59,9 +59,9 @@ class Handler extends ExceptionHandler
                     "code" => $exception->status,
                     //这里使用 $exception->errors() 得到验证的所有错误信息，是一个关联二维数组，所以使用了array_values()取得了数组中的值，而值也是一个数组，所以用的两个 [0][0]
                     "msg" => array_values($exception->errors())[0][0],
-                ];
+                    ];
                 return response()->json($result)->setEncodingOptions(JSON_UNESCAPED_UNICODE);
-            }else{
+            }else if (!empty($exception->getMessage()) && !empty($exception->getCode())){
                 $result = [
                     "success" => false,
                     "code" => $exception->getCode(),
