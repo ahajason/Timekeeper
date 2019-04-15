@@ -70,8 +70,10 @@
   </div>
 </template>
 <script>
-import { startRequest } from '@/api'
-import tabBar from '@/components/tabBar/tabBar'
+import { mapGetters, mapMutations } from 'vuex'
+import { startRequest } from '../../api'
+import Label from '../../components/common/Label.vue'
+import tabBar from '../../components/tabBar/tabBar'
 export default {
   name: 'home',
   components: {
@@ -84,12 +86,33 @@ export default {
     }
   },
   methods: {
+    Label,
   },
   computed: {
-
+    ...mapGetters([
+      'tokenInfo',
+      'todayTodoList',
+    ])
   },
-  mounted(){
-    // startRequest(this,'/test',{},()=>{},()=>{})
+  mounted() {
+    this.getItemList()
+  },
+  methods: {
+    getItemList() {
+      let requestData = this.tokenInfo;
+      startRequest('/item/getTodoList', requestData, (res) => {
+        this.addItemList(res.data)
+      }, () => {
+        if (error.msg) {
+          this.$vux.toast.text(error.msg, 'top')
+        } else {
+          this.$vux.toast.text('网络错误', 'top')
+        }
+      });
+    },
+    ...mapMutations([
+      'addItemList',
+    ])
   }
 
 }

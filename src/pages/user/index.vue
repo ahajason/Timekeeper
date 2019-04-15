@@ -13,7 +13,7 @@
       <div class="userName c">
         <div class="text">{{userInfo&&userInfo.user_nickname}}</div>
       </div>
-      
+
       <div class="right-icon r">
         <i
           class="fa fa-angle-right"
@@ -55,10 +55,9 @@
 
 </template>
 <script>
-import { mapMutations, mapState } from 'vuex'
-import { GET_TOKEN_INFO } from '@/store/mutation-types'
+import { mapGetters } from 'vuex'
 import tabBar from '@/components/tabBar/tabBar';
-import { startRequest } from '@/api'
+import { startRequest } from '../../api'
 export default {
   name: 'user',
   components: {
@@ -70,21 +69,12 @@ export default {
     }
   },
   computed: {
-    ...mapState([
-      'token', 'userId'
+    ...mapGetters([
+      'tokenInfo'
     ])
   },
   mounted() {
-    this.getUserInfo({
-      scb: () => { },
-      fcb: (error) => {
-        if (error.msg) {
-          this.$vux.toast.text(error.msg, 'top')
-        } else {
-          this.$vux.toast.text('网络错误', 'top')
-        }
-      },
-    })
+    this.getUserInfo()
   },
   methods: {
     navToLogin() {
@@ -93,21 +83,17 @@ export default {
       })
     },
     getUserInfo() {
-      let requestData = {};
-      if (!this.token || !this.userId) {
-        this.GET_TOKEN_INFO()
-      }
-      let { token, userId } = this;
-      if (token) requestData['token'] = token;
-      if (userId) requestData['user_id'] = userId;
-      var res = null;
+      let requestData = this.tokenInfo;
       startRequest('/user/getUserInfo', requestData, (response) => {
         this.userInfo = response.data.user_info
-      }, () => { });
+      }, (error) => {
+        if (error.msg) {
+          this.$vux.toast.text(error.msg, 'top')
+        } else {
+          this.$vux.toast.text('网络错误', 'top')
+        }
+      });
     },
-    ...mapMutations([
-      GET_TOKEN_INFO,
-    ]),
   }
 }
 

@@ -52,7 +52,6 @@ import axios from 'axios';
 import { ApiRoot } from '@/api/config';
 import { md5 } from 'vux'
 import { mapMutations } from 'vuex'
-import { SAVE_TOKEN_INFO } from '@/store/mutation-types'
 export default {
   name: "Register",
   components: {
@@ -100,7 +99,7 @@ export default {
         const response = res.data
         if (response.success) {
           const { user_id, token } = response.data;
-          this.SAVE_TOKEN_INFO({ userId: user_id, token });
+          this.saveTokenInfo({ userId: user_id, token });
           this.$vux.toast.text('注册成功', 'top')
           this.$router.push('/');
         } else {
@@ -112,7 +111,7 @@ export default {
       });
     },
     ...mapMutations([
-      SAVE_TOKEN_INFO,
+      'saveTokenInfo',
     ]),
   },
 };

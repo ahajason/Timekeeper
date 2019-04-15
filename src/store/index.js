@@ -8,8 +8,9 @@ Vue.use(Vuex)
 
 const state = {
 	userInfo: null,//用户信息
-	userId: 0,//账号ID
-	token: '',//验证令牌
+	userId: null,//账号ID
+	token: null,//验证令牌
+	itemList: {}//事项列表
 }
 
 export default new Vuex.Store({

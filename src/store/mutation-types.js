@@ -1,2 +1,0 @@
-export const SAVE_TOKEN_INFO = 'SAVE_TOKEN_INFO'
-export const GET_TOKEN_INFO = 'GET_TOKEN_INFO'
