@@ -1,5 +1,5 @@
 <template>
-  <div id="tab-bar">
+  <div id="TTabbar">
     <ul class="list">
       <router-link class="item" tag="li" :to="{ name: item.pageName }" v-for="item in list" :key="item.id" exact>
         <i class="iconfont" :class="item.iconClass"></i>
@@ -10,7 +10,7 @@
 </template>
 <script>
 export default {
-  name: 'tab-bar',
+  name: 'TTabbar',
   data() {
     return {
       list: [{
@@ -44,8 +44,8 @@ export default {
 
 </script>
 
-<style scoped>
-#tab-bar {
+<style  lang='less' scoped>
+#TTabbar {
   right: 0;
   left: 0;
   bottom: 0;

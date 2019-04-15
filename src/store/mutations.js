@@ -14,4 +14,24 @@ export default {
 	addItemList: (state, itemList) => {
 		state.itemList = { ...state.itemList, ...itemList };
 	},
+	setEditingItem: (state, editingItem) => {
+		state.editingItem = editingItem;
+	},
+	updateEditingItem: (state, { key, value }) => {
+		console.log(key, value)
+		state.editingItem[key] = value;
+		console.log(state.editingItem)
+	},
+	setCategoryList: (state, categoryList) => {
+		let categoryMap = {};
+		state.categoryPickerList = categoryList.map(item => {
+			categoryMap[item.category_id] = item
+			return {
+				name: item.category_name,
+				value: item.category_id,
+			};
+		});
+		state.categoryMap = categoryMap;
+	},
+
 }

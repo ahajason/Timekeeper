@@ -45,9 +45,9 @@
   </div>
 </template>
 <script>
-import Form from '@/components/common/Form';
-import FormItem from '@/components/common/FormItem';
-import FormFooter from '@/components/common/FormFooter';
+import Form from '@/components/common/LoginForm';
+import FormItem from '@/components/common/LoginFormItem';
+import FormFooter from '@/components/common/LoginFormFooter';
 import axios from 'axios';
 import { ApiRoot } from '@/api/config';
 import { md5 } from 'vux'

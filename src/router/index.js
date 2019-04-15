@@ -9,8 +9,8 @@ import home from '@/pages/home'
 import timeline from '@/pages/timeline'
 import management from '@/pages/management'
 import user from '@/pages/user'
-import createPlan from '@/pages/plan/create'
-import settingPlan from '@/pages/plan/setting'
+import createItem from '@/pages/item/create'
+import settingItem from '@/pages/item/setting'
 import tomato from '@/pages/tomato'
 
 import login from '@/pages/user/login'
@@ -51,12 +51,12 @@ export default new Router({
       children: [
          {
            path: '/create',
-           name: 'createPlan',
-           component: createPlan,
+           name: 'createItem',
+           component: createItem,
          }, {
-           path: '/setting/:pSyncKey',
-           name: 'settingPlan',
-           component: settingPlan,
+           path: '/setting',
+           name: 'settingItem',
+           component: settingItem,
         },
         {
           path: '/tomato',

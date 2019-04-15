@@ -9,42 +9,69 @@
         v-if="show"
       >
         <div class="headr">
-          <div class="title">待办清单</div>
+          <div class="title">今日待办</div>
         </div>
         <div class="body">
-          <div
-            class="plan flex-box"
-            v-for="(item, index) in [1,2,3,4,5,6,7,8,9,10,11]"
-            :key="index"
-          >
-            <div class="l">
-              <i
-                v-if='true'
-                class="fa fa-square-o"
-                aria-hidden="true"
+          <swipeout>
+            <div
+              v-for="(item, index) in todayTodoList"
+              :key="index"
+            >
+              <swipeout-item
+                transition-mode="follow"
               >
-              </i>
-              <i
-                v-if='false'
-                class="fa fa-check-square-o"
-                aria-hidden="true"
-              >
-              </i>
+                <div slot="right-menu">
+                  <swipeout-button type="primary">Fav</swipeout-button>
+                  <swipeout-button type="warn">Delete</swipeout-button>
+                </div>
+                <div slot="content" class="item flex-box">
+                  <div class="l">
+                    <i
+                      v-if='true'
+                      class="fa fa-square-o"
+                      aria-hidden="true"
+                    >
+                    </i>
+                    <i
+                      v-if='false'
+                      class="fa fa-check-square-o"
+                      aria-hidden="true"
+                    >
+                    </i>
 
+                  </div>
+                  <div class="c">
+                    <div class="name-line">{{item.item_name}}</div>
+                    <div class="level-line">
+                      <div class="category-name">#{{item.category.category_name}}</div>
+                      <Label
+                        v-bind:active="item.item_emergency_level >= 5"
+                        textActive="重要"
+                        text="不重要"
+                        backgroundActive='#ff3333'
+                        size='sm'
+                      ></Label>
+                      <Label
+                        v-bind:active="item.item_importance_level >= 5"
+                        textActive="紧急"
+                        size='sm'
+                      ></Label>
+                    </div>
+
+                  </div>
+                  <div class="r">
+                    <i
+                      class="fa fa-angle-double-left"
+                      aria-hidden="true"
+                    >
+                    </i>
+                  </div>
+                </div>
+
+              </swipeout-item>
             </div>
-            <div class="c">
-              <div class="name-line">事务{{item}}</div>
-              <div class="level-line">事务{{item}}</div>
-              <div class="category-line">事务{{item}}</div>
-            </div>
-            <div class="r">
-              <i
-                class="fa fa-play"
-                aria-hidden="true"
-              >
-              </i>
-            </div>
-          </div>
+
+          </swipeout>
         </div>
       </section>
     </transition>
@@ -52,7 +79,7 @@
       <router-link
         class="start-btn flex-box"
         tag="div"
-        :to="{ name: 'createPlan' }"
+        :to="{ name: 'createItem' }"
         exact
       >
         <div class="slogan">
@@ -71,13 +98,15 @@
 </template>
 <script>
 import { mapGetters, mapMutations } from 'vuex'
-import { startRequest } from '../../api'
 import Label from '../../components/common/Label.vue'
-import tabBar from '../../components/tabBar/tabBar'
+import { Swipeout, SwipeoutItem, SwipeoutButton } from 'vux'
 export default {
   name: 'home',
   components: {
-    tabBar,
+    Label,
+    Swipeout,
+    SwipeoutItem,
+    SwipeoutButton,
   },
   data() {
     return {
@@ -86,7 +115,7 @@ export default {
     }
   },
   methods: {
-    Label,
+
   },
   computed: {
     ...mapGetters([
@@ -100,9 +129,9 @@ export default {
   methods: {
     getItemList() {
       let requestData = this.tokenInfo;
-      startRequest('/item/getTodoList', requestData, (res) => {
+      this.$startRequest('/item/getTodoList', requestData, (res) => {
         this.addItemList(res.data)
-      }, () => {
+      }, (error) => {
         if (error.msg) {
           this.$vux.toast.text(error.msg, 'top')
         } else {
@@ -161,47 +190,64 @@ export default {
     display: flex;
 
     .headr {
-      background: #f5f5f5;
+      // background: #f5f5f5;
+      color: #fff;
       flex: 0 0 auto;
       width: 100%;
       border-radius: 10px 10px 0 0;
-      border-bottom: 1px dashed rgba(52, 52, 52, 0.2);
+      margin-bottom: 20px;
 
       .title {
-        line-height: 2;
+        display: inline-block;
+        // line-height: 2;
+        padding: 0 20px;
         font-size: 22px;
         text-indent: 20px;
+        border-bottom: 1px dashed #fff;
       }
     }
 
     .body {
       flex: 1 0 auto;
-      background: #f5f5f5;
 
-      .plan {
+      .item {
+        // margin-left: 20px;
+        background: #343434;
         text-align: center;
         padding: 6px 0;
         font-size: 25px;
+        // border-radius: 40px 0 0 40px;
+        // box-shadow: 0 0 5px 4px #f5f5f5;
+        color: #fff;
 
         .l {
-          padding: 10px;
+          padding: 10px 20px;
         }
 
         .c {
           text-align: left;
           .name-line {
             font-size: 18px;
+            line-height: 2;
           }
-          .level-line,
-          .category-line {
+          .level-line {
             font-size: 16px;
-            line-height: 1.1;
-            color: rgba(52, 52, 52, 0.6);
+            line-height: 1.2;
+            color: #fff;
+            display: flex;
+            .category-name {
+              font-style: italic;
+              opacity: 0.6;
+            }
+            & > div {
+              margin-right: 15px;
+            }
           }
         }
 
         .r {
-          padding: 10px;
+          padding-right: 15px;
+          opacity: 0.6;
         }
       }
     }

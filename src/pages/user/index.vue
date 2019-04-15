@@ -55,13 +55,9 @@
 
 </template>
 <script>
-import { mapGetters } from 'vuex'
-import tabBar from '@/components/tabBar/tabBar';
-import { startRequest } from '../../api'
 export default {
   name: 'user',
   components: {
-    tabBar
   },
   data() {
     return {
@@ -69,9 +65,6 @@ export default {
     }
   },
   computed: {
-    ...mapGetters([
-      'tokenInfo'
-    ])
   },
   mounted() {
     this.getUserInfo()
@@ -83,8 +76,8 @@ export default {
       })
     },
     getUserInfo() {
-      let requestData = this.tokenInfo;
-      startRequest('/user/getUserInfo', requestData, (response) => {
+      let requestData = this.$store.getters.tokenInfo;
+      this.$startRequest('/user/getUserInfo', requestData, (response) => {
         this.userInfo = response.data.user_info
       }, (error) => {
         if (error.msg) {

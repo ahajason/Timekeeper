@@ -10,15 +10,15 @@
       </keep-alive>
     </transition>
 
-    <tab-bar></tab-bar>
+    <TTabbar></TTabbar>
   </div>
 </template>
 <script>
-import tabBar from '@/components/tabBar/tabBar'
+import TTabbar from '@/components/TTabbar'
 export default {
   name: 'mainPage',
   components: {
-    tabBar
+    TTabbar
   },
   data() {
     return {

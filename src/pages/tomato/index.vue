@@ -7,7 +7,7 @@
         <section class="doing">
           <div class="plan flex-box">
             <div class="c">
-              <div class="name-line">任务{{item}}</div>
+              <div class="name-line">任务</div>
             </div>
             <div class="r">
               <i class="fa fa-angle-double-down" aria-hidden="true"></i>

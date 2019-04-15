@@ -13,11 +13,14 @@ import 'swiper/dist/css/swiper.css';
 import animate from 'animate.css/animate.min.css';
 Vue.use(animate)
 //引入公共方法
+import { startRequest } from './api'
 // import Common from '@/script/common.js';
 //引入弹窗
 import  { LoadingPlugin,ToastPlugin  } from 'vux'
 Vue.use(LoadingPlugin)
 Vue.use(ToastPlugin)
+
+Vue.prototype.$startRequest = startRequest;
 
 const FastClick = require('fastclick');
 FastClick.attach(document.body);
