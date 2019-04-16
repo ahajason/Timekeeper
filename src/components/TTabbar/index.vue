@@ -21,15 +21,15 @@ export default {
         },
         {
           id: 2,
-          pageName: "timeline",
-          iconClass: "icon-timeline",
-          text: "时间轴"
-        },
-        {
-          id: 3,
           pageName: "management",
           iconClass: "icon-chart",
           text: "管理"
+        },
+        {
+          id: 3,
+          pageName: "timeline",
+          iconClass: "icon-timeline",
+          text: "时间轴"
         },
         {
           id: 4,

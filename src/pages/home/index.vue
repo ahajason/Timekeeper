@@ -4,73 +4,59 @@
       enter-active-class="animated slideInUp"
       leave-active-class="animated slideOutDown"
     >
-      <section
-        class="todo"
-        v-if="show"
-      >
+      <section class="todo" v-if="show">
         <div class="headr">
           <div class="title">今日待办</div>
         </div>
         <div class="body">
           <swipeout>
-            <div
-              v-for="(item, index) in todayTodoList"
-              :key="index"
-            >
-              <swipeout-item
-                transition-mode="follow"
-              >
+            <div v-for="(item, index) in todayTodoList" :key="index">
+              <swipeout-item transition-mode="follow">
                 <div slot="right-menu">
-                  <swipeout-button type="primary">Fav</swipeout-button>
-                  <swipeout-button type="warn">Delete</swipeout-button>
+                  <swipeout-button background-color="">Fav</swipeout-button>
+                  <swipeout-button>Delete</swipeout-button>
                 </div>
                 <div slot="content" class="item flex-box">
-                  <div class="l">
-                    <i
-                      v-if='true'
-                      class="fa fa-square-o"
-                      aria-hidden="true"
-                    >
-                    </i>
-                    <i
-                      v-if='false'
-                      class="fa fa-check-square-o"
-                      aria-hidden="true"
-                    >
-                    </i>
-
+                  <div
+                    class="l"
+                    v-if="item.item_state == 0"
+                    @click="completeItem(index)"
+                  >
+                    <i class="fa fa-square-o" aria-hidden="true"> </i>
                   </div>
-                  <div class="c">
-                    <div class="name-line">{{item.item_name}}</div>
+                  <div
+                    class="l"
+                    v-if="item.item_state != 0"
+                    @click="restartItem(index)"
+                  >
+                    <i class="fa fa-check-square-o" aria-hidden="true"> </i>
+                  </div>
+                  <div class="c" @click="goDetails(index)">
+                    <div class="name-line">{{ item.item_name }}</div>
                     <div class="level-line">
-                      <div class="category-name">#{{item.category.category_name}}</div>
+                      <div class="category-name">
+                        #{{ item.category.category_name }}
+                      </div>
                       <Label
                         v-bind:active="item.item_emergency_level >= 5"
                         textActive="重要"
                         text="不重要"
-                        backgroundActive='#ff3333'
-                        size='sm'
+                        backgroundActive="#ff3333"
+                        size="sm"
                       ></Label>
                       <Label
                         v-bind:active="item.item_importance_level >= 5"
                         textActive="紧急"
-                        size='sm'
+                        size="sm"
                       ></Label>
                     </div>
-
                   </div>
                   <div class="r">
-                    <i
-                      class="fa fa-angle-double-left"
-                      aria-hidden="true"
-                    >
-                    </i>
+                    <i class="fa fa-angle-double-left" aria-hidden="true"> </i>
                   </div>
                 </div>
-
               </swipeout-item>
             </div>
-
           </swipeout>
         </div>
       </section>
@@ -86,69 +72,105 @@
           开始一个事务
         </div>
         <div class="r">
-          <i
-            class="fa fa-paper-plane"
-            aria-hidden="true"
-          >
-          </i>
+          <i class="fa fa-paper-plane" aria-hidden="true"> </i>
         </div>
       </router-link>
     </section>
   </div>
 </template>
 <script>
-import { mapGetters, mapMutations } from 'vuex'
-import Label from '../../components/common/Label.vue'
-import { Swipeout, SwipeoutItem, SwipeoutButton } from 'vux'
+import { mapGetters, mapMutations } from "vuex";
+import Label from "../../components/common/Label.vue";
+import { Swipeout, SwipeoutItem, SwipeoutButton } from "vux";
 export default {
-  name: 'home',
+  name: "home",
   components: {
     Label,
     Swipeout,
     SwipeoutItem,
-    SwipeoutButton,
+    SwipeoutButton
   },
   data() {
     return {
-      msg: 'Welcome to Your Vue.js App',
+      msg: "Welcome to Your Vue.js App",
       show: true
-    }
+    };
   },
-  methods: {
-
-  },
+  methods: {},
   computed: {
-    ...mapGetters([
-      'tokenInfo',
-      'todayTodoList',
-    ])
+    ...mapGetters(["tokenInfo", "todayTodoList"])
   },
   mounted() {
-    this.getItemList()
+    this.getItemList();
   },
   methods: {
-    getItemList() {
-      let requestData = this.tokenInfo;
-      this.$startRequest('/item/getTodoList', requestData, (res) => {
-        this.addItemList(res.data)
-      }, (error) => {
-        if (error.msg) {
-          this.$vux.toast.text(error.msg, 'top')
-        } else {
-          this.$vux.toast.text('网络错误', 'top')
+    goDetails(index) {
+      this.$router.push({
+        name: "itemDetails",
+        params: {
+          synckey: index
         }
       });
     },
-    ...mapMutations([
-      'addItemList',
-    ])
+    completeItem(item_sync_key) {
+      let item = this.todayTodoList[item_sync_key];
+      let requestData = { item_sync_key, ...this.tokenInfo };
+      this.$startRequest(
+        "/item/completeItem",
+        requestData,
+        res => {
+          this.addItemList(res.data);
+        },
+        error => {
+          if (error.msg) {
+            this.$vux.toast.text(error.msg, "top");
+          } else {
+            this.$vux.toast.text("网络错误", "top");
+          }
+        }
+      );
+    },
+    restartItem(item_sync_key) {
+      let item = this.todayTodoList[item_sync_key];
+      let requestData = { item_sync_key, ...this.tokenInfo };
+      this.$startRequest(
+        "/item/restartItem",
+        requestData,
+        res => {
+          this.addItemList(res.data);
+        },
+        error => {
+          if (error.msg) {
+            this.$vux.toast.text(error.msg, "top");
+          } else {
+            this.$vux.toast.text("网络错误", "top");
+          }
+        }
+      );
+    },
+    getItemList() {
+      let requestData = this.tokenInfo;
+      this.$startRequest(
+        "/item/getTodoList",
+        requestData,
+        res => {
+          this.addItemList(res.data);
+        },
+        error => {
+          if (error.msg) {
+            this.$vux.toast.text(error.msg, "top");
+          } else {
+            this.$vux.toast.text("网络错误", "top");
+          }
+        }
+      );
+    },
+    ...mapMutations(["addItemList"])
   }
-
-}
-
+};
 </script>
 
-<style lang='less' scoped>
+<style lang="less" scoped>
 .content {
   height: 100%;
 

@@ -7,11 +7,35 @@
       </div>
       <div slot="c">设置事项</div>
       <div slot="r">
-        <div class="text" @click="createItem">完成</div>
-        <i class="fa fa-check" aria-hidden="true"></i>
+        <div class="text" @click="createItem">保存</div>
+        <i class="fa fa-floppy-o" aria-hidden="true"></i>
       </div>
     </THeader>
     <div class="form">
+      <div class="form-item">
+        <div class="label">名称</div>
+        <div class="input">
+          <Label
+            v-bind:active="isImportanceLevelActive"
+            textActive="重要"
+            text="不重要"
+            backgroundActive="#ff3333"
+            @on-active="bindImportanceLevelActive"
+          ></Label>
+        </div>
+      </div>
+      <div class="form-item">
+        <div class="label">事项描述</div>
+        <div class="input">
+          <Label
+            v-bind:active="isImportanceLevelActive"
+            textActive="重要"
+            text="不重要"
+            backgroundActive="#ff3333"
+            @on-active="bindImportanceLevelActive"
+          ></Label>
+        </div>
+      </div>
       <div class="form-item">
         <div class="label">重要程度</div>
         <div class="input">
@@ -35,6 +59,42 @@
         </div>
       </div>
       <div class="form-item">
+        <div class="label">状态</div>
+        <div class="input">
+          <Label
+            v-bind:active="isImportanceLevelActive"
+            textActive="重要"
+            text="不重要"
+            backgroundActive="#ff3333"
+            @on-active="bindImportanceLevelActive"
+          ></Label>
+        </div>
+      </div>
+      <div class="form-item">
+        <div class="label">番茄钟数量</div>
+        <div class="input">
+          <Label
+            v-bind:active="isImportanceLevelActive"
+            textActive="重要"
+            text="不重要"
+            backgroundActive="#ff3333"
+            @on-active="bindImportanceLevelActive"
+          ></Label>
+        </div>
+      </div>
+       <div class="form-item">
+        <div class="label">预测用时</div>
+        <div class="category input" @click="showPopupPicker = !showPopupPicker">
+          #
+          {{
+            this.categoryMap[picked[0]]
+              ? this.categoryMap[picked[0]].category_name
+              : "默认"
+          }}
+          <i class="fa fa-check-square-o" aria-hidden="true"> </i>
+        </div>
+      </div>
+      <div class="form-item">
         <div class="label">事务类别</div>
         <div class="category input" @click="showPopupPicker = !showPopupPicker">
           #
@@ -44,6 +104,68 @@
               : "默认"
           }}
           <i class="fa fa-check-square-o" aria-hidden="true"> </i>
+        </div>
+      </div>
+      
+
+      <div class="form-item">
+        <div class="label">开始时间</div>
+        <div class="input">
+          <Label
+            v-bind:active="isImportanceLevelActive"
+            textActive="重要"
+            text="不重要"
+            backgroundActive="#ff3333"
+            @on-active="bindImportanceLevelActive"
+          ></Label>
+        </div>
+      </div>
+      <div class="form-item">
+        <div class="label">结束时间</div>
+        <div class="input">
+          <Label
+            v-bind:active="isImportanceLevelActive"
+            textActive="重要"
+            text="不重要"
+            backgroundActive="#ff3333"
+            @on-active="bindImportanceLevelActive"
+          ></Label>
+        </div>
+      </div>
+            <div class="form-item">
+        <div class="label">所属计划</div>
+        <div class="category input" @click="showPopupPicker = !showPopupPicker">
+          #
+          {{
+            this.categoryMap[picked[0]]
+              ? this.categoryMap[picked[0]].category_name
+              : "默认"
+          }}
+          <i class="fa fa-check-square-o" aria-hidden="true"> </i>
+        </div>
+      </div>
+      <div class="form-item">
+        <div class="label">创建时间</div>
+        <div class="input">
+          <Label
+            v-bind:active="isImportanceLevelActive"
+            textActive="重要"
+            text="不重要"
+            backgroundActive="#ff3333"
+            @on-active="bindImportanceLevelActive"
+          ></Label>
+        </div>
+      </div>
+      <div class="form-item">
+        <div class="label">最后一次修改的时间</div>
+        <div class="input">
+          <Label
+            v-bind:active="isImportanceLevelActive"
+            textActive="重要"
+            text="不重要"
+            backgroundActive="#ff3333"
+            @on-active="bindImportanceLevelActive"
+          ></Label>
         </div>
       </div>
     </div>
@@ -76,14 +198,7 @@ export default {
     PopupPicker,
     Group
   },
-  mounted() {
-    this.getCategoryList();
-    if (!this.editingItem.item_sync_key) {
-      this.$router.push({
-        name: "createItem"
-      });
-    }
-  },
+  mounted() {},
   computed: {
     isImportanceLevelActive: {
       get() {
@@ -190,25 +305,24 @@ export default {
   color: #fff;
 
   .form {
-    padding: 80px 0;
+    padding: 60px 0;
     width: 100%;
 
     .form-item {
-      padding: 20px 20px;
+      padding: 10px 20px;
       display: flex;
       justify-content: center;
-      width: 90%;
+ 
       margin: auto;
 
       .label,
       .input {
         display: inline-block;
         color: #fff;
-        font-size: 20px;
       }
 
       .label {
-        flex: none;
+        flex: 0 0 120px;
 
         &::after {
           content: "：";
@@ -220,7 +334,7 @@ export default {
       }
 
       .input {
-        flex: auto;
+        flex: 1 1 auto;
         text-align: center;
         vertical-align: middle;
 

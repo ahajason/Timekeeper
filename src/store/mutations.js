@@ -1,3 +1,4 @@
+import { md5 } from "vux";
 export default {
 	saveTokenInfo: (state, { userId, token }) => {
 		state.userId = userId;
@@ -18,9 +19,7 @@ export default {
 		state.editingItem = editingItem;
 	},
 	updateEditingItem: (state, { key, value }) => {
-		console.log(key, value)
 		state.editingItem[key] = value;
-		console.log(state.editingItem)
 	},
 	setCategoryList: (state, categoryList) => {
 		let categoryMap = {};
@@ -32,6 +31,14 @@ export default {
 			};
 		});
 		state.categoryMap = categoryMap;
+	},
+	generateItemSyncKey: state => state.editingItem.item_sync_key = state.editingItem.item_sync_key || md5(new Date().getTime() + Math.random().toString(16).substr(2)),
+	InitEditingItem: state => state.editingItem = {
+		item_sync_key: null,
+		item_name: null,
+		item_emergency_level: 5,
+		item_importance_level: 5,
+		category_id: '0',
 	},
 
 }

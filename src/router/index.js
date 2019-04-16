@@ -11,6 +11,7 @@ import management from '@/pages/management'
 import user from '@/pages/user'
 import createItem from '@/pages/item/create'
 import settingItem from '@/pages/item/setting'
+import itemDetails from '@/pages/item/details'
 import tomato from '@/pages/tomato'
 
 import login from '@/pages/user/login'
@@ -42,21 +43,27 @@ export default new Router({
         path: 'user',
         name: 'user',
         component: user
-      }, ],
+      },],
     },
     {
       path: '/subpage',
       name: 'subpage',
       component: subpage,
       children: [
-         {
-           path: '/create',
-           name: 'createItem',
-           component: createItem,
-         }, {
-           path: '/setting',
-           name: 'settingItem',
-           component: settingItem,
+        {
+          path: '/create',
+          name: 'createItem',
+          component: createItem,
+        },
+        {
+          path: '/setting',
+          name: 'settingItem',
+          component: settingItem,
+        },
+        {
+          path: '/details/:synckey',
+          name: 'itemDetails',
+          component: itemDetails,
         },
         {
           path: '/tomato',
@@ -78,8 +85,8 @@ export default new Router({
           name: 'register',
           component: register,
         },
-        
-        
+
+
       ]
     }
   ]

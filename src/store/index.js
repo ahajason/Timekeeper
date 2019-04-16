@@ -12,6 +12,7 @@ const state = {
 	token: null,//验证令牌
 	itemList: {},//事项列表
 	editingItem: {//编辑中的事项
+		item_sync_key:null,
 		item_name:null,
 		item_emergency_level:5,
 		item_importance_level:5,

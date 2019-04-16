@@ -58,7 +58,7 @@ export default {
       color: #fff;
       padding: 10px 15px;
       font-size: 16px;
-      line-height: 1;
+      line-height: 1.2;
       vertical-align: middle;
       &::placeholder {
         color: rgba(255, 255, 255, 0.5);
