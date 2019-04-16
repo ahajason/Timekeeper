@@ -17,23 +17,61 @@ class ItemController extends Controller
         $user = Auth::user();
         $userId = $user->user_id;
         $request->validate([
-            'sync_key' => 'required|max:50|min:3|unique:items,item_sync_key',
-            'name' => 'required|max:50|min:3',
-            'emergency_level' => 'required|integer|between:0,10',
-            'importance_level' => 'required|integer|between:0,10',
-            'category_id' => 'required',
+            'item_sync_key' => 'required|max:50|min:3|unique:items,item_sync_key',
+            'item_name' => 'required|max:50|min:3',
+            'item_emergency_level' => 'required|integer|between:0,10',
+            'item_importance_level' => 'required|integer|between:0,10',
         ]);
-        //该用户不存在类别，则为其创建
-        Category::whereUserId($userId)->firstOrCreate(['user_id' => $userId]);
-        //该类别不存在或不属于该用户，则抛出异常
-        Category::whereUserId($userId)->findOrFail($request['category_id']);
-        $item = Item::updateOrCreate(['item_sync_key' => $request['sync_key']], [
-            'item_name' => $request['name'],
-            'item_emergency_level' => $request['emergency_level'],
-            'item_importance_level' => $request['importance_level'],
-            'category_id' => $request['category_id'],
+        //该类别不存在或不属于该用户，则选择默认类别
+        $category = Category::whereUserId($userId)->find($request['category_id']);
+        if (empty($category)) {
+            //该用户不存在类别，则为其创建
+            $category = Category::whereUserId($userId)->firstOrCreate(['user_id' => $userId]);
+        }
+        $item = Item::Create([
+            'item_sync_key' => $request['item_sync_key'],
+            'item_name' => $request['item_name'],
+            'item_emergency_level' => $request['item_emergency_level'],
+            'item_importance_level' => $request['item_importance_level'],
+            'category_id' => $category->category_id,
         ]);
-        return ['success' => true, 'data' => $item];
+        $item->load('category');
+
+        return ['success' => true, 'data' => [$item->item_sync_key => $item]];
+    }
+
+    /**
+     * completeItem
+     * @param Request $request
+     * @return array
+     */
+    public function completeItem(Request $request)
+    {
+        $request->validate([
+            'item_sync_key' => 'required|max:50|min:3',
+        ]);
+        $item = Item::whereItemSyncKey($request['item_sync_key'])->with('category')->firstOrFail();
+        $item->item_closed_at = Carbon::now()->toDateTimeString();
+        $item->item_state = Item::ITEM_STATE_DONE;
+        $item->save();
+        return ['success' => true, 'data' => [$item->item_sync_key => $item]];
+    }
+
+    /**
+     * completeItem
+     * @param Request $request
+     * @return array
+     */
+    public function restartItem(Request $request)
+    {
+        $request->validate([
+            'item_sync_key' => 'required|max:50|min:3',
+        ]);
+        $item = Item::whereItemSyncKey($request['item_sync_key'])->with('category')->firstOrFail();
+        $item->item_closed_at = null;
+        $item->item_state = Item::ITEM_STATE_TODO;
+        $item->save();
+        return ['success' => true, 'data' => [$item->item_sync_key => $item]];
     }
 
     public function getTodayTodoList(Request $request)
@@ -51,6 +89,7 @@ class ItemController extends Controller
             ->get();
         return ['success' => true, 'data' => $items];
     }
+
     public function getTodoList(Request $request)
     {
         $user = Auth::user();
@@ -60,8 +99,43 @@ class ItemController extends Controller
             ->whereIn('category_id', $Categories)
             ->with('category')
             ->get();
-        $itemList  = $items->keyBy('item_sync_key');
+        $itemList = $items->keyBy('item_sync_key');
         return ['success' => true, 'data' => $itemList];
+    }
+
+    public function getItem(Request $request)
+    {
+        $request->validate([
+            'item_sync_key' => 'required|max:50|min:3',
+        ]);
+        $item = Item::whereItemSyncKey($request['item_sync_key'])->with('category')->firstOrFail();
+        return ['success' => true, 'data' => $item];
+    }
+
+    public function updateItem(Request $request)
+    {
+        $requestParams = [
+            'item_sync_key' => 'required|max:50|min:3',
+            'item_name' => 'required|max:50|min:3',
+            'item_emergency_level' => 'required|integer|between:0,10',
+            'item_importance_level' => 'required|integer|between:0,10',
+            'category_id' => 'required',
+            '$item_forecast_time'=> 'required',
+            '$item_description' => 'required',
+            '$item_started_at' => 'required',
+            '$item_closed_at' => 'required',
+        ];
+        $request->validate($requestParams);
+        $item = Item::whereItemSyncKey($request['item_sync_key'])->firstOrFail();
+        foreach ($requestParams as $key => $requestParam) {
+            if (is_null($request[$key]) || $key = 'item_sync_key') {
+                continue;
+            }
+            $item->$key = $request[$key];
+        }
+        $item->save();
+        $item->load('category');
+        return ['success' => true, 'data' => [$item->item_sync_key => $item]];
     }
 
 }

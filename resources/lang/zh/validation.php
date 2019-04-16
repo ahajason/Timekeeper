@@ -94,5 +94,7 @@ return [
         'content'  => '内容',
         'identity' => '手机号/用户名',
         'title' => '标题',
+        'item' => '事项',
+        'category' => '类别',
     ],
 ];

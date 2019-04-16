@@ -30,6 +30,10 @@ Route::middleware('user')->group(function () {
         Route::match(['get','post'], 'createItem','API\ItemController@createItem');
         Route::match(['get','post'], 'getTodayTodoList','API\ItemController@getTodayTodoList');
         Route::match(['get','post'], 'getTodoList','API\ItemController@getTodoList');
+        Route::match(['get','post'], 'completeItem','API\ItemController@completeItem');
+        Route::match(['get','post'], 'restartItem','API\ItemController@restartItem');
+        Route::match(['get','post'], 'getItem','API\ItemController@getItem');
+        Route::match(['get','post'], 'updateItem','API\ItemController@updateItem');
     });
     Route::prefix('category')->group(function () {
         Route::match(['get','post'], 'getCategoryList','API\CategoryController@getCategoryList');
