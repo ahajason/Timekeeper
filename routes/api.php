@@ -33,7 +33,9 @@ Route::middleware('user')->group(function () {
         Route::match(['get','post'], 'completeItem','API\ItemController@completeItem');
         Route::match(['get','post'], 'restartItem','API\ItemController@restartItem');
         Route::match(['get','post'], 'getItem','API\ItemController@getItem');
+        Route::match(['get','post'], 'getTimeLine','API\ItemController@getTimeLine');
         Route::match(['get','post'], 'updateItem','API\ItemController@updateItem');
+        Route::match(['get','post'], 'deleteItem','API\ItemController@deleteItem');
     });
     Route::prefix('category')->group(function () {
         Route::match(['get','post'], 'getCategoryList','API\CategoryController@getCategoryList');

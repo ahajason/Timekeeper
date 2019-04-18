@@ -17,8 +17,8 @@ class ItemController extends Controller
         $user = Auth::user();
         $userId = $user->user_id;
         $request->validate([
-            'item_sync_key' => 'required|max:50|min:3|unique:items,item_sync_key',
-            'item_name' => 'required|max:50|min:3',
+            'item_sync_key' => 'required|max:50|min:2|unique:items,item_sync_key',
+            'item_name' => 'required|max:50|min:2',
             'item_emergency_level' => 'required|integer|between:0,10',
             'item_importance_level' => 'required|integer|between:0,10',
         ]);
@@ -48,13 +48,13 @@ class ItemController extends Controller
     public function completeItem(Request $request)
     {
         $request->validate([
-            'item_sync_key' => 'required|max:50|min:3',
+            'item_sync_key' => 'required|max:50|min:2',
         ]);
         $item = Item::whereItemSyncKey($request['item_sync_key'])->with('category')->firstOrFail();
         $item->item_closed_at = Carbon::now()->toDateTimeString();
         $item->item_state = Item::ITEM_STATE_DONE;
         $item->save();
-        return ['success' => true, 'data' => [$item->item_sync_key => $item]];
+        return ['success' => true, 'data' => $item];
     }
 
     /**
@@ -65,13 +65,13 @@ class ItemController extends Controller
     public function restartItem(Request $request)
     {
         $request->validate([
-            'item_sync_key' => 'required|max:50|min:3',
+            'item_sync_key' => 'required|max:50|min:2',
         ]);
         $item = Item::whereItemSyncKey($request['item_sync_key'])->with('category')->firstOrFail();
         $item->item_closed_at = null;
         $item->item_state = Item::ITEM_STATE_TODO;
         $item->save();
-        return ['success' => true, 'data' => [$item->item_sync_key => $item]];
+        return ['success' => true, 'data' => $item];
     }
 
     public function getTodayTodoList(Request $request)
@@ -90,6 +90,38 @@ class ItemController extends Controller
         return ['success' => true, 'data' => $items];
     }
 
+    /**
+     * getTimeLine
+     * @param Request $request
+     * @return array
+     */
+    public function getTimeLine(Request $request)
+    {
+        $user = Auth::user();
+        $userId = $user->user_id;
+        $Categories = Category::whereUserId($userId)->get(['category_id']);
+        $items = Item::whereItemState(Item::ITEM_STATE_DONE)
+            ->whereIn('category_id', $Categories)
+            ->orderByDesc('item_closed_at')
+            ->get();
+        $items->load('category.icon');
+        $itemList = $items->keyBy('item_sync_key');
+        $timeLine = [];
+        foreach ($items as $item) {
+            if (empty($item->item_closed_at)) {
+                continue;
+            }
+            $carbon = Carbon::createFromTimeString($item->item_closed_at);
+            $year = $carbon->year;
+            $month = $carbon->month;
+            $day = $carbon->day;
+            $time = $carbon->toTimeString();
+            $timeLine[$year][$month][$day][$time] = $item->item_sync_key;
+        }
+        return ['success' => true, 'data' => ['timeLine' => $timeLine, 'itemList' => $itemList]];
+    }
+
+
     public function getTodoList(Request $request)
     {
         $user = Auth::user();
@@ -106,7 +138,7 @@ class ItemController extends Controller
     public function getItem(Request $request)
     {
         $request->validate([
-            'item_sync_key' => 'required|max:50|min:3',
+            'item_sync_key' => 'required|max:50|min:2',
         ]);
         $item = Item::whereItemSyncKey($request['item_sync_key'])->with('category')->firstOrFail();
         return ['success' => true, 'data' => $item];
@@ -115,20 +147,20 @@ class ItemController extends Controller
     public function updateItem(Request $request)
     {
         $requestParams = [
-            'item_sync_key' => 'required|max:50|min:3',
-            'item_name' => 'required|max:50|min:3',
+            'item_sync_key' => 'required|max:50|min:2',
+            'item_name' => 'required|max:50|min:2',
             'item_emergency_level' => 'required|integer|between:0,10',
             'item_importance_level' => 'required|integer|between:0,10',
             'category_id' => 'required',
-            '$item_forecast_time'=> 'required',
-            '$item_description' => 'required',
-            '$item_started_at' => 'required',
-            '$item_closed_at' => 'required',
+            'item_forecast_time' => 'required',
+            'item_description' => '',
+            'item_started_at' => '',
+            'item_closed_at' => '',
         ];
         $request->validate($requestParams);
         $item = Item::whereItemSyncKey($request['item_sync_key'])->firstOrFail();
         foreach ($requestParams as $key => $requestParam) {
-            if (is_null($request[$key]) || $key = 'item_sync_key') {
+            if (is_null($request[$key]) || $key == 'item_sync_key') {
                 continue;
             }
             $item->$key = $request[$key];
@@ -136,6 +168,15 @@ class ItemController extends Controller
         $item->save();
         $item->load('category');
         return ['success' => true, 'data' => [$item->item_sync_key => $item]];
+    }
+
+    public function deleteItem(Request $request)
+    {
+        $request->validate([
+            'item_sync_key' => 'required|max:50|min:2',
+        ]);
+        Item::whereItemSyncKey($request['item_sync_key'])->delete();
+        return ['success' => true];
     }
 
 }
