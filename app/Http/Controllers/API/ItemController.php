@@ -134,6 +134,45 @@ class ItemController extends Controller
         $itemList = $items->keyBy('item_sync_key');
         return ['success' => true, 'data' => $itemList];
     }
+    /**
+     * getFilteredItems
+     * @param Request $request
+     * @return array
+     */
+    public function getFilteredItems(Request $request)
+    {
+        $request->validate([
+            'state' => 'required|integer|between:0,2',
+            'importance_level' => 'required|integer|between:0,2',
+            'emergency_level' => 'required|integer|between:0,2',
+        ]);
+        $stateFilter = $request['state'];
+        $importanceFilter = $request['importance_level'];
+        $emergencyFilter = $request['emergency_level'];
+        $user = Auth::user();
+        $userId = $user->user_id;
+        $Categories = Category::whereUserId($userId)->get(['category_id']);
+        $query = Item::whereIn('category_id', $Categories)
+        ->orderByDesc('item_created_at');
+        if ($stateFilter == 1){
+            $query->whereItemState(Item::ITEM_STATE_TODO);
+        }else if($stateFilter == 2){
+            $query->whereItemState(Item::ITEM_STATE_DONE);
+        }
+        if ($importanceFilter == 1){
+            $query->where('item_importance_level','>=',5);
+        }else if($importanceFilter == 2){
+            $query->where('item_importance_level','<',5);
+        }
+        if ($emergencyFilter == 1){
+            $query->where('item_emergency_level','>=',5);
+        }else if($emergencyFilter == 2){
+            $query->where('item_emergency_level','<',5);
+        }
+        $items = $query->with('category')->get();
+        $itemList = $items->keyBy('item_sync_key');
+        return ['success' => true, 'data' => $itemList];
+    }
 
     public function getItem(Request $request)
     {

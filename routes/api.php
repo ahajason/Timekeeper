@@ -36,8 +36,12 @@ Route::middleware('user')->group(function () {
         Route::match(['get','post'], 'getTimeLine','API\ItemController@getTimeLine');
         Route::match(['get','post'], 'updateItem','API\ItemController@updateItem');
         Route::match(['get','post'], 'deleteItem','API\ItemController@deleteItem');
+        Route::match(['get','post'], 'getFilteredItems','API\ItemController@getFilteredItems');
     });
     Route::prefix('category')->group(function () {
         Route::match(['get','post'], 'getCategoryList','API\CategoryController@getCategoryList');
+    });
+    Route::prefix('icon')->group(function () {
+        Route::match(['get','post'], 'getIconList','API\IconController@getIconList');
     });
 });
