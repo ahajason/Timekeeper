@@ -28,12 +28,13 @@ export default {
 <style  lang='less' scoped>
 #THeader {
   position: fixed;
+  background: #343434;
   top: 0;
   right: 0;
   left: 0;
   display: flex;
-  border-top: 1px solid rgba(255, 255, 255);
-  box-shadow: 0px 0px 1px 1px rgba(255, 255, 255);
+  border-bottom: 1px solid rgba(255, 255, 255);
+  // box-shadow: 0px 0px 1px 1px rgba(255, 255, 255);
 
   padding: 10px;
   z-index: 100;
@@ -56,7 +57,7 @@ export default {
   }
   .l,
   .r {
-    flex: 0 0 auto;
+    flex: 1 0 20px;
   }
 }
 </style>

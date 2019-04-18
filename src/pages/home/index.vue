@@ -11,10 +11,15 @@
         <div class="body">
           <swipeout>
             <div v-for="(item, index) in todayTodoList" :key="index">
-              <swipeout-item transition-mode="follow">
+              <swipeout-item>
                 <div slot="right-menu">
-                  <swipeout-button background-color="">Fav</swipeout-button>
-                  <swipeout-button>Delete</swipeout-button>
+                   <swipeout-button
+                    @click.native="confirmDeleteItem(index)"
+                    background-color="#f33"
+                  >
+                    删除
+                  </swipeout-button>
+                 
                 </div>
                 <div slot="content" class="item flex-box">
                   <div
@@ -31,21 +36,21 @@
                   >
                     <i class="fa fa-check-square-o" aria-hidden="true"> </i>
                   </div>
-                  <div class="c" @click="goDetails(index)">
-                    <div class="name-line">{{ item.item_name }}</div>
+                  <div class="c">
+                    <div class="name-line"><div class='name' @click="goDetails(index)">{{ item.item_name }}</div></div>
                     <div class="level-line">
                       <div class="category-name">
                         #{{ item.category.category_name }}
                       </div>
                       <Label
-                        v-bind:active="item.item_emergency_level >= 5"
+                        v-bind:active="item.item_importance_level >= 5"
                         textActive="重要"
                         text="不重要"
                         backgroundActive="#ff3333"
                         size="sm"
                       ></Label>
                       <Label
-                        v-bind:active="item.item_importance_level >= 5"
+                        v-bind:active="item.item_emergency_level >= 5"
                         textActive="紧急"
                         size="sm"
                       ></Label>
@@ -108,9 +113,37 @@ export default {
       this.$router.push({
         name: "itemDetails",
         params: {
-          synckey: index
+          syncKey: index
         }
       });
+    },
+    confirmDeleteItem(item_sync_key) {
+      this.$vux.confirm.show({
+        title: "确认删除",
+        content: "确定要删除吗？删除就没啦~",
+        onCancel: () => {},
+        onConfirm: () => {
+          this.deleteItem(item_sync_key);
+        }
+      });
+    },
+    deleteItem(item_sync_key) {
+      let requestData = { item_sync_key, ...this.$store.getters.tokenInfo };
+      this.$startRequest(
+        "/item/deleteItem",
+        requestData,
+        res => {
+          this.$vux.toast.text("删除成功", "top");
+          this.$router.back();
+        },
+        error => {
+          if (error.msg) {
+            this.$vux.toast.text(error.msg, "top");
+          } else {
+            this.$vux.toast.text("网络错误", "top");
+          }
+        }
+      );
     },
     completeItem(item_sync_key) {
       let item = this.todayTodoList[item_sync_key];
@@ -119,7 +152,9 @@ export default {
         "/item/completeItem",
         requestData,
         res => {
-          this.addItemList(res.data);
+          let newItem = {};
+          newItem[res.data.item_sync_key] = res.data;
+          this.addItemList(newItem);
         },
         error => {
           if (error.msg) {
@@ -137,7 +172,9 @@ export default {
         "/item/restartItem",
         requestData,
         res => {
-          this.addItemList(res.data);
+          let newItem = {};
+          newItem[res.data.item_sync_key] = res.data;
+          this.addItemList(newItem);
         },
         error => {
           if (error.msg) {
@@ -154,7 +191,7 @@ export default {
         "/item/getTodoList",
         requestData,
         res => {
-          this.addItemList(res.data);
+          this.setItemList(res.data);
         },
         error => {
           if (error.msg) {
@@ -165,7 +202,7 @@ export default {
         }
       );
     },
-    ...mapMutations(["addItemList"])
+    ...mapMutations(["addItemList", "setItemList"])
   }
 };
 </script>
@@ -206,7 +243,7 @@ export default {
 
   .todo {
     padding-top: 120px;
-    padding-bottom: 60px;
+    padding-bottom: 120px;
     min-height: 100%;
     flex-direction: column;
     display: flex;
@@ -249,6 +286,9 @@ export default {
         .c {
           text-align: left;
           .name-line {
+            .name{
+              display: inline-block;
+            }
             font-size: 18px;
             line-height: 2;
           }

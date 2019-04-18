@@ -61,7 +61,7 @@ export default new Router({
           component: settingItem,
         },
         {
-          path: '/details/:synckey',
+          path: '/details/:syncKey',
           name: 'itemDetails',
           component: itemDetails,
         },

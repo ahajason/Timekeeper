@@ -5,176 +5,111 @@
         <i class="fa fa-angle-left" aria-hidden="true"></i>
         <div class="text">返回</div>
       </div>
-      <div slot="c">设置事项</div>
+      <div slot="c">详情</div>
       <div slot="r">
-        <div class="text" @click="createItem">保存</div>
+        <div class="text" @click="updateItem">保存</div>
         <i class="fa fa-floppy-o" aria-hidden="true"></i>
       </div>
     </THeader>
-    <div class="form">
-      <div class="form-item">
-        <div class="label">名称</div>
-        <div class="input">
-          <Label
-            v-bind:active="isImportanceLevelActive"
-            textActive="重要"
-            text="不重要"
-            backgroundActive="#ff3333"
-            @on-active="bindImportanceLevelActive"
-          ></Label>
+    <TGroup class="group">
+      <Cell label="事项名称:" :inline="true">
+        <input type="text" placeholder="事项名称" v-model="item.item_name" />
+      </Cell>
+      <Cell label="重要程度:">
+        <Label
+          v-bind:active="item.item_importance_level >= 5"
+          textActive="重要"
+          text="不重要"
+          backgroundActive="#ff3333"
+          @on-active="bindImportanceLevelActive"
+        ></Label>
+      </Cell>
+      <Cell label="紧急程度:">
+        <Label
+          v-bind:active="item.item_emergency_level >= 5"
+          textActive="紧急"
+          @on-active="bindEmergencyLevelActive"
+        ></Label>
+      </Cell>
+      <Cell label="预测用时:">
+        <div class="forecast_time">
+          <input
+            type="text"
+            placeholder="0"
+            v-model="item.item_forecast_time"
+          />
+          <div class="unit">min</div>
         </div>
-      </div>
-      <div class="form-item">
-        <div class="label">事项描述</div>
-        <div class="input">
-          <Label
-            v-bind:active="isImportanceLevelActive"
-            textActive="重要"
-            text="不重要"
-            backgroundActive="#ff3333"
-            @on-active="bindImportanceLevelActive"
-          ></Label>
-        </div>
-      </div>
-      <div class="form-item">
-        <div class="label">重要程度</div>
-        <div class="input">
-          <Label
-            v-bind:active="isImportanceLevelActive"
-            textActive="重要"
-            text="不重要"
-            backgroundActive="#ff3333"
-            @on-active="bindImportanceLevelActive"
-          ></Label>
-        </div>
-      </div>
-      <div class="form-item">
-        <div class="label">紧急程度</div>
-        <div class="input">
-          <Label
-            v-bind:active="isEmergencyLevelActive"
-            textActive="紧急"
-            @on-active="bindEmergencyLevelActive"
-          ></Label>
-        </div>
-      </div>
-      <div class="form-item">
-        <div class="label">状态</div>
-        <div class="input">
-          <Label
-            v-bind:active="isImportanceLevelActive"
-            textActive="重要"
-            text="不重要"
-            backgroundActive="#ff3333"
-            @on-active="bindImportanceLevelActive"
-          ></Label>
-        </div>
-      </div>
-      <div class="form-item">
-        <div class="label">番茄钟数量</div>
-        <div class="input">
-          <Label
-            v-bind:active="isImportanceLevelActive"
-            textActive="重要"
-            text="不重要"
-            backgroundActive="#ff3333"
-            @on-active="bindImportanceLevelActive"
-          ></Label>
-        </div>
-      </div>
-       <div class="form-item">
-        <div class="label">预测用时</div>
-        <div class="category input" @click="showPopupPicker = !showPopupPicker">
+      </Cell>
+      <Cell label="事务类别:">
+        <div
+          class="category input"
+          @click="showPopupPicker = !showPopupPicker"
+          v-if="categoryMap[item.category_id]"
+        >
           #
-          {{
-            this.categoryMap[picked[0]]
-              ? this.categoryMap[picked[0]].category_name
-              : "默认"
-          }}
-          <i class="fa fa-check-square-o" aria-hidden="true"> </i>
+          {{ categoryMap[item.category_id].category_name }}
+          <i
+            :class="categoryMap[item.category_id].icon.icon_src"
+            aria-hidden="true"
+          >
+          </i>
         </div>
-      </div>
-      <div class="form-item">
-        <div class="label">事务类别</div>
-        <div class="category input" @click="showPopupPicker = !showPopupPicker">
-          #
-          {{
-            this.categoryMap[picked[0]]
-              ? this.categoryMap[picked[0]].category_name
-              : "默认"
-          }}
-          <i class="fa fa-check-square-o" aria-hidden="true"> </i>
+      </Cell>
+      <Cell label="事项描述:">
+        <textarea
+          type="text"
+          placeholder="输入对事项的详细描述"
+          rows="4"
+          v-model="item.item_description"
+        />
+      </Cell>
+      <Cell label="开始时间:" v-if="item.item_started_at">
+        <div class="time">{{ item.item_started_at }}</div>
+      </Cell>
+      <Cell label="结束时间:" v-if="item.item_closed_at">
+        <div class="time">{{ item.item_closed_at }}</div>
+      </Cell>
+      <Cell label="状态:">
+        <div class="text">
+          {{ ["待办", "进行中", "已完成"][item.item_state] }}
         </div>
-      </div>
-      
-
-      <div class="form-item">
-        <div class="label">开始时间</div>
-        <div class="input">
-          <Label
-            v-bind:active="isImportanceLevelActive"
-            textActive="重要"
-            text="不重要"
-            backgroundActive="#ff3333"
-            @on-active="bindImportanceLevelActive"
-          ></Label>
+      </Cell>
+      <Cell label="番茄钟数:">
+        <div class="text">{{ item.item_tomatoes }}</div>
+      </Cell>
+      <Cell label="所属计划:" v-if="item.plan_id">
+        <div class="text">{{ item.plan_id }}</div>
+      </Cell>
+      <Cell label="创建时间:">
+        <div class="time">{{ item.item_created_at }}</div>
+      </Cell>
+      <Cell label="上次更新时间:">
+        <div class="time">{{ item.item_updated_at }}</div>
+      </Cell>
+      <Cell :inline="true">
+        <div>
+          <button @click='restartItem' v-if="item.item_state == 2">
+            <i class="fa fa-check-square-o" aria-hidden="true"></i>重启
+          </button>
+          <button  @click='completeItem' v-if="item.item_state == 0">
+            <i class="fa fa-square-o" aria-hidden="true"></i>结束
+          </button>
         </div>
-      </div>
-      <div class="form-item">
-        <div class="label">结束时间</div>
-        <div class="input">
-          <Label
-            v-bind:active="isImportanceLevelActive"
-            textActive="重要"
-            text="不重要"
-            backgroundActive="#ff3333"
-            @on-active="bindImportanceLevelActive"
-          ></Label>
+        <div>
+          <button @click="confirmDeleteItem">
+            <i class="fa fa-trash-o" aria-hidden="true"></i>删除
+          </button>
         </div>
-      </div>
-            <div class="form-item">
-        <div class="label">所属计划</div>
-        <div class="category input" @click="showPopupPicker = !showPopupPicker">
-          #
-          {{
-            this.categoryMap[picked[0]]
-              ? this.categoryMap[picked[0]].category_name
-              : "默认"
-          }}
-          <i class="fa fa-check-square-o" aria-hidden="true"> </i>
-        </div>
-      </div>
-      <div class="form-item">
-        <div class="label">创建时间</div>
-        <div class="input">
-          <Label
-            v-bind:active="isImportanceLevelActive"
-            textActive="重要"
-            text="不重要"
-            backgroundActive="#ff3333"
-            @on-active="bindImportanceLevelActive"
-          ></Label>
-        </div>
-      </div>
-      <div class="form-item">
-        <div class="label">最后一次修改的时间</div>
-        <div class="input">
-          <Label
-            v-bind:active="isImportanceLevelActive"
-            textActive="重要"
-            text="不重要"
-            backgroundActive="#ff3333"
-            @on-active="bindImportanceLevelActive"
-          ></Label>
-        </div>
-      </div>
-    </div>
+      </Cell>
+    </TGroup>
     <group>
       <popup-picker
         :show.sync="showPopupPicker"
         :show-cell="false"
         :data="[categoryPickerList]"
-        v-model="picked"
+        @on-change="onCategoryPickerChange"
+        v-model="defaultPicked"
       >
       </popup-picker>
     </group>
@@ -182,93 +117,37 @@
 </template>
 <script>
 import { mapGetters } from "vuex";
-import { Picker, PopupPicker, Group } from "vux";
+import { Picker, PopupPicker, Group, Range } from "vux";
 import THeader from "../../components/THeader";
-import Label from "@/components/common/Label.vue";
+import Label from "@/components/common/Label";
+import TGroup from "@/components/common/Group";
+import Cell from "@/components/common/Cell";
 export default {
   name: "HelloWorld",
   data() {
     return {
-      showPopupPicker: false
+      showPopupPicker: false,
+      item: {},
+      defaultPicked: [1]
     };
   },
   components: {
     THeader,
     Label,
     PopupPicker,
-    Group
+    Group,
+    TGroup,
+    Cell,
+    Range
   },
-  mounted() {},
+  mounted() {
+    this.getItem();
+    this.getCategoryList();
+  },
   computed: {
-    isImportanceLevelActive: {
-      get() {
-        return this.editingItem.item_emergency_level >= 5;
-      },
-      set(value) {
-        this.$store.commit("updateEditingItem", {
-          key: "item_emergency_level",
-          value: value ? 7 : 2
-        });
-      }
-    },
-    picked: {
-      get() {
-        return [this.editingItem.category_id];
-      },
-      set(value) {
-        this.$store.commit("updateEditingItem", {
-          key: "category_id",
-          value: value[0]
-        });
-      }
-    },
-    isEmergencyLevelActive: {
-      get() {
-        return this.editingItem.item_importance_level >= 5;
-      },
-      set(value) {
-        this.$store.commit("updateEditingItem", {
-          key: "item_importance_level",
-          value: value ? 7 : 2
-        });
-      }
-    },
-
-    ...mapGetters([
-      "editingItem",
-      "categoryPickerList",
-      "categoryMap",
-      "tokenInfo"
-    ])
+    ...mapGetters(["categoryPickerList", "categoryMap", "tokenInfo"])
   },
   methods: {
-    createItem() {
-      if (!this.editingItem.item_name) {
-        this.$vux.toast.text("请填写事项名称", "top");
-        return;
-      }
-      this.$store.commit("generateItemSyncKey");
-      let requestData = { ...this.tokenInfo, ...this.editingItem };
-      this.$startRequest(
-        "/item/createItem",
-        requestData,
-        res => {
-          this.$store.commit("addItemList", res.data);
-          this.$store.commit("InitEditingItem");
-          this.$vux.toast.text("创建成功", "top");
-          this.$router.replace({
-            name: "home"
-          });
-        },
-        error => {
-          if (error.msg) {
-            this.$vux.toast.text(error.msg, "top");
-          } else {
-            this.$vux.toast.text("网络错误", "top");
-          }
-        }
-      );
-    },
     getCategoryList() {
       let requestData = this.tokenInfo;
       this.$startRequest(
@@ -286,14 +165,147 @@ export default {
         }
       );
     },
+    getItem() {
+      let item_sync_key = this.$route.params.syncKey;
+      if (!item_sync_key) {
+        this.$router.back();
+      }
+      let requestData = { item_sync_key, ...this.$store.getters.tokenInfo };
+      this.$startRequest(
+        "/item/getItem",
+        requestData,
+        res => {
+          this.item = res.data;
+        },
+        error => {
+          if (error.msg) {
+            this.$vux.toast.text(error.msg, "top");
+          } else {
+            this.$vux.toast.text("网络错误", "top");
+          }
+        }
+      );
+    },
+    updateItem() {
+      let requestData = { ...this.item, ...this.$store.getters.tokenInfo };
+      this.$startRequest(
+        "/item/updateItem",
+        requestData,
+        res => {
+          this.$vux.toast.text("保存成功", "top");
+          this.$router.back();
+        },
+        error => {
+          if (error.msg) {
+            this.$vux.toast.text(error.msg, "top");
+          } else {
+            this.$vux.toast.text("网络错误", "top");
+          }
+        }
+      );
+    },
     goback() {
       this.$router.back();
     },
     bindImportanceLevelActive() {
-      this.isImportanceLevelActive = !this.isImportanceLevelActive;
+      if (this.item.item_importance_level >= 5) {
+        this.item.item_importance_level = 2;
+      } else {
+        this.item.item_importance_level = 7;
+      }
     },
     bindEmergencyLevelActive() {
-      this.isEmergencyLevelActive = !this.isEmergencyLevelActive;
+      if (this.item.item_emergency_level >= 5) {
+        this.item.item_emergency_level = 2;
+      } else {
+        this.item.item_emergency_level = 7;
+      }
+    },
+    onCategoryPickerChange(val) {
+      this.item.category_id = val[0];
+    },
+    completeItem(item_sync_key) {
+      let item = this.todayTodoList[item_sync_key];
+      let requestData = { item_sync_key, ...this.$store.getters.tokenInfo };
+      this.$startRequest(
+        "/item/completeItem",
+        requestData,
+        res => {
+          this.item = res.data;
+        },
+        error => {
+          if (error.msg) {
+            this.$vux.toast.text(error.msg, "top");
+          } else {
+            this.$vux.toast.text("网络错误", "top");
+          }
+        }
+      );
+    },
+    confirmDeleteItem() {
+      this.$vux.confirm.show({
+        title: "确认删除",
+        content: "确定要删除吗？删除就没啦~",
+        onCancel: () => {},
+        onConfirm: () => {
+          this.deleteItem();
+        }
+      });
+    },
+    deleteItem() {
+      let item_sync_key = this.item.item_sync_key;
+      let requestData = { item_sync_key, ...this.$store.getters.tokenInfo };
+      this.$startRequest(
+        "/item/deleteItem",
+        requestData,
+        res => {
+          this.$vux.toast.text("删除成功", "top");
+          this.$router.back();
+        },
+        error => {
+          if (error.msg) {
+            this.$vux.toast.text(error.msg, "top");
+          } else {
+            this.$vux.toast.text("网络错误", "top");
+          }
+        }
+      );
+    },
+    completeItem() {
+      let item_sync_key = this.item.item_sync_key;
+      let requestData = { item_sync_key, ...this.tokenInfo };
+      this.$startRequest(
+        "/item/completeItem",
+        requestData,
+        res => {
+          this.item = res.data;
+        },
+        error => {
+          if (error.msg) {
+            this.$vux.toast.text(error.msg, "top");
+          } else {
+            this.$vux.toast.text("网络错误", "top");
+          }
+        }
+      );
+    },
+    restartItem() {
+      let item_sync_key = this.item.item_sync_key;
+      let requestData = { item_sync_key, ...this.$store.getters.tokenInfo };
+      this.$startRequest(
+        "/item/restartItem",
+        requestData,
+        res => {
+          this.item = res.data;
+        },
+        error => {
+          if (error.msg) {
+            this.$vux.toast.text(error.msg, "top");
+          } else {
+            this.$vux.toast.text("网络错误", "top");
+          }
+        }
+      );
     }
   }
 };
@@ -303,57 +315,25 @@ export default {
 .page {
   background: #343434;
   color: #fff;
-
-  .form {
-    padding: 60px 0;
-    width: 100%;
-
-    .form-item {
-      padding: 10px 20px;
-      display: flex;
+  padding: 60px 0 0;
+  .group {
+    .forecast_time {
       justify-content: center;
- 
-      margin: auto;
-
-      .label,
-      .input {
-        display: inline-block;
-        color: #fff;
+      display: flex;
+      input {
+        text-align: right;
+        width: 80px;
       }
-
-      .label {
-        flex: 0 0 120px;
-
-        &::after {
-          content: "：";
-        }
-      }
-      .category {
-        font-style: italic;
-        opacity: 0.8;
-      }
-
-      .input {
-        flex: 1 1 auto;
-        text-align: center;
-        vertical-align: middle;
-
-        i {
-          vertical-align: middle;
-        }
-
-        .text {
-          max-width: 100px;
-          display: inline-block;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          white-space: nowrap;
-          vertical-align: middle;
-        }
+      .unit {
+        margin-left: 10px;
+        text-align: left;
+        width: 80px;
       }
     }
+    .category {
+      font-style: italic;
+    }
   }
-
   .bottom {
     position: fixed;
     bottom: 0;

@@ -1,44 +1,40 @@
 <template>
-  <div
-    id='TFooter'
-    class="flex-box"
-  >
+  <div id="TFooter" class="flex-box">
     <div class="l">
-      <slot name='l'></slot>
+      <slot name="l"></slot>
     </div>
     <div class="c">
-      <slot name='c'></slot>
+      <slot name="c"></slot>
       <slot></slot>
     </div>
     <div class="r">
-      <slot name='r'></slot>
+      <slot name="r"></slot>
     </div>
   </div>
 </template>
 <script>
 export default {
-  name: 'TFooter',
+  name: "TFooter",
   data() {
     return {
-      msg: 'Welcome to Your Vue.js App'
-    }
+      msg: "Welcome to Your Vue.js App"
+    };
   }
-}
-
+};
 </script>
 
-<style  lang='less' scoped>
+<style lang="less" scoped>
 #TFooter {
-    position: fixed;
-    bottom: 0;
-    right: 0;
-    left: 0;
-    display: flex;
-    color: #fff;
-    border-top: 1px dashed rgba(255, 255, 255);
-    font-size: 18px;
-    padding: 10px;
-
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  display: flex;
+  color: #fff;
+  background: #343434;
+  border-top: 1px dashed rgba(255, 255, 255);
+  font-size: 18px;
+  padding: 10px;
 
   .text {
     display: inline-block;
