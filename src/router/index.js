@@ -42,7 +42,8 @@ export default new Router({
       }, {
         path: 'user',
         name: 'user',
-        component: user
+        component: user,
+        meta: { keepAlive: true },
       },],
     },
     {

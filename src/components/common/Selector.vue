@@ -6,12 +6,11 @@
         v-for="item in options"
         :key="item.value"
         @click="select(item)"
-        :class="(item == selected) | selectedClass"
+        :class="(item.value == selected.value) | selectedClass"
       >
         <div
-          class="text"
           :style="
-            item == selected
+            item.value == selected.value
               ? 'text-shadow: 0 0 1px ' +
                 selectedColor +
                 ', 0 0 2px ' +
@@ -45,7 +44,10 @@ export default {
       type: Array,
       default: () => []
     },
-    selected: {},
+    selected: {
+      type: Object,
+      default: () => {}
+    },
     label: {
       type: String,
       default: ""
@@ -65,7 +67,6 @@ export default {
     }
   },
   mounted() {
-      this.$emit("on-select", this.options[0]);
   }
 };
 </script>

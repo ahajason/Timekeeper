@@ -31,12 +31,6 @@
           v-for="(item, index) in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]"
           :key="index"
         >
-          <!-- <div class="l">
-              <i v-if='true' class="fa fa-square-o" aria-hidden="true">
-              </i>
-              <i v-if='false' class="fa fa-check-square-o" aria-hidden="true">
-              </i>
-            </div> -->
           <div class="c">
             <div class="name-line">任务{{ item }}</div>
           </div>

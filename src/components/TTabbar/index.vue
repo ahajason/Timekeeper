@@ -44,7 +44,7 @@ export default {
   position: fixed;
   box-shadow: 0 2px 4px #000;
   width: 100%;
-  z-index: 1000;
+  z-index: 500;
   background: #fff;
   .list {
     display: flex;

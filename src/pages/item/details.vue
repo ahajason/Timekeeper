@@ -89,10 +89,10 @@
       </Cell>
       <Cell :inline="true">
         <div>
-          <button @click='restartItem' v-if="item.item_state == 2">
+          <button @click="restartItem" v-if="item.item_state == 2">
             <i class="fa fa-check-square-o" aria-hidden="true"></i>重启
           </button>
-          <button  @click='completeItem' v-if="item.item_state == 0">
+          <button @click="completeItem" v-if="item.item_state == 0">
             <i class="fa fa-square-o" aria-hidden="true"></i>结束
           </button>
         </div>
@@ -103,7 +103,7 @@
         </div>
       </Cell>
     </TGroup>
-    <group>
+    <group v-transfer-dom>
       <popup-picker
         :show.sync="showPopupPicker"
         :show-cell="false"
@@ -122,8 +122,11 @@ import THeader from "../../components/THeader";
 import Label from "@/components/common/Label";
 import TGroup from "@/components/common/Group";
 import Cell from "@/components/common/Cell";
+import { TransferDom } from "vux";
+
 export default {
   name: "HelloWorld",
+
   data() {
     return {
       showPopupPicker: false,
@@ -307,6 +310,9 @@ export default {
         }
       );
     }
+  },
+  directives: {
+    TransferDom
   }
 };
 </script>

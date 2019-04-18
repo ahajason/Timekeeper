@@ -1,43 +1,42 @@
 <template>
-  <div class="list">
-    <div  v-for="(yearList, year) in timeLine" :key="year">
-      
-      <div class="time">{{ year }} 年</div>
-      <div v-for="(monthList, month) in yearList" :key="month">
-        
-        <div class="time">{{ month }} 月</div>
-        <div v-for="(dayList, day) in monthList" :key="day">
-          
-          <div class="time">{{ day }} 日</div>
-          <div v-for="(timeList, time) in dayList" :key="time">
-            <div class="item flex-box">
-              <div class="time">{{ time }}</div>
-              <div class="dialog">
-                <div class="line"></div>
-                <div class="icon">
-                  <i class="fa fa-address-book" aria-hidden="true"></i>
-                </div>
-                <div class="triangle"></div>
-                <div class="box">
-                  <div class="name">我是中文乱码熬枯受淡</div>
-                  <div class="content">
-                    我是中文乱码熬枯受淡就卡到卡上打瞌睡的教科书的哈卡收到货拉三等奖安徽的卡是极好的开始接电话
+  <div class="page">
+    <div class="list">
+      <div v-for="(yearList, year) in timeLine" :key="year">
+        <div v-for="(monthList, month) in yearList" :key="month">
+          <div v-for="(dayList, day) in monthList" :key="day">
+            <div class="day">{{ month }}/{{ day }}</div>
+            <div v-for="(key, time) in dayList" :key="time">
+              <div class="item flex-box">
+                <div class="time">{{ time }}</div>
+                <div class="dialog">
+                  <div class="line"></div>
+                  <div class="icon">
+                    <i
+                      :class="itemList[key].category.icon.icon_src"
+                      aria-hidden="true"
+                    ></i>
+                  </div>
+                  <div class="triangle"></div>
+                  <div class="box">
+                    <div class="name" @click="goDetails(key)">{{ itemList[key].item_name }}</div>
+                    <div class="content" v-if="itemList[key].item_description">
+                      {{ itemList[key].item_description }}
+                    </div>
                   </div>
                 </div>
+                <!-- dialog -->
               </div>
-              <!-- dialog -->
+              <!-- item -->
             </div>
-            <!-- item -->
+            <!-- time -->
           </div>
-          <!-- time -->
-
+          <!-- day -->
         </div>
-        <!-- day -->
-
+        <!-- month -->
+        <div class="year">{{ year }} 年</div>
       </div>
-      <!-- month -->
+      <!-- year -->
     </div>
-    <!-- year -->
   </div>
 </template>
 <script>
@@ -55,8 +54,13 @@ export default {
     this.getTimeLine();
   },
   methods: {
-    time() {
-      return dateFormat(new Date(), "MM/DD HH:mm");
+    goDetails(index) {
+      this.$router.push({
+        name: "itemDetails",
+        params: {
+          syncKey: index
+        }
+      });
     },
     getTimeLine() {
       let requestData = this.$store.getters.tokenInfo;
@@ -67,6 +71,7 @@ export default {
           this.timeLine = res.data.timeLine;
           console.log(this.timeLine);
           this.itemList = res.data.itemList;
+          console.log(this.itemList);
         },
         error => {
           if (error.msg) {
@@ -84,14 +89,14 @@ export default {
 <style scoped lang="less">
 .list {
   color: #fff;
-  padding: 0 10px 100px;
+  padding: 0 0 100px;
   .item {
     align-items: flex-start;
-    padding: 10px 0;
+    padding: 10px 10px;
 
     .time {
       flex: 0 0 auto;
-      font-size: 12px;
+      font-size: 14px;
       line-height: 30px;
       padding: 3px 10px 0 0;
     }
@@ -103,7 +108,7 @@ export default {
       .line {
         position: absolute;
         content: "";
-        top: -10px;
+        top: -100px;
         left: 15px;
         bottom: -100px;
         width: 4px;
@@ -116,10 +121,12 @@ export default {
         left: 0;
         width: 35px;
         height: 35px;
+        line-height: 35px;
         display: table;
         background: #4026b4;
         border: 3px solid #fff;
         border-radius: 50%;
+        z-index: 1;
         i {
           font-size: 16px;
           vertical-align: middle;
@@ -148,11 +155,20 @@ export default {
         border-radius: 6px;
         .name {
           color: #000;
-          margin-bottom: 10px;
           font-weight: bold;
+        }
+        .content {
+          margin-top: 10px;
         }
       }
     }
+  }
+  .day,
+  .year {
+    padding: 10px 10px 0;
+  }
+  .year {
+    border-bottom: 2px solid #fff;
   }
 }
 </style>
