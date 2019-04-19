@@ -31,7 +31,7 @@
       </div>
     </div>
 
-    <swiper ref="mySwiper">
+    <swiper ref="tswiper">
       <swiperSlide class="module" id="module1">
         <div class="panel">
           <div class="selector-group">
@@ -117,10 +117,6 @@
       <swiperSlide class="module" id="module2">2</swiperSlide>
       <swiperSlide class="module" id="module3">
         <ul class="itemList">
-          <li class="nofound" v-if="itemList.length == 0">
-            没有找到符合条件的「事项」<br />
-            可通过「首页」或「右下角」的「创建」按钮添加更多「事项」
-          </li>
           <li
             class="item"
             v-for="(category, index) in categoryList"
@@ -163,31 +159,52 @@
         </div>
       </a>
     </CircleMenu>
-    <div v-transfer-dom>
-      <Group>
-        <popup v-model="show" height="50%" class="popup0">
-          <Group>
-            <Cell :inline="true">
-              <input type="text" placeholder="类别名称" />
-            </Cell>
-            <Cell :inline="true">
-              <Slider v-model="colors"></Slider>
-            </Cell>
-            <button @click="log">12121</button>
-            <Flexbox>
-              <FlexboxItem v-for="icon in iconList" :key="icon.icon_id" >
-                <i :style="colors.hex | colorsCss" :class="icon.icon_src"></i>
-              </FlexboxItem>
-            </Flexbox>
-          </Group>
-        </popup>
-      </Group>
+    <div v-transfer-dom class="popup-warpper">
+      <popup v-model="show" height="68%" class="popup">
+        <Group>
+          <Cell :inline="true">
+            <input
+              type="text"
+              placeholder="输入类别名称"
+              v-model="editingCategory.category_name"
+            />
+          </Cell>
+          <Cell :inline="true">
+            <Slider v-model="colors"></Slider>
+          </Cell>
+          <Cell :inline="true">
+            <i
+              v-if="editingCategory.icon"
+              v-bind:style="editingCategory.category_color | colorsCss"
+              :class="editingCategory.icon.icon_src"
+            ></i>
+            {{ editingCategory.category_color }}
+          </Cell>
+          <Cell :inline="true">
+            <div class="icon-box">
+              <div
+                class="icon-item"
+                v-for="icon in iconList"
+                :key="icon.icon_id"
+              >
+                <Glowing color="#fff" :textShadow="colors.hex">
+                  <i :class="icon.icon_src"></i>
+                </Glowing>
+
+                  <i :style="colors.hex | colorsCss" :class="icon.icon_src"></i>
+
+              </div>
+            </div>
+          </Cell>
+        </Group>
+      </popup>
     </div>
   </div>
 </template>
 <script>
 import Selector from "@/components/common/Selector";
 import Label from "../../components/common/Label.vue";
+import Glowing from "../../components/common/Glowing.vue";
 import CircleMenu from "vue-circle-menu";
 import { swiper, swiperSlide } from "vue-awesome-swiper";
 import { Popup, TransferDom, Flexbox, FlexboxItem } from "vux";
@@ -208,7 +225,8 @@ export default {
     FlexboxItem,
     Group,
     Cell,
-    Slider
+    Slider,
+    Glowing
   },
   data() {
     return {
@@ -270,26 +288,41 @@ export default {
       typeSwiperIndex: 0,
       swiper: {},
       categoryList: {},
+      editingCategory: {
+        category_color: "#888",
+        icon: {
+          icon_id: 1,
+          icon_order: 1,
+          icon_size: 100,
+          icon_src: "fa fa-tag",
+          icon_type: 1
+        }
+      },
       iconList: [],
       show: false,
       colors: {
-        hex:"#888"
-      },
+        hex: "#888"
+      }
     };
   },
+  watch: {
+    colors: function(val) {
+      this.editingCategory.category_color = val.hex;
+    }
+  },
   mounted() {
-    this.swiper = this.$refs.mySwiper.swiper;
     this.getFilteredItems();
     this.getCategoryList();
     this.getIconList();
+    this.swiper = this.$refs.tswiper.swiper;
   },
   filters: {
     colorsCss: color => "color:" + color
   },
   computed: {},
   methods: {
-    log(){
-      console.log(this.colors)
+    log() {
+      console.log(this.colors);
     },
     swiperTo(index) {
       this.swiper.slideTo(index, 500, true);
@@ -355,6 +388,24 @@ export default {
       );
     },
     getIconList() {
+      let requestData = this.$store.getters.tokenInfo;
+      this.$startRequest(
+        "/icon/getIconList",
+        requestData,
+        res => {
+          this.iconList = res.data;
+          console.log(this.iconList);
+        },
+        error => {
+          if (error.msg) {
+            this.$vux.toast.text(error.msg, "top");
+          } else {
+            this.$vux.toast.text("网络错误", "top");
+          }
+        }
+      );
+    },
+    editCategory() {
       let requestData = this.$store.getters.tokenInfo;
       this.$startRequest(
         "/icon/getIconList",
@@ -512,8 +563,34 @@ export default {
     }
   }
 }
-.popup0 {
+.popup {
+  padding: 10px;
   background: #343434;
   color: #fff;
+  font: 20px/150% "仿宋", "FangSong", "FZFangSong", "楷书", Arial, Tahoma,
+    "Hiragino Sans GB", "NSimSun", sans-serif;
+  .icon1 {
+    width: 35px;
+    height: 35px;
+    line-height: 35px;
+    display: table;
+    background: #4026b4;
+    border: 3px solid #fff;
+    border-radius: 50%;
+    z-index: 1;
+    i {
+      font-size: 16px;
+      vertical-align: middle;
+      text-align: center;
+      display: table-cell;
+    }
+  }
+  .icon-box {
+    .icon-item {
+      display: inline-block;
+      padding: 5px;
+      width: auto;
+    }
+  }
 }
 </style>
