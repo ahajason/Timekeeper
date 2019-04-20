@@ -37,6 +37,7 @@ Route::middleware('user')->group(function () {
         Route::match(['get','post'], 'updateItem','API\ItemController@updateItem');
         Route::match(['get','post'], 'deleteItem','API\ItemController@deleteItem');
         Route::match(['get','post'], 'getFilteredItems','API\ItemController@getFilteredItems');
+        Route::match(['get','post'], 'recordTomatoes','API\ItemController@recordTomatoes');
     });
     Route::prefix('category')->group(function () {
         Route::match(['get','post'], 'getCategoryList','API\CategoryController@getCategoryList');

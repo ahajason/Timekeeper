@@ -129,11 +129,12 @@ class ItemController extends Controller
         $Categories = Category::whereUserId($userId)->get(['category_id']);
         $items = Item::whereItemState(Item::ITEM_STATE_TODO)
             ->whereIn('category_id', $Categories)
-            ->with('category')
+            ->with('category.icon')
             ->get();
         $itemList = $items->keyBy('item_sync_key');
         return ['success' => true, 'data' => $itemList];
     }
+
     /**
      * getFilteredItems
      * @param Request $request
@@ -153,21 +154,21 @@ class ItemController extends Controller
         $userId = $user->user_id;
         $Categories = Category::whereUserId($userId)->get(['category_id']);
         $query = Item::whereIn('category_id', $Categories)
-        ->orderByDesc('item_created_at');
-        if ($stateFilter == 1){
+            ->orderByDesc('item_created_at');
+        if ($stateFilter == 1) {
             $query->whereItemState(Item::ITEM_STATE_TODO);
-        }else if($stateFilter == 2){
+        } else if ($stateFilter == 2) {
             $query->whereItemState(Item::ITEM_STATE_DONE);
         }
-        if ($importanceFilter == 1){
-            $query->where('item_importance_level','>=',5);
-        }else if($importanceFilter == 2){
-            $query->where('item_importance_level','<',5);
+        if ($importanceFilter == 1) {
+            $query->where('item_importance_level', '>=', 5);
+        } else if ($importanceFilter == 2) {
+            $query->where('item_importance_level', '<', 5);
         }
-        if ($emergencyFilter == 1){
-            $query->where('item_emergency_level','>=',5);
-        }else if($emergencyFilter == 2){
-            $query->where('item_emergency_level','<',5);
+        if ($emergencyFilter == 1) {
+            $query->where('item_emergency_level', '>=', 5);
+        } else if ($emergencyFilter == 2) {
+            $query->where('item_emergency_level', '<', 5);
         }
         $items = $query->with('category')->get();
         $itemList = $items->keyBy('item_sync_key');
@@ -216,6 +217,27 @@ class ItemController extends Controller
         ]);
         Item::whereItemSyncKey($request['item_sync_key'])->delete();
         return ['success' => true];
+    }
+
+    public function recordTomatoes(Request $request)
+    {
+        $request->validate([
+            'tomatoes' => 'required',
+        ]);
+        foreach (json_decode($request['tomatoes']) as $item_sync_key => $used_time) {
+            $item = Item::whereItemSyncKey($item_sync_key)->with('category')->firstOrFail();
+            $item->item_tomatoes = intval(round($used_time * 10 / (25*60) )) + $item->item_tomatoes;
+            $item->save();
+        }
+        $user = Auth::user();
+        $userId = $user->user_id;
+        $Categories = Category::whereUserId($userId)->get(['category_id']);
+        $items = Item::whereItemState(Item::ITEM_STATE_TODO)
+            ->whereIn('category_id', $Categories)
+            ->with('category.icon')
+            ->get();
+        $itemList = $items->keyBy('item_sync_key');
+        return ['success' => true, 'data' => $itemList];
     }
 
 }
