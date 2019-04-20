@@ -35,7 +35,7 @@ export default {
   border-top: 1px dashed rgba(255, 255, 255);
   font-size: 18px;
   padding: 10px;
-
+  z-index: 1;
   .text {
     display: inline-block;
   }
