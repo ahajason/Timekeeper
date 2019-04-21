@@ -239,5 +239,38 @@ class ItemController extends Controller
         $itemList = $items->keyBy('item_sync_key');
         return ['success' => true, 'data' => $itemList];
     }
+    public function completeItemByCountdown(Request $request)
+    {
+        $request->validate([
+            'item_sync_key' => 'required|max:50|min:2',
+            'item_forecast_time' => 'required|integer',
+            'item_started_at' => 'required',
+            'item_closed_at' => 'required',
+            'effective_time' => 'required',
+        ]);
+
+        $effective_time = $request['$effective_time'];
+        $itemSyncKey = $request['item_sync_key'];
+        $item_forecast_time = $request['item_forecast_time'] * 60;
+        $item_started_at = Carbon::createFromTimestamp($request['item_started_at'])->toDateTimeString();
+        $item_closed_at = Carbon::createFromTimestamp($request['item_closed_at'])->toDateTimeString();;
+        $item = Item::whereItemSyncKey($itemSyncKey)->firstOrFail();
+        $item->item_forecast_time = $item_forecast_time;
+        $item->item_started_at = $item_started_at;
+        $item->item_closed_at = $item_closed_at;
+        $item->item_state = Item::ITEM_STATE_DONE;
+        $item->item_tomatoes = intval(round($effective_time * 10 / (25*60) )) + $item->item_tomatoes;;
+        $item->save();
+
+        $user = Auth::user();
+        $userId = $user->user_id;
+        $Categories = Category::whereUserId($userId)->get(['category_id']);
+        $items = Item::whereItemState(Item::ITEM_STATE_TODO)
+            ->whereIn('category_id', $Categories)
+            ->with('category.icon')
+            ->get();
+        $itemList = $items->keyBy('item_sync_key');
+        return ['success' => true, 'data' => $itemList];
+    }
 
 }
