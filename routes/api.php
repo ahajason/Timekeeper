@@ -25,6 +25,7 @@ Route::prefix('user')->group(function () {
 Route::middleware('user')->group(function () {
     Route::prefix('user')->group(function () {
         Route::match(['get','post'], 'getUserInfo','API\UseController@getUserInfo');
+        Route::match(['get','post'], 'logout','API\UseController@logout');
     });
     Route::prefix('item')->group(function () {
         Route::match(['get','post'], 'createItem','API\ItemController@createItem');
@@ -42,6 +43,8 @@ Route::middleware('user')->group(function () {
     });
     Route::prefix('category')->group(function () {
         Route::match(['get','post'], 'getCategoryList','API\CategoryController@getCategoryList');
+        Route::match(['get','post'], 'saveCategory','API\CategoryController@saveCategory');
+        Route::match(['get','post'], 'deleteCategory','API\CategoryController@deleteCategory');
     });
     Route::prefix('icon')->group(function () {
         Route::match(['get','post'], 'getIconList','API\IconController@getIconList');

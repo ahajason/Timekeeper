@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Manager\PortraitManager;
 use App\Manager\UserManager;
 use App\Model\Category;
+use App\Model\LoginSession;
 use App\Model\Portrait;
 use App\Model\User;
 use Exception;
@@ -83,6 +84,19 @@ class UseController extends Controller
         $user->load('portrait');
 
         return ['success' => true, 'data' => ['user_info' => $user]];
+    }
+
+    public function logout(Request $request)
+    {
+        $user = Auth::user();
+        $userId = $user->user_id;
+        $token = $request['token'];
+        $loginSession = LoginSession::whereUserId($userId)
+            ->whereToken($token)
+            ->firstOrFail();
+        $loginSession->token_is_active = false;
+        $loginSession->save();
+        return ['success' => true];
     }
 
 }

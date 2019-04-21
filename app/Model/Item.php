@@ -42,6 +42,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Model\Item whereItemUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Model\Item wherePlanId($value)
  * @mixin \Eloquent
+ * @property-read \App\Model\Category $category
  */
 class Item extends Model
 {

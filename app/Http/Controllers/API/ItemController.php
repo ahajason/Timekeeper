@@ -116,7 +116,7 @@ class ItemController extends Controller
             $month = $carbon->month;
             $day = $carbon->day;
             $time = $carbon->toTimeString();
-            $timeLine[$year][$month][$day][$time] = $item->item_sync_key;
+            $timeLine[$year.' '][$month.'/'.$day][$time] = $item->item_sync_key;
         }
         return ['success' => true, 'data' => ['timeLine' => $timeLine, 'itemList' => $itemList]];
     }
@@ -226,7 +226,7 @@ class ItemController extends Controller
         ]);
         foreach (json_decode($request['tomatoes']) as $item_sync_key => $used_time) {
             $item = Item::whereItemSyncKey($item_sync_key)->with('category')->firstOrFail();
-            $item->item_tomatoes = intval(round($used_time * 10 / (25*60) )) + $item->item_tomatoes;
+            $item->item_tomatoes = intval(round($used_time * 10 / (25 * 60))) + $item->item_tomatoes;
             $item->save();
         }
         $user = Auth::user();
@@ -239,6 +239,7 @@ class ItemController extends Controller
         $itemList = $items->keyBy('item_sync_key');
         return ['success' => true, 'data' => $itemList];
     }
+
     public function completeItemByCountdown(Request $request)
     {
         $request->validate([
@@ -259,7 +260,7 @@ class ItemController extends Controller
         $item->item_started_at = $item_started_at;
         $item->item_closed_at = $item_closed_at;
         $item->item_state = Item::ITEM_STATE_DONE;
-        $item->item_tomatoes = intval(round($effective_time * 10 / (25*60) )) + $item->item_tomatoes;;
+        $item->item_tomatoes = intval(round($effective_time * 10 / (25 * 60))) + $item->item_tomatoes;;
         $item->save();
 
         $user = Auth::user();

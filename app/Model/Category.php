@@ -27,6 +27,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Model\Category whereCategoryUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Model\Category whereUserId($value)
  * @mixin \Eloquent
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\Item[] $item
  */
 class Category extends Model
 {

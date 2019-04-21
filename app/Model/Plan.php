@@ -30,6 +30,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Model\Plan wherePlanStartedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Model\Plan wherePlanUpdatedAt($value)
  * @mixin \Eloquent
+ * @property int $category_id 所属事项类别Id
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Model\Plan whereCategoryId($value)
  */
 class Plan extends Model
 {

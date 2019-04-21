@@ -27,6 +27,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Model\User whereUserUpdatedAt($value)
  * @mixin \Eloquent
  * @property-read \App\Model\Portrait $portrait
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\Category[] $category
  */
 class User extends Model implements Authenticatable
 {
