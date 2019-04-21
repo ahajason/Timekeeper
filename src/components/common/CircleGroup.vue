@@ -3,21 +3,21 @@
     <XCircle
       stroke-color="#fff"
       trail-color="#343434"
-      anticlockwise
+      :anticlockwise='anticlockwise'
       class="sCircle"
       :percent="cptSecond"
     >
       <XCircle
         stroke-color="#fff"
         trail-color="#343434"
-        anticlockwise
+        :anticlockwise='anticlockwise'
         class="mCircle"
         :percent="cptMinute"
       >
         <XCircle
           stroke-color="#fff"
           trail-color="#343434"
-          anticlockwise
+          :anticlockwise='anticlockwise'
           class="hCircle"
           :percent="cptHour"
         >
@@ -81,20 +81,14 @@ export default {
   computed: {
     // cptSecond: ()=>parseInt(this.second/60*100),
     cptSecond: function() {
-      return this.anticlockwise
-        ? parseInt((this.second / this.maxSecond) * 100)
-        : parseInt(100 - (this.second / this.maxSecond) * 100);
+      return parseInt((this.second / this.maxSecond) * 100)
     },
     cptMinute: function() {
-      return this.anticlockwise
-        ? parseInt((this.minute / this.maxMinute) * 100)
-        : parseInt(100 - (this.minute / this.maxMinute) * 100);
+      return  parseInt((this.minute / this.maxMinute) * 100)
     },
     cptHour: function() {
       if (this.hasHour)
-        return this.anticlockwise
-          ? parseInt((this.hour / this.maxHour) * 100)
-          : parseInt(100 - (this.hour / this.maxHour) * 100);
+        return parseInt((this.hour / this.maxHour) * 100)
       else
         return 0;
     }

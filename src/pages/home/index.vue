@@ -134,7 +134,7 @@ export default {
         requestData,
         res => {
           this.$vux.toast.text("删除成功", "top");
-          this.$router.back();
+          this.getItemList();
         },
         error => {
           if (error.msg) {
