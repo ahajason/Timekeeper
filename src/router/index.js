@@ -16,6 +16,7 @@ import tomato from '@/pages/tomato'
 
 import login from '@/pages/user/login'
 import register from '@/pages/user/register'
+import profile from '@/pages/user/profile'
 
 Vue.use(Router)
 
@@ -85,6 +86,11 @@ export default new Router({
           path: '/register',
           name: 'register',
           component: register,
+        },
+        {
+          path: '/profile',
+          name: 'profile',
+          component: profile,
         },
 
 

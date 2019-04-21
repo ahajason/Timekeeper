@@ -144,6 +144,9 @@ export default {
     Range
   },
   mounted() {
+    this.$vux.loading.show({
+      text:''
+    });
     this.getItem();
     this.getCategoryList();
   },
@@ -179,8 +182,10 @@ export default {
         requestData,
         res => {
           this.item = res.data;
+          this.$vux.loading.hide();
         },
         error => {
+          this.$vux.loading.hide();
           if (error.msg) {
             this.$vux.toast.text(error.msg, "top");
           } else {

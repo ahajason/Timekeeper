@@ -114,18 +114,24 @@
           </li>
         </ul>
       </swiperSlide>
-      <swiperSlide class="module" id="module2">2</swiperSlide>
+      <swiperSlide class="module" id="module2">
+        <Glowing color="#fff" textShadow="#88ffff">
+          我叫计划，主人不要我了
+        </Glowing>
+      </swiperSlide>
       <swiperSlide class="module" id="module3">
-        <ul class="itemList">
+        <ul class="categoryList">
           <li
             class="item"
             v-for="(category, index) in categoryList"
             :key="index"
-            @click="goDetails(index)"
+            @click="editCategory(category)"
           >
             <div class="name-line">
-              <div class="name" @click="goDetails(index)">
+              <Glowing color="#fff" :textShadow="category.category_color">
                 <i :class="category.icon.icon_src"></i>
+              </Glowing>
+              <div class="name">
                 {{ category.category_name }}
               </div>
             </div>
@@ -144,7 +150,7 @@
       btn
     >
       <a slot="item_1" class="fa fa-tags">
-        <div class="menu-letf" @click="show = !show">
+        <div class="menu-letf" @click="createCategory">
           新建类别
         </div>
       </a>
@@ -160,7 +166,30 @@
       </a>
     </CircleMenu>
     <div v-transfer-dom class="popup-warpper">
-      <popup v-model="show" height="68%" class="popup">
+      <popup v-model="categoryPanel" height="68%" class="popup">
+        <div class="header">
+          <div class="l">
+            <div @click="hideCategoryPanel">
+              <i class="fa fa-times" aria-hidden="true"></i>
+              <div class="text">关闭</div>
+            </div>
+          </div>
+          <div class="c">
+            <div
+              @click="confirmDeleteCategory"
+              v-if="editingCategory.category_id"
+            >
+              <i class="fa fa-trash" aria-hidden="true"></i>
+              <div class="text">删除</div>
+            </div>
+          </div>
+          <div class="r">
+            <div @click="saveCategory">
+              <i class="fa fa-floppy-o" aria-hidden="true"></i>
+              <div class="text">保存</div>
+            </div>
+          </div>
+        </div>
         <Group>
           <Cell :inline="true">
             <input
@@ -172,13 +201,33 @@
           <Cell :inline="true">
             <Slider v-model="colors"></Slider>
           </Cell>
-          <Cell :inline="true">
-            <i
-              v-if="editingCategory.icon"
-              v-bind:style="editingCategory.category_color | colorsCss"
-              :class="editingCategory.icon.icon_src"
-            ></i>
-            {{ editingCategory.category_color }}
+          <Cell :inline="true" v-if="editingCategory.icon">
+            <div class="example-wrapper">
+              <div class="example">
+                <i :class="editingCategory.icon.icon_src"></i>
+              </div>
+              <div class="example">
+                <Glowing
+                  color="#fff"
+                  :textShadow="editingCategory.category_color"
+                >
+                  <i :class="editingCategory.icon.icon_src"></i>
+                </Glowing>
+              </div>
+              <div class="example">
+                <div
+                  class="circle"
+                  :style="editingCategory.category_color | backgroundCss"
+                >
+                  <i :class="editingCategory.icon.icon_src"></i>
+                </div>
+              </div>
+              <div class="example">
+                <div class="color-text">
+                  {{ editingCategory.category_color }}
+                </div>
+              </div>
+            </div>
           </Cell>
           <Cell :inline="true">
             <div class="icon-box">
@@ -186,13 +235,9 @@
                 class="icon-item"
                 v-for="icon in iconList"
                 :key="icon.icon_id"
+                @click="setIconOfEditingCategory(icon)"
               >
-                <Glowing color="#fff" :textShadow="colors.hex">
-                  <i :class="icon.icon_src"></i>
-                </Glowing>
-
-                  <i :style="colors.hex | colorsCss" :class="icon.icon_src"></i>
-
+                <i :class="icon.icon_src"></i>
               </div>
             </div>
           </Cell>
@@ -289,6 +334,7 @@ export default {
       swiper: {},
       categoryList: {},
       editingCategory: {
+        category_name: "",
         category_color: "#888",
         icon: {
           icon_id: 1,
@@ -299,10 +345,11 @@ export default {
         }
       },
       iconList: [],
-      show: false,
+      categoryPanel: false,
       colors: {
         hex: "#888"
-      }
+      },
+      disableSaveCategory: false
     };
   },
   watch: {
@@ -317,13 +364,11 @@ export default {
     this.swiper = this.$refs.tswiper.swiper;
   },
   filters: {
-    colorsCss: color => "color:" + color
+    colorsCss: color => "color:" + color,
+    backgroundCss: background => " background:" + background
   },
   computed: {},
   methods: {
-    log() {
-      console.log(this.colors);
-    },
     swiperTo(index) {
       this.swiper.slideTo(index, 500, true);
     },
@@ -387,6 +432,7 @@ export default {
         }
       );
     },
+
     getIconList() {
       let requestData = this.$store.getters.tokenInfo;
       this.$startRequest(
@@ -405,13 +451,98 @@ export default {
         }
       );
     },
-    editCategory() {
-      let requestData = this.$store.getters.tokenInfo;
+    saveCategory() {
+      if (this.disableSaveCategory) {
+        return;
+      }
+
+      this.disableSaveCategory = true;
+      if (!this.editingCategory.category_name) {
+        this.$vux.toast.text("请填写类别名称", "top");
+        return;
+      }
+      this.$vux.loading.show({
+        text: "保存中"
+      });
+      let requestData = {
+        ...this.$store.getters.tokenInfo,
+        ...this.editingCategory
+      };
       this.$startRequest(
-        "/icon/getIconList",
+        "/category/saveCategory",
         requestData,
         res => {
-          this.iconList = res.data;
+          this.categoryList = res.data;
+          this.$vux.loading.hide();
+          this.$vux.toast.text("保存成功", "top");
+          this.hideCategoryPanel();
+          this.disableSaveCategory = false;
+        },
+        error => {
+          this.$vux.loading.hide();
+          if (error.msg) {
+            this.$vux.toast.text(error.msg, "top");
+          } else {
+            this.$vux.toast.text("网络错误", "top");
+          }
+          this.disableSaveCategory = false;
+        }
+      );
+    },
+    createCategory() {
+      this.editingCategory = {
+        category_name: "",
+        category_color: "#888",
+        icon: {
+          icon_id: 1,
+          icon_order: 1,
+          icon_size: 100,
+          icon_src: "fa fa-tag",
+          icon_type: 1
+        },
+        category_icon_id: 1
+      };
+      this.categoryPanel = true;
+    },
+    setIconOfEditingCategory(icon) {
+      this.editingCategory.icon = icon;
+      this.editingCategory.category_icon_id = icon.icon_id;
+    },
+
+    editCategory(category) {
+      this.editingCategory = { ...category };
+      this.categoryPanel = true;
+    },
+
+    hideCategoryPanel() {
+      this.categoryPanel = false;
+      this.disableSaveCategory = false;
+    },
+    confirmDeleteCategory() {
+      this.$vux.confirm.show({
+        title: "确认删除",
+        content: "确定要删除该类别吗？删除后所属的所有事项与计划都会被删除~",
+        onCancel: () => {},
+        onConfirm: () => {
+          this.deleteCategory(this.editingCategory);
+        }
+      });
+    },
+    deleteCategory(category) {
+      if (!category.category_id) {
+        return;
+      }
+      let requestData = {
+        category_id: category.category_id,
+        ...this.$store.getters.tokenInfo
+      };
+      this.$startRequest(
+        "/category/deleteCategory",
+        requestData,
+        res => {
+          this.$vux.toast.text("删除成功", "top");
+          this.getCategoryList();
+          this.hideCategoryPanel();
         },
         error => {
           if (error.msg) {
@@ -501,6 +632,7 @@ export default {
       }
     }
   }
+  .categoryList,
   .itemList {
     padding: 10px 0;
     .nofound {
@@ -545,6 +677,16 @@ export default {
       }
     }
   }
+  .categoryList {
+    .item {
+      .name-line {
+        display: flex;
+        .name {
+          margin-left: 15px;
+        }
+      }
+    }
+  }
   .create-menu {
     position: fixed;
     bottom: 70px;
@@ -564,32 +706,76 @@ export default {
   }
 }
 .popup {
-  padding: 10px;
   background: #343434;
   color: #fff;
   font: 20px/150% "仿宋", "FangSong", "FZFangSong", "楷书", Arial, Tahoma,
     "Hiragino Sans GB", "NSimSun", sans-serif;
-  .icon1 {
-    width: 35px;
-    height: 35px;
-    line-height: 35px;
-    display: table;
-    background: #4026b4;
-    border: 3px solid #fff;
-    border-radius: 50%;
-    z-index: 1;
-    i {
-      font-size: 16px;
-      vertical-align: middle;
-      text-align: center;
-      display: table-cell;
+  .header {
+    padding: 5px 10px 0;
+    font-size: 18px;
+    display: flex;
+    justify-content: space-between;
+    .text {
+      display: inline-block;
     }
   }
-  .icon-box {
-    .icon-item {
-      display: inline-block;
-      padding: 5px;
-      width: auto;
+  .group {
+    padding: 10px;
+    .example-wrapper {
+      width: 100%;
+      display: flex;
+      justify-content: flex-start;
+      .example {
+        margin-left: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .color-text {
+          opacity: 0.8;
+          white-space: nowrap;
+          font-style: italic;
+        }
+      }
+    }
+
+    .circle {
+      width: 35px;
+      height: 35px;
+      line-height: 35px;
+      display: table;
+      border: 3px solid #fff;
+      border-radius: 50%;
+      z-index: 1;
+      i {
+        font-size: 16px;
+        vertical-align: middle;
+        text-align: center;
+        display: table-cell;
+      }
+    }
+    .icon1 {
+      width: 35px;
+      height: 35px;
+      line-height: 35px;
+      display: table;
+      background: #4026b4;
+      border: 3px solid #fff;
+      border-radius: 50%;
+      z-index: 1;
+      i {
+        font-size: 16px;
+        vertical-align: middle;
+        text-align: center;
+        display: table-cell;
+      }
+    }
+    .icon-box {
+      padding: 10px;
+      .icon-item {
+        display: inline-block;
+        padding: 5px;
+        width: auto;
+      }
     }
   }
 }

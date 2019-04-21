@@ -1,31 +1,25 @@
 <template>
   <div class="page">
-    <div class="header-panel flex-box" @click="navToLogin">
-      <div class="portrait l">
-        <img
-          :src="userInfo.portrait && userInfo.portrait.portrait_url"
-          alt=""
-        />
+    <THeader>
+      <div slot="l" @click="goback">
+        <i class="fa fa-angle-left" aria-hidden="true"></i>
+        <div class="text">返回</div>
       </div>
-      <div class="c">
-        <div class="userName">
-          {{ userInfo.user_nickname || "&nbsp;&nbsp;&nbsp;" }}
-        </div>
-      </div>
-      <div class="right-icon r">
-        <!-- <i
-          class="fa fa-angle-right"
-          aria-hidden="true"
-        ></i> -->
-      </div>
-    </div>
+      <div slot="c">个人信息</div>
+      <div slot="r"></div>
+    </THeader>
     <div class="settings-list">
       <div class="setting-item">
         <div class="title">
-          <div class="text" @click="goProfile">个人信息</div>
+          <div class="text">头像</div>
         </div>
         <div class="value">
-          <div class="text"></div>
+          <img
+            :src="
+              userInfo && userInfo.portrait && userInfo.portrait.portrait_url
+            "
+            alt=""
+          />
         </div>
         <div class="right-icon">
           <i class="fa fa-angle-right" aria-hidden="true"></i>
@@ -33,21 +27,32 @@
       </div>
       <div class="setting-item">
         <div class="title">
-          <div class="text">关于</div>
+          <div class="text" @click="goProfile">昵称</div>
         </div>
         <div class="value">
-          <div class="text">v1.6.0</div>
+          <div class="text">{{ userInfo.user_nickname }}</div>
         </div>
         <div class="right-icon">
           <i class="fa fa-angle-right" aria-hidden="true"></i>
         </div>
       </div>
-      <div class="setting-item" @click="confirmLogout">
+      <div class="setting-item">
         <div class="title">
-          <div class="text">退出</div>
+          <div class="text">账号</div>
         </div>
         <div class="value">
-          <div class="text"></div>
+          <div class="text">{{ userInfo.user_account }}</div>
+        </div>
+        <div class="right-icon"></div>
+      </div>
+      <div class="setting-item">
+        <div class="title">
+          <div class="text">邮箱</div>
+        </div>
+        <div class="value">
+          <div class="text">
+            {{ userInfo.user_email || "未绑定" }}
+          </div>
         </div>
         <div class="right-icon">
           <i class="fa fa-angle-right" aria-hidden="true"></i>
@@ -57,14 +62,15 @@
   </div>
 </template>
 <script>
+import THeader from "../../components/THeader";
 export default {
-  name: "user",
-  components: {},
+  name: "profile",
+  components: {
+    THeader
+  },
   data() {
     return {
-      userInfo: {
-        portrait: null
-      }
+      userInfo: {}
     };
   },
   computed: {},
@@ -72,6 +78,9 @@ export default {
     this.getUserInfo();
   },
   methods: {
+    goback() {
+      this.$router.back();
+    },
     navToLogin() {
       return;
       // this.$router.push({
@@ -153,48 +162,11 @@ export default {
 
 <style scoped lang="less">
 .page {
-  padding: 40px 20px;
-  .header-panel {
-    color: #fff;
-
-    .portrait {
-      width: 80px;
-      height: 80px;
-      overflow: hidden;
-      box-sizing: border-box;
-      z-index: 1;
-      flex: 0 0 auto;
-      border-radius: 50%;
-      border: 4px solid #fff;
-
-      img {
-        width: 100%;
-        height: 100%;
-      }
-    }
-    .c {
-      .userName {
-        line-height: 1.8;
-        font-size: 24px;
-        flex: 1 1 auto;
-        margin: 0 10px 0;
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        padding: 0 10px 2px;
-        border-bottom: 2px solid #fff;
-      }
-    }
-
-    .right-icon {
-      font-size: 25px;
-    }
-  }
-
+  padding: 60px 20px;
   .settings-list {
     width: 100%;
     color: #fff;
-    padding: 40px 0;
+
     .setting-item {
       display: flex;
       align-items: center;
@@ -213,7 +185,12 @@ export default {
         .text {
           margin: 0 8px;
           font-size: 16px;
-          opacity: 0.6;
+          opacity: 0.8;
+        }
+        img {
+          margin: 0 8px;
+          width: 80px;
+          height: 80px;
         }
       }
 

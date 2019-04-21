@@ -2,9 +2,8 @@
   <div class="page">
     <div class="list">
       <div v-for="(yearList, year) in timeLine" :key="year">
-        <div v-for="(monthList, month) in yearList" :key="month">
-          <div v-for="(dayList, day) in monthList" :key="day">
-            <div class="day">{{ month }}/{{ day }}</div>
+          <div v-for="(dayList, day) in yearList" :key="day">
+            <div class="day">{{ day }}</div>
             <div v-for="(key, time) in dayList" :key="time">
               <div class="item flex-box">
                 <div class="time">{{ time }}</div>
@@ -30,9 +29,7 @@
             </div>
             <!-- time -->
           </div>
-          <!-- day -->
-        </div>
-        <!-- month -->
+          <!-- month + day -->
         <div class="year">{{ year }} 年</div>
       </div>
       <!-- year -->
@@ -69,9 +66,7 @@ export default {
         requestData,
         res => {
           this.timeLine = res.data.timeLine;
-          console.log(this.timeLine);
           this.itemList = res.data.itemList;
-          console.log(this.itemList);
         },
         error => {
           if (error.msg) {

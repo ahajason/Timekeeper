@@ -13,13 +13,12 @@
             <div v-for="(item, index) in todayTodoList" :key="index">
               <swipeout-item>
                 <div slot="right-menu">
-                   <swipeout-button
+                  <swipeout-button
                     @click.native="confirmDeleteItem(index)"
                     background-color="#f33"
                   >
                     删除
                   </swipeout-button>
-                 
                 </div>
                 <div slot="content" class="item flex-box">
                   <div
@@ -37,7 +36,11 @@
                     <i class="fa fa-check-square-o" aria-hidden="true"> </i>
                   </div>
                   <div class="c">
-                    <div class="name-line"><div class='name' @click="goDetails(index)">{{ item.item_name }}</div></div>
+                    <div class="name-line">
+                      <div class="name" @click="goDetails(index)">
+                        {{ item.item_name }}
+                      </div>
+                    </div>
                     <div class="level-line">
                       <div class="category-name">
                         #{{ item.category.category_name }}
@@ -63,6 +66,12 @@
               </swipeout-item>
             </div>
           </swipeout>
+          <div>
+            <li class="nofound" v-if="todayTodoList.length == 0">
+              您已完成所有待办「事项」<br />
+              可通过「上方」或「管理页」的「创建」按钮添加更多「事项」
+            </li>
+          </div>
         </div>
       </section>
     </transition>
@@ -286,7 +295,7 @@ export default {
         .c {
           text-align: left;
           .name-line {
-            .name{
+            .name {
               display: inline-block;
             }
             font-size: 18px;
@@ -311,6 +320,12 @@ export default {
           padding-right: 15px;
           opacity: 0.6;
         }
+      }
+      .nofound {
+        padding: 20px 20px 6px 20px;
+        font-style: italic;
+        opacity: 0.8;
+        font-size: 16px;
       }
     }
   }
