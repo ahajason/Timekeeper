@@ -44,33 +44,28 @@ class Handler extends ExceptionHandler
     /**
      * Render an exception into an HTTP response.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Exception  $exception
+     * @param  \Illuminate\Http\Request $request
+     * @param  \Exception $exception
      * @return \Illuminate\Http\Response
      */
     public function render($request, Exception $exception)
     {
-//        //如果路由中含有“api/”，则说明是一个 api 的接口请求
-//        if($request->is("api/*")) {
-            //如果错误是 ValidationException的一个实例，说明是一个验证的错误
-            if ($exception instanceof ValidationException) {
-                $result = [
-                    "success" => false,
-                    "code" => $exception->status,
-                    //这里使用 $exception->errors() 得到验证的所有错误信息，是一个关联二维数组，所以使用了array_values()取得了数组中的值，而值也是一个数组，所以用的两个 [0][0]
-                    "msg" => array_values($exception->errors())[0][0],
-                    ];
-                return response()->json($result)->setEncodingOptions(JSON_UNESCAPED_UNICODE);
-            }else if (!empty($exception->getMessage()) && !empty($exception->getCode())){
-                $result = [
-                    "success" => false,
-                    "code" => $exception->getCode(),
-                    //这里使用 $exception->errors() 得到验证的所有错误信息，是一个关联二维数组，所以使用了array_values()取得了数组中的值，而值也是一个数组，所以用的两个 [0][0]
-                    "msg" => $exception->getMessage(),
-                ];
-                return response()->json($result)->setEncodingOptions(JSON_UNESCAPED_UNICODE);
-            }
-//        }
+        if ($exception instanceof ValidationException) {
+            $result = [
+                "success" => false,
+                "code" => $exception->status,
+                //这里使用 $exception->errors() 得到验证的所有错误信息，是一个关联二维数组，所以使用了array_values()取得了数组中的值，而值也是一个数组，所以用的两个 [0][0]
+                "msg" => array_values($exception->errors())[0][0],
+            ];
+            return response()->json($result)->setEncodingOptions(JSON_UNESCAPED_UNICODE);
+        } else if (!empty($exception->getMessage()) && !empty($exception->getCode())) {
+            $result = [
+                "success" => false,
+                "code" => $exception->getCode(),
+                "msg" => $exception->getMessage(),
+            ];
+            return response()->json($result)->setEncodingOptions(JSON_UNESCAPED_UNICODE);
+        }
         return parent::render($request, $exception);
     }
 }

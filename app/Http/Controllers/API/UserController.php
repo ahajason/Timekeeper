@@ -15,10 +15,10 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 /**
- * Class UseController
+ * Class UserController
  * @package App\Http\Controllers\API
  */
-class UseController extends Controller
+class UserController extends Controller
 {
 
 

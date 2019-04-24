@@ -18,14 +18,14 @@ Route::get('/test', function (Request $request) {
 });
 
 Route::prefix('user')->group(function () {
-    Route::match(['get','post'],'register','API\UseController@register');
-    Route::match(['get','post'],'login','API\UseController@login');
+    Route::match(['get','post'],'register','API\UserController@register');
+    Route::match(['get','post'],'login','API\UserController@login');
 });
 
 Route::middleware('user')->group(function () {
     Route::prefix('user')->group(function () {
-        Route::match(['get','post'], 'getUserInfo','API\UseController@getUserInfo');
-        Route::match(['get','post'], 'logout','API\UseController@logout');
+        Route::match(['get','post'], 'getUserInfo','API\UserController@getUserInfo');
+        Route::match(['get','post'], 'logout','API\UserController@logout');
     });
     Route::prefix('item')->group(function () {
         Route::match(['get','post'], 'createItem','API\ItemController@createItem');

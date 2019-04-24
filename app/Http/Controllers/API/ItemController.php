@@ -16,6 +16,7 @@ class ItemController extends Controller
     {
         $user = Auth::user();
         $userId = $user->user_id;
+        //使用Validator对请求数据进行验证
         $request->validate([
             'item_sync_key' => 'required|max:50|min:2|unique:items,item_sync_key',
             'item_name' => 'required|max:50|min:2',
