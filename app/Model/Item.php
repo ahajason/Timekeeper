@@ -16,7 +16,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $item_tomatoes 番茄钟数量*10(避免精度丢失)
  * @property int $item_state 事项事务状态
  * @property int $category_id 所属事项类别Id
- * @property int|null $plan_id 所属计划Id
  * @property int $item_forecast_time 预计用时（秒/s）
  * @property string|null $item_description 事项描述
  * @property string|null $item_started_at 开始时间
@@ -40,7 +39,6 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Model\Item whereItemSyncKey($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Model\Item whereItemTomatoes($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Model\Item whereItemUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Model\Item wherePlanId($value)
  * @mixin \Eloquent
  * @property-read \App\Model\Category $category
  */

@@ -32,7 +32,6 @@ class CreateItemsTable extends Migration
             $table->index('item_emergency_level');
             $table->index('item_importance_level');
             $table->index('category_id');
-            $table->index('plan_id');
         });
     }
 
