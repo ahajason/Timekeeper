@@ -12,17 +12,9 @@
             <div class="text">事项</div>
           </li>
           <li
-            class="plan"
+            class="category"
             :class="swiper.realIndex == 1 ? 'active' : ''"
             @click="swiperTo('1')"
-          >
-            <i class="fa fa-calendar"></i>
-            <div class="text">计划</div>
-          </li>
-          <li
-            class="category"
-            :class="swiper.realIndex == 2 ? 'active' : ''"
-            @click="swiperTo('2')"
           >
             <i class="fa fa-tags"></i>
             <div class="text">类别</div>
@@ -114,11 +106,6 @@
           </li>
         </ul>
       </swiperSlide>
-      <swiperSlide class="module" id="module2">
-        <Glowing color="#fff" textShadow="#88ffff">
-          我叫计划，主人不要我了
-        </Glowing>
-      </swiperSlide>
       <swiperSlide class="module" id="module3">
         <ul class="categoryList">
           <li
@@ -154,12 +141,7 @@
           新建类别
         </div>
       </a>
-      <a slot="item_2" class="fa fa-calendar">
-        <div class="menu-letf">
-          新建计划
-        </div>
-      </a>
-      <a slot="item_3" class="fa fa-tasks">
+      <a slot="item_3" class="fa fa-tasks" @click="goCreateItem">
         <div class="menu-letf">
           新建事项
         </div>
@@ -369,6 +351,11 @@ export default {
   },
   computed: {},
   methods: {
+    goCreateItem() {
+      this.$router.push({
+        name: "createItem",
+      });
+    },
     swiperTo(index) {
       this.swiper.slideTo(index, 500, true);
     },
@@ -440,7 +427,6 @@ export default {
         requestData,
         res => {
           this.iconList = res.data;
-          console.log(this.iconList);
         },
         error => {
           if (error.msg) {

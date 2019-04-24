@@ -83,7 +83,7 @@
         exact
       >
         <div class="slogan">
-          开始一个事务
+          创建一个事项
         </div>
         <div class="r">
           <i class="fa fa-paper-plane" aria-hidden="true"> </i>
