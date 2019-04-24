@@ -25,4 +25,5 @@ use Illuminate\Database\Eloquent\Model;
 class Icon extends Model
 {
     public $timestamps = false;
+    protected $primaryKey = 'icon_id';
 }

@@ -4,7 +4,6 @@ namespace App\Http\Controllers\API;
 
 use App\Model\Category;
 use App\Model\Item;
-use App\Model\Plan;
 use Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -70,7 +69,6 @@ class CategoryController extends Controller
         Category::whereUserId($userId)->whereCategoryId($categoryId)->firstOrFail();
         Category::whereCategoryId($categoryId)->delete();
         Item::whereCategoryId($categoryId)->delete();
-        Plan::whereCategoryId($categoryId)->delete();
         return ['success' => true];
     }
 

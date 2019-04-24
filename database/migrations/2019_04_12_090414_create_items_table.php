@@ -22,7 +22,6 @@ class CreateItemsTable extends Migration
             $table->integer('item_tomatoes')->default(0)->comment('番茄钟数量*10(避免精度丢失)');
             $table->unsignedTinyInteger('item_state')->default(0)->comment('事项事务状态');
             $table->unsignedInteger('category_id')->comment('所属事项类别Id');
-            $table->unsignedInteger('plan_id')->nullable()->comment('所属计划Id');
             $table->unsignedInteger('item_forecast_time')->default(0)->comment('预计用时（秒/s）');
             $table->text('item_description')->nullable()->comment('事项描述');
             $table->timestamp('item_started_at', 0)->nullable()->comment('开始时间');

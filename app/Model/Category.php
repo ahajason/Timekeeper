@@ -50,10 +50,4 @@ class Category extends Model
         return $this->hasMany(Item::class, 'category_id', 'category_id');
     }
 
-
-//    public function portrait(){
-//        return $this
-//            ->hasOne(Portrait::class, 'user_id', 'user_id')
-//            ->wherePortraitIsActive(true);
-//    }
 }
