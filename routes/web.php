@@ -12,7 +12,8 @@
 */
 
 Route::get('/', function () {
-    return 'welcome';
+    \View::addExtension('html','php');
+    return  view()->file(public_path('index.html'));
 });
 
 Route::get('/portrait', 'FileController@portrait');
