@@ -19,7 +19,7 @@ class CreateLoginSessionsTable extends Migration
             $table->string('token',50)->comment('访问令牌');
             $table->boolean('token_is_active')->default(false)->comment('访问令牌是否可用');
             $table->string('client_ip_address',30)->nullable()->comment('客户端IP地址');
-            $table->string('client_user_agent',255)->nullable()->comment('客户端代理信息');
+            $table->text('client_user_agent',255)->nullable()->comment('客户端代理信息');
             $table->string('client_browser',30)->nullable()->comment('客户端浏览器');
             $table->string('client_browser_ver',30)->nullable()->comment('客户端浏览器版本');
             $table->string('client_os',30)->nullable()->comment('客户端操作系统');

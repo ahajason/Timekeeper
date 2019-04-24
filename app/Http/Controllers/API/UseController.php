@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Exceptions\ErrorCode;
 use App\Manager\PortraitManager;
 use App\Manager\UserManager;
 use App\Model\Category;
@@ -65,7 +66,7 @@ class UseController extends Controller
             $user = User::whereUserEmail($userAccount)->whereUserPassword($userPassword)->first();
         }
         if (empty($user)) {
-            throw new Exception('账号或密码错误');
+            throw new Exception('账号或密码错误',ErrorCode::ERROR_INCORRECT_USERNAME_OR_PASSWORD);
         }
         $userId = $user->user_id;
         $token = UserManager::createLoginSession($userId);
