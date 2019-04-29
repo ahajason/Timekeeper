@@ -130,7 +130,7 @@
     <CircleMenu
       class="create-menu"
       type="top"
-      :number="3"
+      :number="2"
       mask="black"
       circle
       animate="animated rubberBand"
@@ -141,7 +141,7 @@
           新建类别
         </div>
       </a>
-      <a slot="item_3" class="fa fa-tasks" @click="goCreateItem">
+      <a slot="item_2" class="fa fa-tasks" @click="goCreateItem">
         <div class="menu-letf">
           新建事项
         </div>

@@ -814,7 +814,7 @@ export default {
         .plan {
           text-align: center;
           padding: 10px 0 3px;
-          width: 60%;
+          width: 70%;
           border-bottom: 1px dashed rgb(255, 255, 255);
 
           .r {

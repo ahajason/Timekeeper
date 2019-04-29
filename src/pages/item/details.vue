@@ -41,7 +41,7 @@
           <div class="unit">min</div>
         </div>
       </Cell>
-      <Cell label="事务类别:">
+      <Cell label="事项类别:">
         <div
           class="category input"
           @click="showPopupPicker = !showPopupPicker"
@@ -76,7 +76,7 @@
         </div>
       </Cell>
       <Cell label="番茄钟数:">
-        <div class="text">{{ item.item_tomatoes }}</div>
+        <div class="text">{{ item.item_tomatoes | calctomatoes }}</div>
       </Cell>
       <Cell label="所属计划:" v-if="item.plan_id">
         <div class="text">{{ item.plan_id }}</div>
@@ -145,13 +145,18 @@ export default {
   },
   mounted() {
     this.$vux.loading.show({
-      text:''
+      text: ""
     });
     this.getItem();
     this.getCategoryList();
   },
   computed: {
     ...mapGetters(["categoryPickerList", "categoryMap", "tokenInfo"])
+  },
+  filters: {
+    calctomatoes(val) {
+      return val && val / 10;
+    }
   },
   methods: {
     getCategoryList() {

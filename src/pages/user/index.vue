@@ -119,8 +119,8 @@ export default {
     },
     confirmLogout() {
       this.$vux.confirm.show({
-        title: "确认删除",
-        content: "确定要删除该类别吗？删除后所属的所有事项与计划都会被删除~",
+        title: "确认退出",
+        content: "确定要退出当前吗？退出后需要重新登录账号才能继续使用~",
         onCancel: () => {},
         onConfirm: () => {
           this.logout(this.editingCategory);

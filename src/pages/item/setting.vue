@@ -39,11 +39,13 @@
         <div class="category input" @click="showPopupPicker = !showPopupPicker">
           #
           {{
-            this.categoryMap[picked[0]]
-              ? this.categoryMap[picked[0]].category_name
+            categoryMap[picked[0]]
+              ? categoryMap[picked[0]].category_name
               : "默认"
           }}
-          <i class="fa fa-check-square-o" aria-hidden="true"> </i>
+          <Glowing v-if="categoryMap[picked[0]]" color="#fff" :textShadow="categoryMap[picked[0]].category_color">
+            <i :class="categoryMap[picked[0]].icon.icon_src"></i>
+          </Glowing>
         </div>
       </div>
     </div>
@@ -63,8 +65,9 @@ import { mapGetters } from "vuex";
 import { Picker, PopupPicker, Group } from "vux";
 import THeader from "../../components/THeader";
 import Label from "@/components/common/Label.vue";
+import Glowing from "../../components/common/Glowing.vue";
 export default {
-  name: "HelloWorld",
+  name: "Setting",
   data() {
     return {
       showPopupPicker: false
@@ -74,7 +77,8 @@ export default {
     THeader,
     Label,
     PopupPicker,
-    Group
+    Group,
+    Glowing
   },
   mounted() {
     this.getCategoryList();
