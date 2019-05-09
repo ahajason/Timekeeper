@@ -43,7 +43,11 @@
               ? categoryMap[picked[0]].category_name
               : "默认"
           }}
-          <Glowing v-if="categoryMap[picked[0]]" color="#fff" :textShadow="categoryMap[picked[0]].category_color">
+          <Glowing
+            v-if="categoryMap[picked[0]]"
+            color="#fff"
+            :textShadow="categoryMap[picked[0]].category_color"
+          >
             <i :class="categoryMap[picked[0]].icon.icon_src"></i>
           </Glowing>
         </div>
@@ -91,11 +95,11 @@ export default {
   computed: {
     isImportanceLevelActive: {
       get() {
-        return this.editingItem.item_emergency_level >= 5;
+        return this.editingItem.item_importance_level >= 5;
       },
       set(value) {
         this.$store.commit("updateEditingItem", {
-          key: "item_emergency_level",
+          key: "item_importance_level",
           value: value ? 7 : 2
         });
       }
@@ -113,11 +117,11 @@ export default {
     },
     isEmergencyLevelActive: {
       get() {
-        return this.editingItem.item_importance_level >= 5;
+        return this.editingItem.item_emergency_level >= 5;
       },
       set(value) {
         this.$store.commit("updateEditingItem", {
-          key: "item_importance_level",
+          key: "item_emergency_level",
           value: value ? 7 : 2
         });
       }
