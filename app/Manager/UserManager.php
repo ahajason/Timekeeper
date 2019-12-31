@@ -8,8 +8,10 @@
 namespace App\Manager;
 
 
+use App\Exceptions\ErrorCode;
 use App\Model\LoginSession;
-use App\Utils\ClientInfoUtil;
+use Carbon\Carbon;
+use Exception;
 
 /**
  * Class UserManager
@@ -24,33 +26,48 @@ class UserManager
      */
     public static function createLoginSession(int $userId)
     {
-        $ip = $_SERVER['REMOTE_ADDR'];
         $agent = $_SERVER['HTTP_USER_AGENT'];
-        $token = md5(microtime(true).mt_rand());
+        $token = md5(microtime(true) . mt_rand());
+        $loginSession = self::getLoginSession($userId, $agent);
+        if (empty($loginSession)) {
+            $loginSession = new LoginSession();
+            $loginSession->user_id = $userId;
+            $loginSession->client_ip_address = $_SERVER['REMOTE_ADDR'];
+            $loginSession->setClientInfo($agent);
+        }
+        $loginSession->token = $token;
+        $loginSession->token_is_active = true;
+        $loginSession->save();
+        return $token;
+    }
+
+    /**
+     * @param $userId
+     * @param $token
+     * @throws Exception
+     */
+    public static function verifyLoginSession($userId, $token)
+    {
+        $effectiveTime = Carbon::now()->subMonth()->toDateTimeString();//默认有效期一个月
         $loginSession = LoginSession::whereUserId($userId)
+            ->whereToken($token)
+            ->where('session_updated_at', '>=', $effectiveTime)
+            ->whereTokenIsActive(true)
+            ->first();
+        if (empty($loginSession)) {
+            throw new Exception('Token值无效或已过期', ErrorCode::ERROR_AUTH_FAIL);
+        }
+    }
+
+    /**
+     * @param int $userId
+     * @param $agent
+     * @return LoginSession|\Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model|object|null
+     */
+    public static function getLoginSession(int $userId, $agent)
+    {
+        return LoginSession::whereUserId($userId)
             ->whereClientUserAgent($agent)
             ->first();
-        if(empty($loginSession)){
-            $clientInfo = ClientInfoUtil::getClientInfo($agent);
-            LoginSession::create([
-                'user_id' => $userId,
-                'token' => $token,
-                'token_is_active' => true,
-                'client_ip_address' => $ip,
-                'client_user_agent' => $agent,
-                'client_browser' => $clientInfo['browser'],
-                'client_browser_ver' => $clientInfo['browser_ver'],
-                'client_os' => $clientInfo['os'],
-                'client_os_ver' => $clientInfo['os_ver'],
-                'client_equipment' => $clientInfo['equipment'],
-                'client_mobile_brand' => $clientInfo['mobile_brand'],
-                'client_mobile_ver' => $clientInfo['mobile_ver'],
-            ]);
-        }else{
-            $loginSession->token = $token;
-            $loginSession->token_is_active = true;
-            $loginSession->save();
-        }
-        return $token;
     }
 }

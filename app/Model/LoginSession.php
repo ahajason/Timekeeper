@@ -2,6 +2,7 @@
 
 namespace App\Model;
 
+use App\Utils\ClientInfoUtil;
 use Illuminate\Database\Eloquent\Model;
 
 
@@ -63,5 +64,18 @@ class LoginSession extends Model
     ];
     const CREATED_AT = 'session_created_at';
     const UPDATED_AT = 'session_updated_at';
+
+    public function setClientInfo($agent)
+    {
+        $clientInfo = ClientInfoUtil::getClientInfo($agent);
+        $this->client_user_agent = $agent;
+        $this->client_browser = $clientInfo['browser'];
+        $this->client_browser_ver = $clientInfo['browser_ver'];
+        $this->client_os = $clientInfo['os'];
+        $this->client_os_ver = $clientInfo['os_ver'];
+        $this->client_equipment = $clientInfo['equipment'];
+        $this->client_mobile_brand = $clientInfo['mobile_brand'];
+        $this->client_mobile_ver = $clientInfo['mobile_ver'];
+    }
 
 }
