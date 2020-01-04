@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "animate.css": "^3.7.0",
-    "axios": "^0.18.0",
+    "axios": "^0.18.1",
     "better-scroll": "^0.1.15",
     "blueimp-md5": "^2.10.0",
     "font-awesome": "^4.7.0",
