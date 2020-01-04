@@ -1,6 +1,6 @@
 <template>
   <div class="page">
-    <transition name="fade" mode="out-in">
+    <transition mode="out-in" name="fade">
       <router-view/>
     </transition>
   </div>
@@ -16,7 +16,5 @@
     }
   }
 </script>
-
 <style scoped>
-
 </style>

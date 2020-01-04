@@ -4,17 +4,17 @@
       <div class="type">
         <ul>
           <li
-            :class="swiper.realIndex == 0 ? 'active' : ''"
-            @click="swiperTo('0')"
-            class="item"
+              :class="swiper.realIndex == 0 ? 'active' : ''"
+              @click="swiperTo('0')"
+              class="item"
           >
             <i class="fa fa-tasks"/>
             <div class="text">事项</div>
           </li>
           <li
-            :class="swiper.realIndex == 1 ? 'active' : ''"
-            @click="swiperTo('1')"
-            class="category"
+              :class="swiper.realIndex == 1 ? 'active' : ''"
+              @click="swiperTo('1')"
+              class="category"
           >
             <i class="fa fa-tags"/>
             <div class="text">类别</div>
@@ -28,25 +28,25 @@
         <div class="panel">
           <div class="selector-group">
             <Selector
-              :options="stateList"
-              :selected="stateSelected"
-              @on-select="bindStateSelect"
-              label="状态："
-              selectedColor="#33c"
+                :options="stateList"
+                :selected="stateSelected"
+                @on-select="bindStateSelect"
+                label="状态："
+                selectedColor="#33c"
             />
             <Selector
-              :options="importanceLevelList"
-              @on-select="bindImportanceLevelSelect"
-              label="重要程度："
-              selectedColor="#c33"
-              v-bind:selected="importanceLevelSelected"
+                :options="importanceLevelList"
+                @on-select="bindImportanceLevelSelect"
+                label="重要程度："
+                selectedColor="#c33"
+                v-bind:selected="importanceLevelSelected"
             />
             <Selector
-              :options="emergencyLevelList"
-              @on-select="bindEmergencyLevelSelect"
-              label="紧急程度："
-              selectedColor="#cc3"
-              v-bind:selected="emergencyLevelSelected"
+                :options="emergencyLevelList"
+                @on-select="bindEmergencyLevelSelect"
+                label="紧急程度："
+                selectedColor="#cc3"
+                v-bind:selected="emergencyLevelSelected"
             />
           </div>
           <div class="folding-bar">
@@ -59,10 +59,10 @@
             可通过「首页」或「右下角」的「创建」按钮添加更多「事项」
           </li>
           <li
-            :key="index"
-            @click="goDetails(index)"
-            class="item"
-            v-for="(item, index) in itemList"
+              :key="index"
+              @click="goDetails(index)"
+              class="item"
+              v-for="(item, index) in itemList"
           >
             <div class="name-line">
               <div @click="goDetails(index)" class="name">
@@ -74,17 +74,17 @@
             </div>
             <div class="level-line">
               <Label
-                backgroundActive="#f66"
-                size="sm"
-                text="不重要"
-                textActive="重要"
-                v-bind:active="item.item_importance_level >= 5"
+                  backgroundActive="#f66"
+                  size="sm"
+                  text="不重要"
+                  textActive="重要"
+                  v-bind:active="item.item_importance_level >= 5"
               />
               <Label
-                backgroundActive="#ff6"
-                size="sm"
-                textActive="紧急"
-                v-bind:active="item.item_emergency_level >= 5"
+                  backgroundActive="#ff6"
+                  size="sm"
+                  textActive="紧急"
+                  v-bind:active="item.item_emergency_level >= 5"
               />
             </div>
             <div class="level-line">
@@ -95,12 +95,12 @@
                 {{ item.item_closed_at }}
               </div>
               <Label
-                background="#88eeee"
-                backgroundActive="#68f"
-                size="sm"
-                text="已完成"
-                textActive="待办"
-                v-bind:active="item.item_state == 0"
+                  background="#88eeee"
+                  backgroundActive="#68f"
+                  size="sm"
+                  text="已完成"
+                  textActive="待办"
+                  v-bind:active="item.item_state == 0"
               />
             </div>
           </li>
@@ -109,10 +109,10 @@
       <swiperSlide class="module" id="module3">
         <ul class="categoryList">
           <li
-            :key="index"
-            @click="editCategory(category)"
-            class="item"
-            v-for="(category, index) in categoryList"
+              :key="index"
+              @click="editCategory(category)"
+              class="item"
+              v-for="(category, index) in categoryList"
           >
             <div class="name-line">
               <Glowing :textShadow="category.category_color" color="#fff">
@@ -128,13 +128,13 @@
       </swiperSlide>
     </swiper>
     <CircleMenu
-      :number="2"
-      animate="animated rubberBand"
-      btn
-      circle
-      class="create-menu"
-      mask="black"
-      type="top"
+        :number="2"
+        animate="animated rubberBand"
+        btn
+        circle
+        class="create-menu"
+        mask="black"
+        type="top"
     >
       <a class="fa fa-tags" slot="item_1">
         <div @click="createCategory" class="menu-letf">
@@ -158,8 +158,8 @@
           </div>
           <div class="c">
             <div
-              @click="confirmDeleteCategory"
-              v-if="editingCategory.category_id"
+                @click="confirmDeleteCategory"
+                v-if="editingCategory.category_id"
             >
               <i aria-hidden="true" class="fa fa-trash"></i>
               <div class="text">删除</div>
@@ -175,9 +175,9 @@
         <Group>
           <Cell :inline="true">
             <input
-              placeholder="输入类别名称"
-              type="text"
-              v-model="editingCategory.category_name"
+                placeholder="输入类别名称"
+                type="text"
+                v-model="editingCategory.category_name"
             />
           </Cell>
           <Cell :inline="true">
@@ -190,16 +190,16 @@
               </div>
               <div class="example">
                 <Glowing
-                  :textShadow="editingCategory.category_color"
-                  color="#fff"
+                    :textShadow="editingCategory.category_color"
+                    color="#fff"
                 >
                   <i :class="editingCategory.icon.icon_src"></i>
                 </Glowing>
               </div>
               <div class="example">
                 <div
-                  :style="editingCategory.category_color | backgroundCss"
-                  class="circle"
+                    :style="editingCategory.category_color | backgroundCss"
+                    class="circle"
                 >
                   <i :class="editingCategory.icon.icon_src"></i>
                 </div>
@@ -214,10 +214,10 @@
           <Cell :inline="true">
             <div class="icon-box">
               <div
-                :key="icon.icon_id"
-                @click="setIconOfEditingCategory(icon)"
-                class="icon-item"
-                v-for="icon in iconList"
+                  :key="icon.icon_id"
+                  @click="setIconOfEditingCategory(icon)"
+                  class="icon-item"
+                  v-for="icon in iconList"
               >
                 <i :class="icon.icon_src"></i>
               </div>

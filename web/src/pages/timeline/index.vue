@@ -1,7 +1,7 @@
 <template>
   <div class="page">
     <div class="list">
-      <div v-for="(yearList, year) in timeLine" :key="year">
+      <div :key="year" v-for="(yearList, year) in timeLine">
         <div :key="day" v-for="(dayList, day) in yearList">
           <div class="day">{{ day }}</div>
           <div :key="time" v-for="(key, time) in dayList">
@@ -11,8 +11,8 @@
                 <div class="line"></div>
                 <div class="icon">
                   <i
-                    :class="itemList[key].category.icon.icon_src"
-                    aria-hidden="true"
+                      :class="itemList[key].category.icon.icon_src"
+                      aria-hidden="true"
                   ></i>
                 </div>
                 <div class="triangle"></div>
@@ -80,7 +80,7 @@
   };
 </script>
 
-<style scoped lang="less">
+<style lang="less" scoped>
   .list {
     color: #fff;
     padding: 0 0 100px;

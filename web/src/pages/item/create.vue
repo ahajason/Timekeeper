@@ -1,28 +1,28 @@
 <template>
   <div class="page">
     <THeader>
-      <div slot="l" @click="goback">
-        <i class="fa fa-angle-left" aria-hidden="true"></i>
+      <div @click="goback" slot="l">
+        <i aria-hidden="true" class="fa fa-angle-left"></i>
         <div class="text">返回</div>
       </div>
       <div slot="c">创建事项</div>
       <div slot="r">
-        <div class="text" @click="createItem">完成</div>
-        <i class="fa fa-check" aria-hidden="true"></i>
+        <div @click="createItem" class="text">完成</div>
+        <i aria-hidden="true" class="fa fa-check"></i>
       </div>
     </THeader>
     <TFooter>
       <div slot="c">
         <input
-          type="text"
-          ref="input-name"
-          placeholder="请输入计划名称…"
-          v-model="editingItem.item_name"
+            placeholder="请输入计划名称…"
+            ref="input-name"
+            type="text"
+            v-model="editingItem.item_name"
         />
       </div>
       <div slot="r">
-        <div class="text" @click="goSetting">设置</div>
-        <i class="fa fa-angle-right" aria-hidden="true"></i>
+        <div @click="goSetting" class="text">设置</div>
+        <i aria-hidden="true" class="fa fa-angle-right"></i>
       </div>
     </TFooter>
   </div>

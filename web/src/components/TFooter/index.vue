@@ -1,5 +1,5 @@
 <template>
-  <div id="TFooter" class="flex-box">
+  <div class="flex-box" id="TFooter">
     <div class="l">
       <slot name="l"></slot>
     </div>

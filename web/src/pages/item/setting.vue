@@ -1,14 +1,14 @@
 <template>
   <div class="page">
     <THeader>
-      <div slot="l" @click="goback">
-        <i class="fa fa-angle-left" aria-hidden="true"></i>
+      <div @click="goback" slot="l">
+        <i aria-hidden="true" class="fa fa-angle-left"></i>
         <div class="text">返回</div>
       </div>
       <div slot="c">设置事项</div>
       <div slot="r">
-        <div class="text" @click="createItem">完成</div>
-        <i class="fa fa-check" aria-hidden="true"></i>
+        <div @click="createItem" class="text">完成</div>
+        <i aria-hidden="true" class="fa fa-check"></i>
       </div>
     </THeader>
     <div class="form">
@@ -16,11 +16,11 @@
         <div class="label">重要程度</div>
         <div class="input">
           <Label
-            v-bind:active="isImportanceLevelActive"
-            textActive="重要"
-            text="不重要"
-            backgroundActive="#ff3333"
-            @on-active="bindImportanceLevelActive"
+              @on-active="bindImportanceLevelActive"
+              backgroundActive="#ff3333"
+              text="不重要"
+              textActive="重要"
+              v-bind:active="isImportanceLevelActive"
           ></Label>
         </div>
       </div>
@@ -28,15 +28,15 @@
         <div class="label">紧急程度</div>
         <div class="input">
           <Label
-            v-bind:active="isEmergencyLevelActive"
-            textActive="紧急"
-            @on-active="bindEmergencyLevelActive"
+              @on-active="bindEmergencyLevelActive"
+              textActive="紧急"
+              v-bind:active="isEmergencyLevelActive"
           ></Label>
         </div>
       </div>
       <div class="form-item">
         <div class="label">事务类别</div>
-        <div class="category input" @click="showPopupPicker = !showPopupPicker">
+        <div @click="showPopupPicker = !showPopupPicker" class="category input">
           #
           {{
           categoryMap[picked[0]]
@@ -44,9 +44,9 @@
           : "默认"
           }}
           <Glowing
-            v-if="categoryMap[picked[0]]"
-            color="#fff"
-            :textShadow="categoryMap[picked[0]].category_color"
+              :textShadow="categoryMap[picked[0]].category_color"
+              color="#fff"
+              v-if="categoryMap[picked[0]]"
           >
             <i :class="categoryMap[picked[0]].icon.icon_src"></i>
           </Glowing>
@@ -55,10 +55,10 @@
     </div>
     <group>
       <popup-picker
-        :show.sync="showPopupPicker"
-        :show-cell="false"
-        :data="[categoryPickerList]"
-        v-model="picked"
+          :data="[categoryPickerList]"
+          :show-cell="false"
+          :show.sync="showPopupPicker"
+          v-model="picked"
       >
       </popup-picker>
     </group>

@@ -14,7 +14,7 @@
 
 </script>
 
-<style scoped lang='less'>
+<style lang='less' scoped>
   .from-footer {
     font-size: 16px;
     align-items: center;

@@ -1,11 +1,11 @@
 <template>
   <div id="DigitalClock">
-    <div v-if="hasHour" class="column" :class="column1 | columnClass">
+    <div :class="column1 | columnClass" class="column" v-if="hasHour">
       <div class="num num-0">0</div>
       <div class="num num-1">1</div>
       <div class="num num-2">2</div>
     </div>
-    <div v-if="hasHour" class="column" :class="column2 | columnClass">
+    <div :class="column2 | columnClass" class="column" v-if="hasHour">
       <div class="num num-0">0</div>
       <div class="num num-1">1</div>
       <div class="num num-2">2</div>
@@ -17,8 +17,8 @@
       <div class="num num-8">8</div>
       <div class="num num-9">9</div>
     </div>
-    <div v-if="hasHour" class="colon">:</div>
-    <div class="column" :class="column3 | columnClass">
+    <div class="colon" v-if="hasHour">:</div>
+    <div :class="column3 | columnClass" class="column">
       <div class="num num-0">0</div>
       <div class="num num-1">1</div>
       <div class="num num-2">2</div>
@@ -26,7 +26,7 @@
       <div class="num num-4">4</div>
       <div class="num num-5">5</div>
     </div>
-    <div class="column" :class="column4 | columnClass">
+    <div :class="column4 | columnClass" class="column">
       <div class="num num-0">0</div>
       <div class="num num-1">1</div>
       <div class="num num-2">2</div>
@@ -39,7 +39,7 @@
       <div class="num num-9">9</div>
     </div>
     <div class="colon">:</div>
-    <div class="column" :class="column5 | columnClass">
+    <div :class="column5 | columnClass" class="column">
       <div class="num num-0">0</div>
       <div class="num num-1">1</div>
       <div class="num num-2">2</div>
@@ -47,7 +47,7 @@
       <div class="num num-4">4</div>
       <div class="num num-5">5</div>
     </div>
-    <div class="column" :class="column6 | columnClass">
+    <div :class="column6 | columnClass" class="column">
       <div class="num num-0">0</div>
       <div class="num num-1">1</div>
       <div class="num num-2">2</div>
@@ -124,7 +124,7 @@
 
 </script>
 
-<style scoped lang='less'>
+<style lang='less' scoped>
   #DigitalClock {
     text-align: center;
     // background-color: #0e141b;

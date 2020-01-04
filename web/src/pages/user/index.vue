@@ -1,10 +1,10 @@
 <template>
   <div class="page">
-    <div class="header-panel flex-box" @click="navToLogin">
+    <div @click="navToLogin" class="header-panel flex-box">
       <div class="portrait l">
         <img
-          :src="userInfo.portrait && userInfo.portrait.portrait_url"
-          alt=""
+            :src="userInfo.portrait && userInfo.portrait.portrait_url"
+            alt=""
         />
       </div>
       <div class="c">
@@ -22,13 +22,13 @@
     <div class="settings-list">
       <div class="setting-item">
         <div class="title">
-          <div class="text" @click="goProfile">个人信息</div>
+          <div @click="goProfile" class="text">个人信息</div>
         </div>
         <div class="value">
           <div class="text"></div>
         </div>
         <div class="right-icon">
-          <i class="fa fa-angle-right" aria-hidden="true"></i>
+          <i aria-hidden="true" class="fa fa-angle-right"></i>
         </div>
       </div>
       <div class="setting-item">
@@ -39,10 +39,10 @@
           <div class="text">v1.6.0</div>
         </div>
         <div class="right-icon">
-          <i class="fa fa-angle-right" aria-hidden="true"></i>
+          <i aria-hidden="true" class="fa fa-angle-right"/>
         </div>
       </div>
-      <div class="setting-item" @click="confirmLogout">
+      <div @click="confirmLogout" class="setting-item">
         <div class="title">
           <div class="text">退出</div>
         </div>
@@ -50,7 +50,7 @@
           <div class="text"></div>
         </div>
         <div class="right-icon">
-          <i class="fa fa-angle-right" aria-hidden="true"></i>
+          <i aria-hidden="true" class="fa fa-angle-right"/>
         </div>
       </div>
     </div>
@@ -152,7 +152,7 @@
   };
 </script>
 
-<style scoped lang="less">
+<style lang="less" scoped>
   .page {
     padding: 40px 20px;
 

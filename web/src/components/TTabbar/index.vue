@@ -1,26 +1,26 @@
 <template>
   <div id="TTabbar">
     <ul class="list">
-      <router-link class="item" tag="li" :to="{ name: 'home' }" exact>
+      <router-link :to="{ name: 'home' }" class="item" exact tag="li">
         <div class="nav-icon"><i class="iconfont icon-home"></i></div>
         <div class="nav-text">首页</div>
       </router-link>
 
-      <router-link class="item" tag="li" :to="{ name: 'management' }" exact>
+      <router-link :to="{ name: 'management' }" class="item" exact tag="li">
         <div class="nav-icon"><i class="iconfont icon-chart"></i></div>
         <div class="nav-text">管理</div>
       </router-link>
-      <router-link class="item" tag="li" :to="{ name: 'tomato' }" exact>
+      <router-link :to="{ name: 'tomato' }" class="item" exact tag="li">
         <div class="nav-icon"><img src="static/tomato.png"/></div>
         <div class="nav-text">番茄钟</div>
       </router-link>
 
-      <router-link class="item" tag="li" :to="{ name: 'timeline' }" exact>
+      <router-link :to="{ name: 'timeline' }" class="item" exact tag="li">
         <div class="nav-icon"><i class="iconfont icon-timeline"></i></div>
         <div class="nav-text">时间轴</div>
       </router-link>
 
-      <router-link class="item" tag="li" :to="{ name: 'user' }" exact>
+      <router-link :to="{ name: 'user' }" class="item" exact tag="li">
         <div class="nav-icon"><i class="iconfont icon-user"></i></div>
         <div class="nav-text">我的</div>
       </router-link>

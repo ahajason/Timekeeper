@@ -1,67 +1,67 @@
 <template>
   <div class="page">
     <THeader>
-      <div slot="l" @click="goback">
-        <i class="fa fa-angle-left" aria-hidden="true"></i>
+      <div @click="goback" slot="l">
+        <i aria-hidden="true" class="fa fa-angle-left"></i>
         <div class="text">返回</div>
       </div>
       <div slot="c">详情</div>
       <div slot="r">
-        <div class="text" @click="updateItem">保存</div>
-        <i class="fa fa-floppy-o" aria-hidden="true"></i>
+        <div @click="updateItem" class="text">保存</div>
+        <i aria-hidden="true" class="fa fa-floppy-o"></i>
       </div>
     </THeader>
     <TGroup class="group">
-      <Cell label="事项名称:" :inline="true">
+      <Cell :inline="true" label="事项名称:">
         <input placeholder="事项名称" type="text" v-model="item.item_name"/>
       </Cell>
       <Cell label="重要程度:">
         <Label
-          v-bind:active="item.item_importance_level >= 5"
-          textActive="重要"
-          text="不重要"
-          backgroundActive="#ff3333"
-          @on-active="bindImportanceLevelActive"
+            @on-active="bindImportanceLevelActive"
+            backgroundActive="#ff3333"
+            text="不重要"
+            textActive="重要"
+            v-bind:active="item.item_importance_level >= 5"
         ></Label>
       </Cell>
       <Cell label="紧急程度:">
         <Label
-          v-bind:active="item.item_emergency_level >= 5"
-          textActive="紧急"
-          @on-active="bindEmergencyLevelActive"
+            @on-active="bindEmergencyLevelActive"
+            textActive="紧急"
+            v-bind:active="item.item_emergency_level >= 5"
         ></Label>
       </Cell>
       <Cell label="预测用时:">
         <div class="forecast_time">
           <input
-            type="text"
-            placeholder="0"
-            v-model="item.item_forecast_time"
+              placeholder="0"
+              type="text"
+              v-model="item.item_forecast_time"
           />
           <div class="unit">min</div>
         </div>
       </Cell>
       <Cell label="事项类别:">
         <div
-          class="category input"
-          @click="showPopupPicker = !showPopupPicker"
-          v-if="categoryMap[item.category_id]"
+            @click="showPopupPicker = !showPopupPicker"
+            class="category input"
+            v-if="categoryMap[item.category_id]"
         >
           #
           {{ categoryMap[item.category_id].category_name }}
           <i
-            :class="categoryMap[item.category_id].icon.icon_src"
-            aria-hidden="true"
+              :class="categoryMap[item.category_id].icon.icon_src"
+              aria-hidden="true"
           >
           </i>
         </div>
       </Cell>
       <Cell label="事项描述:">
         <textarea
-          type="text"
-          placeholder="输入对事项的详细描述"
-          rows="4"
-          v-model="item.item_description"
+            placeholder="输入对事项的详细描述"
+            rows="4"
+            type="text"
+            v-model="item.item_description"
         />
       </Cell>
       <Cell label="开始时间:" v-if="item.item_started_at">
@@ -90,26 +90,26 @@
       <Cell :inline="true">
         <div>
           <button @click="restartItem" v-if="item.item_state == 2">
-            <i class="fa fa-check-square-o" aria-hidden="true"></i>重启
+            <i aria-hidden="true" class="fa fa-check-square-o"></i>重启
           </button>
           <button @click="completeItem" v-if="item.item_state == 0">
-            <i class="fa fa-square-o" aria-hidden="true"></i>结束
+            <i aria-hidden="true" class="fa fa-square-o"></i>结束
           </button>
         </div>
         <div>
           <button @click="confirmDeleteItem">
-            <i class="fa fa-trash-o" aria-hidden="true"></i>删除
+            <i aria-hidden="true" class="fa fa-trash-o"></i>删除
           </button>
         </div>
       </Cell>
     </TGroup>
     <group v-transfer-dom>
       <popup-picker
-        :show.sync="showPopupPicker"
-        :show-cell="false"
-        :data="[categoryPickerList]"
-        @on-change="onCategoryPickerChange"
-        v-model="defaultPicked"
+          :data="[categoryPickerList]"
+          :show-cell="false"
+          :show.sync="showPopupPicker"
+          @on-change="onCategoryPickerChange"
+          v-model="defaultPicked"
       >
       </popup-picker>
     </group>

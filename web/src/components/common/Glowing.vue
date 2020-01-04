@@ -1,7 +1,6 @@
 <template>
   <div
-    class="wrapper"
-    :style="{
+      :style="{
       color: color,
       textShadow:
         '0 0 1px ' +
@@ -17,6 +16,7 @@
         ', 0 0 6px ' +
         textShadow
     }"
+      class="wrapper"
   >
     <slot></slot>
   </div>
@@ -43,4 +43,4 @@
   };
 </script>
 
-<style scoped lang="less"></style>
+<style lang="less" scoped></style>

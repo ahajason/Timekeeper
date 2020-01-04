@@ -1,13 +1,13 @@
 <template>
   <div
-    class="wrapper"
-    :class="size"
-    @click="onClick"
+      :class="size"
+      @click="onClick"
+      class="wrapper"
   >
     <div
-      class="Label"
-      v-text="active?textActive:text"
-      :style="active?labelActiveStyle:labelStyle"
+        :style="active?labelActiveStyle:labelStyle"
+        class="Label"
+        v-text="active?textActive:text"
     ></div>
   </div>
 </template>
@@ -77,7 +77,7 @@
 
 </script>
 
-<style scoped lang='less'>
+<style lang='less' scoped>
   .wrapper {
     display: inline-block;
     text-align: center;

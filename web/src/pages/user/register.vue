@@ -3,26 +3,26 @@
     <Form title="注册">
       <FormItem>
         <input
-          type="text"
-          placeholder="账号"
-          v-model="account"
-          maxlength="20"
+            maxlength="20"
+            placeholder="账号"
+            type="text"
+            v-model="account"
         >
       </FormItem>
       <FormItem>
         <input
-          type="password"
-          placeholder="密码"
-          v-model="password"
-          maxlength="20"
+            maxlength="20"
+            placeholder="密码"
+            type="password"
+            v-model="password"
         >
       </FormItem>
       <FormItem>
         <input
-          type="password"
-          placeholder="确认密码"
-          v-model="repassword"
-          maxlength="20"
+            maxlength="20"
+            placeholder="确认密码"
+            type="password"
+            v-model="repassword"
         >
       </FormItem>
       <FormItem>
@@ -30,15 +30,15 @@
       </FormItem>
       <FormFooter>
         <router-link
-          class="item"
-          tag="div"
-          :to="{ name: 'login' }"
-          exact
+            :to="{ name: 'login' }"
+            class="item"
+            exact
+            tag="div"
         >
           <i
-            class="fa fa-undo"
-            aria-hidden="true"
-          ></i>&nbsp;返回登录
+              aria-hidden="true"
+              class="fa fa-undo"
+          />&nbsp;返回登录
         </router-link>
       </FormFooter>
     </Form>
@@ -117,5 +117,5 @@
     },
   };
 </script>
-<style scoped lang='less'>
+<style lang='less' scoped>
 </style>

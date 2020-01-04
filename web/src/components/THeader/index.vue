@@ -1,7 +1,7 @@
 <template>
   <div
-    id='THeader'
-    class="flex-box"
+      class="flex-box"
+      id='THeader'
   >
     <div class="l">
       <slot name='l'></slot>

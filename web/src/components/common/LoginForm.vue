@@ -1,8 +1,8 @@
 <template>
   <div class="form">
     <div
-      class="form-header"
-      v-text="title"
+        class="form-header"
+        v-text="title"
     ></div>
     <slot></slot>
   </div>
@@ -24,7 +24,7 @@
 
 </script>
 
-<style scoped lang='less'>
+<style lang='less' scoped>
   .page {
     .form {
       width: 100%;

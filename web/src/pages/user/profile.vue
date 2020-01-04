@@ -1,8 +1,8 @@
 <template>
   <div class="page">
     <THeader>
-      <div slot="l" @click="goback">
-        <i class="fa fa-angle-left" aria-hidden="true"></i>
+      <div @click="goback" slot="l">
+        <i aria-hidden="true" class="fa fa-angle-left"></i>
         <div class="text">返回</div>
       </div>
       <div slot="c">个人信息</div>
@@ -15,25 +15,25 @@
         </div>
         <div class="value">
           <img
-            :src="
+              :src="
               userInfo && userInfo.portrait && userInfo.portrait.portrait_url
             "
-            alt=""
+              alt=""
           />
         </div>
         <div class="right-icon">
-          <i class="fa fa-angle-right" aria-hidden="true"></i>
+          <i aria-hidden="true" class="fa fa-angle-right"></i>
         </div>
       </div>
       <div class="setting-item">
         <div class="title">
-          <div class="text" @click="goProfile">昵称</div>
+          <div @click="goProfile" class="text">昵称</div>
         </div>
         <div class="value">
           <div class="text">{{ userInfo.user_nickname }}</div>
         </div>
         <div class="right-icon">
-          <i class="fa fa-angle-right" aria-hidden="true"></i>
+          <i aria-hidden="true" class="fa fa-angle-right"></i>
         </div>
       </div>
       <div class="setting-item">
@@ -55,7 +55,7 @@
           </div>
         </div>
         <div class="right-icon">
-          <i class="fa fa-angle-right" aria-hidden="true"></i>
+          <i aria-hidden="true" class="fa fa-angle-right"></i>
         </div>
       </div>
     </div>
@@ -162,7 +162,7 @@
   };
 </script>
 
-<style scoped lang="less">
+<style lang="less" scoped>
   .page {
     padding: 60px 20px;
 

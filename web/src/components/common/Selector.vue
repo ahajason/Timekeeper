@@ -1,15 +1,15 @@
 <template>
-  <div id="Selector" class="selector">
+  <div class="selector" id="Selector">
     <div class="label" v-text="label"></div>
     <ul>
       <li
-        v-for="item in options"
-        :key="item.value"
-        @click="select(item)"
-        :class="(item.value == selected.value) | selectedClass"
+          :class="(item.value == selected.value) | selectedClass"
+          :key="item.value"
+          @click="select(item)"
+          v-for="item in options"
       >
         <div
-          :style="
+            :style="
             item.value == selected.value
               ? 'text-shadow: 0 0 1px ' +
                 selectedColor +
@@ -72,7 +72,7 @@
   };
 </script>
 
-<style scoped lang="less">
+<style lang="less" scoped>
   .selector {
     display: flex;
 

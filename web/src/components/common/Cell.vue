@@ -1,6 +1,6 @@
 <template>
   <div class="from-item">
-    <div v-if="!inline" class="label" v-text="label"></div>
+    <div class="label" v-if="!inline" v-text="label"></div>
     <div class="input">
       <slot></slot>
     </div>
@@ -26,7 +26,7 @@
   };
 </script>
 
-<style scoped lang="less">
+<style lang="less" scoped>
   .from-item {
     padding: 10px 20px;
     display: flex;

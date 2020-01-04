@@ -1,8 +1,8 @@
 <template>
   <div class="content">
     <transition
-      enter-active-class="animated slideInUp"
-      leave-active-class="animated slideOutDown"
+        enter-active-class="animated slideInUp"
+        leave-active-class="animated slideOutDown"
     >
       <section class="todo" v-if="show">
         <div class="headr">
@@ -10,34 +10,34 @@
         </div>
         <div class="body">
           <swipeout>
-            <div v-for="(item, index) in todayTodoList" :key="index">
+            <div :key="index" v-for="(item, index) in todayTodoList">
               <swipeout-item>
                 <div slot="right-menu">
                   <swipeout-button
-                    @click.native="confirmDeleteItem(index)"
-                    background-color="#f33"
+                      @click.native="confirmDeleteItem(index)"
+                      background-color="#f33"
                   >
                     删除
                   </swipeout-button>
                 </div>
-                <div slot="content" class="item flex-box">
+                <div class="item flex-box" slot="content">
                   <div
-                    class="l"
-                    v-if="item.item_state == 0"
-                    @click="completeItem(index)"
+                      @click="completeItem(index)"
+                      class="l"
+                      v-if="item.item_state == 0"
                   >
-                    <i class="fa fa-square-o" aria-hidden="true"> </i>
+                    <i aria-hidden="true" class="fa fa-square-o"> </i>
                   </div>
                   <div
-                    class="l"
-                    v-if="item.item_state != 0"
-                    @click="restartItem(index)"
+                      @click="restartItem(index)"
+                      class="l"
+                      v-if="item.item_state != 0"
                   >
-                    <i class="fa fa-check-square-o" aria-hidden="true"> </i>
+                    <i aria-hidden="true" class="fa fa-check-square-o"> </i>
                   </div>
                   <div class="c">
                     <div class="name-line">
-                      <div class="name" @click="goDetails(index)">
+                      <div @click="goDetails(index)" class="name">
                         {{ item.item_name }}
                       </div>
                     </div>
@@ -46,21 +46,21 @@
                         #{{ item.category.category_name }}
                       </div>
                       <Label
-                        v-bind:active="item.item_importance_level >= 5"
-                        textActive="重要"
-                        text="不重要"
-                        backgroundActive="#ff3333"
-                        size="sm"
+                          backgroundActive="#ff3333"
+                          size="sm"
+                          text="不重要"
+                          textActive="重要"
+                          v-bind:active="item.item_importance_level >= 5"
                       ></Label>
                       <Label
-                        v-bind:active="item.item_emergency_level >= 5"
-                        textActive="紧急"
-                        size="sm"
+                          size="sm"
+                          textActive="紧急"
+                          v-bind:active="item.item_emergency_level >= 5"
                       ></Label>
                     </div>
                   </div>
                   <div class="r">
-                    <i class="fa fa-angle-double-left" aria-hidden="true"> </i>
+                    <i aria-hidden="true" class="fa fa-angle-double-left"> </i>
                   </div>
                 </div>
               </swipeout-item>
@@ -77,16 +77,16 @@
     </transition>
     <section class="create-task">
       <router-link
-        class="start-btn flex-box"
-        tag="div"
-        :to="{ name: 'createItem' }"
-        exact
+          :to="{ name: 'createItem' }"
+          class="start-btn flex-box"
+          exact
+          tag="div"
       >
         <div class="slogan">
           创建一个事项
         </div>
         <div class="r">
-          <i class="fa fa-paper-plane" aria-hidden="true"> </i>
+          <i aria-hidden="true" class="fa fa-paper-plane"> </i>
         </div>
       </router-link>
     </section>

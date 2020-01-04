@@ -14,7 +14,7 @@
 
 </script>
 
-<style scoped lang='less'>
+<style lang='less' scoped>
   .from-item {
     padding: 10px 30px;
 

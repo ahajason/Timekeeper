@@ -14,7 +14,7 @@
   };
 </script>
 
-<style scoped lang="less">
+<style lang="less" scoped>
   .group {
     width: 100%;
   }

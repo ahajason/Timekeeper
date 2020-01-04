@@ -1,25 +1,25 @@
 <template>
   <div class="CircleGroup">
     <XCircle
-      stroke-color="#fff"
-      trail-color="#343434"
-      :anticlockwise='anticlockwise'
-      class="sCircle"
-      :percent="cptSecond"
-    >
-      <XCircle
+        :anticlockwise='anticlockwise'
+        :percent="cptSecond"
+        class="sCircle"
         stroke-color="#fff"
         trail-color="#343434"
-        :anticlockwise='anticlockwise'
-        class="mCircle"
-        :percent="cptMinute"
-      >
-        <XCircle
+    >
+      <XCircle
+          :anticlockwise='anticlockwise'
+          :percent="cptMinute"
+          class="mCircle"
           stroke-color="#fff"
           trail-color="#343434"
-          :anticlockwise='anticlockwise'
-          class="hCircle"
-          :percent="cptHour"
+      >
+        <XCircle
+            :anticlockwise='anticlockwise'
+            :percent="cptHour"
+            class="hCircle"
+            stroke-color="#fff"
+            trail-color="#343434"
         >
           <slot></slot>
         </XCircle>
@@ -98,7 +98,7 @@
   };
 </script>
 
-<style scoped lang="less">
+<style lang="less" scoped>
   .mCircle {
     padding: 6px;
   }

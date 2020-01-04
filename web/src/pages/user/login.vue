@@ -3,18 +3,18 @@
     <Form title="登录">
       <FormItem>
         <input
-          type="text"
-          placeholder="账号/邮箱"
-          v-model="account"
-          maxlength="50"
+            maxlength="50"
+            placeholder="账号/邮箱"
+            type="text"
+            v-model="account"
         >
       </FormItem>
       <FormItem>
         <input
-          type="password"
-          placeholder="密码"
-          v-model="password"
-          maxlength="20"
+            maxlength="20"
+            placeholder="密码"
+            type="password"
+            v-model="password"
         >
       </FormItem>
       <FormItem>
@@ -31,13 +31,13 @@
         </router-link>
         <div class="item">|</div> -->
         <router-link
-          class="item"
-          tag="div"
-          :to="{ name: 'register' }"
-          exact
+            :to="{ name: 'register' }"
+            class="item"
+            exact
+            tag="div"
         >前往注册&nbsp;<i
-          aria-hidden="true"
-          class="fa fa-angle-right"
+            aria-hidden="true"
+            class="fa fa-angle-right"
         ></i>
         </router-link>
       </FormFooter>
@@ -111,5 +111,5 @@
     },
   };
 </script>
-<style scoped lang='less'>
+<style lang='less' scoped>
 </style>

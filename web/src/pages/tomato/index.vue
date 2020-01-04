@@ -1,16 +1,16 @@
 <template>
   <div class="page">
-    <THeader style="border:none" class="header">
+    <THeader class="header" style="border:none">
       <div slot="l">
         <div @click="goback">
-          <i class="fa fa-angle-left" aria-hidden="true"></i>
+          <i aria-hidden="true" class="fa fa-angle-left"></i>
           <div class="text">返回</div>
         </div>
       </div>
       <div slot="c"></div>
       <div slot="r">
         <div @click="onNext" v-if="test">
-          <i class="fa fa-fast-forward" aria-hidden="true"></i>
+          <i aria-hidden="true" class="fa fa-fast-forward"></i>
           <div class="text">快速完成</div>
         </div>
       </div>
@@ -18,22 +18,22 @@
     <div class="container">
       <div class="tabbar">
         <div
-          :class="swiper.realIndex == 0 ? 'active' : ''"
-          @click="swiperTo('0')"
+            :class="swiper.realIndex == 0 ? 'active' : ''"
+            @click="swiperTo('0')"
         >
           番茄钟
         </div>
         |
         <div
-          :class="swiper.realIndex == 1 ? 'active' : ''"
-          @click="swiperTo('1')"
+            :class="swiper.realIndex == 1 ? 'active' : ''"
+            @click="swiperTo('1')"
         >
           计时模式
         </div>
         |
         <div
-          :class="swiper.realIndex == 2 ? 'active' : ''"
-          @click="swiperTo('2')"
+            :class="swiper.realIndex == 2 ? 'active' : ''"
+            @click="swiperTo('2')"
         >
           倒计时
         </div>
@@ -42,19 +42,19 @@
         <swiperSlide class="module" id="tomato">
           <div class="content">
             <CircleGroup
-              class="CircleGroup"
-              v-bind="timeUnitArr0"
-              :maxHour="10"
-              v-bind:maxMinute="tomatoMaxMinute"
-              anticlockwise
-              :hasHour="false"
+                :hasHour="false"
+                :maxHour="10"
+                anticlockwise
+                class="CircleGroup"
+                v-bind="timeUnitArr0"
+                v-bind:maxMinute="tomatoMaxMinute"
             >
               <DigitalClock
-                :hasHour="false"
-                class="DigitalClock"
-                v-bind="timeDigitalArr0"
+                  :hasHour="false"
+                  class="DigitalClock"
+                  v-bind="timeDigitalArr0"
               ></DigitalClock>
-              <div class="tomatoCounter" @click="onNext0">
+              <div @click="onNext0" class="tomatoCounter">
                 <img class="tomato" src="static/tomato.png"/>
                 <div class="text">x {{ tomatoNumber }}</div>
               </div>
@@ -63,8 +63,8 @@
               <div class="plan flex-box" v-if="currentItemSyncKey && todoList">
                 <div class="c">
                   <i
-                    :class="todoList[currentItemSyncKey].category.icon.icon_src"
-                    aria-hidden="true"
+                      :class="todoList[currentItemSyncKey].category.icon.icon_src"
+                      aria-hidden="true"
                   ></i>
                   <div class="name-line">
                     {{ todoList[currentItemSyncKey].item_name }}
@@ -74,20 +74,20 @@
             </section>
             <section class="todo" v-if="todoList">
               <div
-                class="plan flex-box"
-                v-for="item in tomatoTodoList"
-                :key="item.item_sync_key"
-                @click="activeItem(item.item_sync_key)"
+                  :key="item.item_sync_key"
+                  @click="activeItem(item.item_sync_key)"
+                  class="plan flex-box"
+                  v-for="item in tomatoTodoList"
               >
                 <div class="c">
                   <i
-                    :class="item.category.icon.icon_src"
-                    aria-hidden="true"
+                      :class="item.category.icon.icon_src"
+                      aria-hidden="true"
                   ></i>
                   <div class="name-line">{{ item.item_name }}</div>
                 </div>
                 <div class="r">
-                  <i class="fa fa-angle-double-up" aria-hidden="true"></i>
+                  <i aria-hidden="true" class="fa fa-angle-double-up"></i>
                 </div>
               </div>
             </section>
@@ -97,16 +97,16 @@
           <div class="content">
             <CircleGroup class="CircleGroup" v-bind="timeUnitArr1">
               <DigitalClock
-                class="DigitalClock"
-                v-bind="timeDigitalArr1"
+                  class="DigitalClock"
+                  v-bind="timeDigitalArr1"
               ></DigitalClock>
             </CircleGroup>
             <section class="doing">
               <div class="plan flex-box" v-if="currentItemSyncKey && todoList">
                 <div class="c">
                   <i
-                    :class="todoList[currentItemSyncKey].category.icon.icon_src"
-                    aria-hidden="true"
+                      :class="todoList[currentItemSyncKey].category.icon.icon_src"
+                      aria-hidden="true"
                   ></i>
                   <div class="name-line">
                     {{ todoList[currentItemSyncKey].item_name }}
@@ -116,20 +116,20 @@
             </section>
             <section class="todo" v-if="todoList">
               <div
-                class="plan flex-box"
-                v-for="item in tomatoTodoList"
-                :key="item.item_sync_key"
-                @click="activeItem(item.item_sync_key)"
+                  :key="item.item_sync_key"
+                  @click="activeItem(item.item_sync_key)"
+                  class="plan flex-box"
+                  v-for="item in tomatoTodoList"
               >
                 <div class="c">
                   <i
-                    :class="item.category.icon.icon_src"
-                    aria-hidden="true"
+                      :class="item.category.icon.icon_src"
+                      aria-hidden="true"
                   ></i>
                   <div class="name-line">{{ item.item_name }}</div>
                 </div>
                 <div class="r">
-                  <i class="fa fa-angle-double-up" aria-hidden="true"></i>
+                  <i aria-hidden="true" class="fa fa-angle-double-up"></i>
                 </div>
               </div>
             </section>
@@ -139,23 +139,23 @@
           <div class="content">
             <div class="clock-wrapper" v-if="countdownFinishTime">
               <CircleGroup
-                class="CircleGroup"
-                v-bind="timeUnitArr2"
-                v-bind:maxMinute="countdownMaxMinute"
-                v-bind:maxHour="countdownMaxHour"
-                V-bind:hasHour="countdownHasHour"
+                  V-bind:hasHour="countdownHasHour"
+                  class="CircleGroup"
+                  v-bind="timeUnitArr2"
+                  v-bind:maxHour="countdownMaxHour"
+                  v-bind:maxMinute="countdownMaxMinute"
               >
                 <DigitalClock
-                  class="DigitalClock"
-                  v-bind="timeDigitalArr2"
+                    class="DigitalClock"
+                    v-bind="timeDigitalArr2"
                 ></DigitalClock>
               </CircleGroup>
               <section class="doing">
                 <div class="plan flex-box" v-if="countdownSyncKey && todoList">
                   <div class="c">
                     <i
-                      :class="todoList[countdownSyncKey].category.icon.icon_src"
-                      aria-hidden="true"
+                        :class="todoList[countdownSyncKey].category.icon.icon_src"
+                        aria-hidden="true"
                     ></i>
                     <div class="name-line">
                       {{ todoList[countdownSyncKey].item_name }}
@@ -164,13 +164,13 @@
                 </div>
               </section>
               <section class="button-wrapper">
-                <button v-if="!pause2" @click="onParse2">暂停</button>
-                <button v-if="pause2" @click="onContinue2">继续</button>
+                <button @click="onParse2" v-if="!pause2">暂停</button>
+                <button @click="onContinue2" v-if="pause2">继续</button>
                 <button @click="onStop2">完成</button>
               </section>
             </div>
 
-            <div v-if="!countdownFinishTime" class="setting-wrapper">
+            <div class="setting-wrapper" v-if="!countdownFinishTime">
               <section class="input-wrapper">
                 <span>倒计时</span
                 ><input placeholder="25" v-model="countdownMaxTime"/><span
@@ -183,20 +183,20 @@
 
               <section class="selectedTodo" v-if="todoList">
                 <div
-                  class="plan flex-box"
-                  v-for="item in todoList"
-                  :key="item.item_sync_key"
-                  @click="activeCountdownItem(item.item_sync_key)"
+                    :key="item.item_sync_key"
+                    @click="activeCountdownItem(item.item_sync_key)"
+                    class="plan flex-box"
+                    v-for="item in todoList"
                 >
                   <div class="c">
                     <i
-                      :class="item.category.icon.icon_src"
-                      aria-hidden="true"
+                        :class="item.category.icon.icon_src"
+                        aria-hidden="true"
                     ></i>
                     <div class="name-line">{{ item.item_name }}</div>
                   </div>
                   <div class="r" v-if="item.item_sync_key == countdownSyncKey">
-                    <i class="fa fa-check" aria-hidden="true"></i>
+                    <i aria-hidden="true" class="fa fa-check"></i>
                   </div>
                 </div>
               </section>
@@ -208,15 +208,15 @@
     <TFooter v-if="swiper.realIndex == 0">
       <div slot="l">
         <div @click="onParse0" v-show="!pause0">
-          <i class="fa fa-coffee" aria-hidden="true"></i>
+          <i aria-hidden="true" class="fa fa-coffee"></i>
           <div class="text">休息</div>
         </div>
-        <div v-if="tomatoNumber" @click="onAction0" v-show="pause0">
-          <i class="fa fa-play-circle-o" aria-hidden="true"></i>
+        <div @click="onAction0" v-if="tomatoNumber" v-show="pause0">
+          <i aria-hidden="true" class="fa fa-play-circle-o"></i>
           <div class="text">继续</div>
         </div>
-        <div v-if="!tomatoNumber" @click="onAction0" v-show="pause0">
-          <i class="fa fa-play-circle-o" aria-hidden="true"></i>
+        <div @click="onAction0" v-if="!tomatoNumber" v-show="pause0">
+          <i aria-hidden="true" class="fa fa-play-circle-o"></i>
           <div class="text">开始</div>
         </div>
       </div>
@@ -224,22 +224,22 @@
       <div slot="r">
         <div @click="onStop0">
           <div class="text">结束</div>
-          <i class="fa fa-stop-circle-o" aria-hidden="true"></i>
+          <i aria-hidden="true" class="fa fa-stop-circle-o"></i>
         </div>
       </div>
     </TFooter>
     <TFooter v-if="swiper.realIndex == 1">
       <div slot="l">
         <div @click="onParse1" v-show="!pause1">
-          <i class="fa fa-coffee" aria-hidden="true"></i>
+          <i aria-hidden="true" class="fa fa-coffee"></i>
           <div class="text">暂停</div>
         </div>
-        <div v-if="startTime" @click="onAction1" v-show="pause1">
-          <i class="fa fa-play-circle-o" aria-hidden="true"></i>
+        <div @click="onAction1" v-if="startTime" v-show="pause1">
+          <i aria-hidden="true" class="fa fa-play-circle-o"></i>
           <div class="text">继续</div>
         </div>
-        <div v-if="!startTime" @click="onAction1" v-show="pause1">
-          <i class="fa fa-play-circle-o" aria-hidden="true"></i>
+        <div @click="onAction1" v-if="!startTime" v-show="pause1">
+          <i aria-hidden="true" class="fa fa-play-circle-o"></i>
           <div class="text">开始</div>
         </div>
       </div>
@@ -247,7 +247,7 @@
       <div slot="r">
         <div @click="onStop1">
           <div class="text">结束</div>
-          <i class="fa fa-stop-circle-o" aria-hidden="true"></i>
+          <i aria-hidden="true" class="fa fa-stop-circle-o"></i>
         </div>
       </div>
     </TFooter>
@@ -770,7 +770,7 @@
   };
 </script>
 
-<style scoped lang="less">
+<style lang="less" scoped>
   .page {
     background: #343434;
 
