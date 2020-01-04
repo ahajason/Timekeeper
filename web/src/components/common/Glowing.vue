@@ -22,24 +22,25 @@
   </div>
 </template>
 <script>
-export default {
-  name: "Glowing",
-  data() {
-    return {};
-  },
-  props: {
-    color: {
-      type: String,
-      default: "#fff"
+  export default {
+    name: "Glowing",
+    data() {
+      return {};
     },
-    textShadow: {
-      type: String,
-      default: "#fff"
-    }
-  },
-  mounted() {},
-  methods: {}
-};
+    props: {
+      color: {
+        type: String,
+        default: "#fff"
+      },
+      textShadow: {
+        type: String,
+        default: "#fff"
+      }
+    },
+    mounted() {
+    },
+    methods: {}
+  };
 </script>
 
 <style scoped lang="less"></style>

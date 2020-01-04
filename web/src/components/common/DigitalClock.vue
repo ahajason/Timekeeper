@@ -115,7 +115,8 @@
         },
       },
     },
-    mounted() {},
+    mounted() {
+    },
     filters: {
       columnClass: (column) => 'column-' + column
     }

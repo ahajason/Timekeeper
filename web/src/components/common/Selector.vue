@@ -34,63 +34,68 @@
   </div>
 </template>
 <script>
-export default {
-  name: "Selector",
-  data() {
-    return {};
-  },
-  props: {
-    options: {
-      type: Array,
-      default: () => []
+  export default {
+    name: "Selector",
+    data() {
+      return {};
     },
-    selected: {
-      type: Object,
-      default: () => {}
+    props: {
+      options: {
+        type: Array,
+        default: () => []
+      },
+      selected: {
+        type: Object,
+        default: () => {
+        }
+      },
+      label: {
+        type: String,
+        default: ""
+      },
+      selectedColor: {
+        type: String,
+        default: "#f87"
+      }
     },
-    label: {
-      type: String,
-      default: ""
+    filters: {
+      selectedClass: isSelected => (isSelected ? "selected" : "")
     },
-    selectedColor: {
-      type: String,
-      default: "#f87"
+    computed: {},
+    methods: {
+      select(item) {
+        this.$emit("on-select", item);
+      }
+    },
+    mounted() {
     }
-  },
-  filters: {
-    selectedClass: isSelected => (isSelected ? "selected" : "")
-  },
-  computed: {},
-  methods: {
-    select(item) {
-      this.$emit("on-select", item);
-    }
-  },
-  mounted() {
-  }
-};
+  };
 </script>
 
 <style scoped lang="less">
-.selector {
-  display: flex;
-  .label {
+  .selector {
     display: flex;
-    flex: 0 0 100px;
-    white-space: nowrap;
-  }
-  ul {
-    display: flex;
-    li {
+
+    .label {
       display: flex;
-      justify-content: center;
-      align-items: center;
-      flex: 0 0 60px;
-      .text {
+      flex: 0 0 100px;
+      white-space: nowrap;
+    }
+
+    ul {
+      display: flex;
+
+      li {
         display: flex;
-        white-space: nowrap;
+        justify-content: center;
+        align-items: center;
+        flex: 0 0 60px;
+
+        .text {
+          display: flex;
+          white-space: nowrap;
+        }
       }
     }
   }
-}
 </style>

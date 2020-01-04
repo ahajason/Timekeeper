@@ -8,36 +8,35 @@
   </div>
 </template>
 <script>
-export default {
-  name: "Form",
-  data() {
-    return {};
-  },
-  props: {
-    title: {
-      type: String,
-      default: "",
-    }
-  },
-  methods: {
-  }
-};
+  export default {
+    name: "Form",
+    data() {
+      return {};
+    },
+    props: {
+      title: {
+        type: String,
+        default: "",
+      }
+    },
+    methods: {}
+  };
 
 </script>
 
 <style scoped lang='less'>
-.page {
-  .form {
-    width: 100%;
-    padding: 30px 0 100px;
-    color: #fff;
+  .page {
+    .form {
+      width: 100%;
+      padding: 30px 0 100px;
+      color: #fff;
 
-    .form-header {
-      text-align: center;
-      font-size: 50px;
-      padding: 20px 0;
-      line-height: 150%;
+      .form-header {
+        text-align: center;
+        font-size: 50px;
+        padding: 20px 0;
+        line-height: 150%;
+      }
     }
   }
-}
 </style>

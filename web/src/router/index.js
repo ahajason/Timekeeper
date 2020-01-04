@@ -2,7 +2,6 @@ import Vue from 'vue'
 //引入组件
 import Router from 'vue-router'
 //引入页面
-import helloWorld from '@/pages/helloWorld'
 import mainPage from '@/pages/mainPage'
 import subpage from '@/pages/subpage'
 import home from '@/pages/home'
@@ -18,7 +17,7 @@ import login from '@/pages/user/login'
 import register from '@/pages/user/register'
 import profile from '@/pages/user/profile'
 
-Vue.use(Router)
+Vue.use(Router);
 
 
 export default new Router({
@@ -44,7 +43,7 @@ export default new Router({
         path: 'user',
         name: 'user',
         component: user,
-        meta: { keepAlive: true },
+        meta: {keepAlive: true},
       },],
     },
     {
@@ -92,8 +91,6 @@ export default new Router({
           name: 'profile',
           component: profile,
         },
-
-
       ]
     }
   ]

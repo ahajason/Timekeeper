@@ -62,142 +62,146 @@
   </div>
 </template>
 <script>
-import THeader from "../../components/THeader";
-export default {
-  name: "profile",
-  components: {
-    THeader
-  },
-  data() {
-    return {
-      userInfo: {}
-    };
-  },
-  computed: {},
-  mounted() {
-    this.getUserInfo();
-  },
-  methods: {
-    goback() {
-      this.$router.back();
+  import THeader from "../../components/THeader";
+
+  export default {
+    name: "profile",
+    components: {
+      THeader
     },
-    navToLogin() {
-      return;
-      // this.$router.push({
-      //   name: "login"
-      // });
+    data() {
+      return {
+        userInfo: {}
+      };
     },
-    goProfile() {
-      this.$router.push({
-        name: "profile"
-      });
+    computed: {},
+    mounted() {
+      this.getUserInfo();
     },
-    getUserInfo() {
-      let requestData = this.$store.getters.tokenInfo;
-      this.$startRequest(
-        "/user/getUserInfo",
-        requestData,
-        response => {
-          this.userInfo = response.data.user_info;
-        },
-        error => {
-          if (error.msg) {
-            this.$vux.toast.text(error.msg, "top");
-          } else {
-            this.$vux.toast.text("网络错误", "top");
+    methods: {
+      goback() {
+        this.$router.back();
+      },
+      navToLogin() {
+
+        // this.$router.push({
+        //   name: "login"
+        // });
+      },
+      goProfile() {
+        this.$router.push({
+          name: "profile"
+        });
+      },
+      getUserInfo() {
+        let requestData = this.$store.getters.tokenInfo;
+        this.$startRequest(
+          "/user/getUserInfo",
+          requestData,
+          response => {
+            this.userInfo = response.data.user_info;
+          },
+          error => {
+            if (error.msg) {
+              this.$vux.toast.text(error.msg, "top");
+            } else {
+              this.$vux.toast.text("网络错误", "top");
+            }
           }
-        }
-      );
-    },
-    logout() {
-      let requestData = this.$store.getters.tokenInfo;
-      this.$startRequest(
-        "/user/getUserInfo",
-        requestData,
-        response => {
-          this.userInfo = response.data.user_info;
-        },
-        error => {
-          if (error.msg) {
-            this.$vux.toast.text(error.msg, "top");
-          } else {
-            this.$vux.toast.text("网络错误", "top");
+        );
+      },
+      logout() {
+        let requestData = this.$store.getters.tokenInfo;
+        this.$startRequest(
+          "/user/getUserInfo",
+          requestData,
+          response => {
+            this.userInfo = response.data.user_info;
+          },
+          error => {
+            if (error.msg) {
+              this.$vux.toast.text(error.msg, "top");
+            } else {
+              this.$vux.toast.text("网络错误", "top");
+            }
           }
-        }
-      );
-    },
-    confirmLogout() {
-      this.$vux.confirm.show({
-        title: "确认删除",
-        content: "确定要删除该类别吗？删除后所属的所有事项与计划都会被删除~",
-        onCancel: () => {},
-        onConfirm: () => {
-          this.logout(this.editingCategory);
-        }
-      });
-    },
-    logout() {
-      let requestData = this.$store.getters.tokenInfo;
-      this.$startRequest(
-        "/user/logout",
-        requestData,
-        res => {
-          this.$vux.toast.text("登出成功", "top");
-          this.$router.push({
-            name: "login"
-          });
-        },
-        error => {
-          if (error.msg) {
-            this.$vux.toast.text(error.msg, "top");
-          } else {
-            this.$vux.toast.text("网络错误", "top");
+        );
+      },
+      confirmLogout() {
+        this.$vux.confirm.show({
+          title: "确认删除",
+          content: "确定要删除该类别吗？删除后所属的所有事项与计划都会被删除~",
+          onCancel: () => {
+          },
+          onConfirm: () => {
+            this.logout(this.editingCategory);
           }
-        }
-      );
+        });
+      },
+      logout() {
+        let requestData = this.$store.getters.tokenInfo;
+        this.$startRequest(
+          "/user/logout",
+          requestData,
+          res => {
+            this.$vux.toast.text("登出成功", "top");
+            this.$router.push({
+              name: "login"
+            });
+          },
+          error => {
+            if (error.msg) {
+              this.$vux.toast.text(error.msg, "top");
+            } else {
+              this.$vux.toast.text("网络错误", "top");
+            }
+          }
+        );
+      }
     }
-  }
-};
+  };
 </script>
 
 <style scoped lang="less">
-.page {
-  padding: 60px 20px;
-  .settings-list {
-    width: 100%;
-    color: #fff;
+  .page {
+    padding: 60px 20px;
 
-    .setting-item {
-      display: flex;
-      align-items: center;
-      padding: 6px 10px 6px 20px;
-      border-bottom: 1px solid #fff;
-      margin: 20px 0;
+    .settings-list {
+      width: 100%;
+      color: #fff;
 
-      .title {
-        flex: 1 1 auto;
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-      }
+      .setting-item {
+        display: flex;
+        align-items: center;
+        padding: 6px 10px 6px 20px;
+        border-bottom: 1px solid #fff;
+        margin: 20px 0;
 
-      .value {
-        .text {
-          margin: 0 8px;
-          font-size: 16px;
-          opacity: 0.8;
+        .title {
+          flex: 1 1 auto;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
         }
-        img {
-          margin: 0 8px;
-          width: 80px;
-          height: 80px;
-        }
-      }
 
-      .right-icon {
-        font-size: 25px;
+        .value {
+          .text {
+            margin: 0 8px;
+            font-size: 16px;
+            opacity: 0.8;
+          }
+
+          img {
+            margin: 0 8px;
+            width: 80px;
+            height: 80px;
+          }
+        }
+
+        .right-icon {
+          font-size: 25px;
+        }
       }
     }
   }
-}
 </style>

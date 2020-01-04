@@ -1,27 +1,28 @@
 <template>
   <div class="page">
-    <transition name="fade" mode="out-in">
+    <transition mode="out-in" name="fade">
       <keep-alive>
-        <router-view v-if="$route.meta.keepAlive"></router-view>
+        <router-view v-if="$route.meta.keepAlive"/>
       </keep-alive>
     </transition>
-    <transition name="fade" mode="out-in">
-      <router-view v-if="!$route.meta.keepAlive"></router-view>
+    <transition mode="out-in" name="fade">
+      <router-view v-if="!$route.meta.keepAlive"/>
     </transition>
-    <TTabbar></TTabbar>
+    <TTabbar/>
   </div>
 </template>
 <script>
-import TTabbar from "@/components/TTabbar";
-export default {
-  name: "mainPage",
-  components: {
-    TTabbar
-  },
-  data() {
-    return {};
-  }
-};
+  import TTabbar from "@/components/TTabbar";
+
+  export default {
+    name: "mainPage",
+    components: {
+      TTabbar
+    },
+    data() {
+      return {};
+    }
+  };
 </script>
 
 <style scoped></style>

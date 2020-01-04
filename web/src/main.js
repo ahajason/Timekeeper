@@ -11,17 +11,20 @@ import '@/assets/iconfont/iconfont.css';
 import '@/style/common.css';
 import 'swiper/dist/css/swiper.css';
 import animate from 'animate.css/animate.min.css';
-Vue.use(animate)
 //引入公共方法
 // import Common from '@/script/common.js';
-import { startRequest } from './api'
-Vue.prototype.$startRequest = startRequest;
+import {startRequest} from './api'
 //引入弹窗
-import { LoadingPlugin, ToastPlugin, DatetimePlugin, ConfirmPlugin } from 'vux'
-Vue.use(LoadingPlugin)
-Vue.use(ToastPlugin)
-Vue.use(DatetimePlugin)
-Vue.use(ConfirmPlugin)
+import {ConfirmPlugin, DatetimePlugin, LoadingPlugin, ToastPlugin} from 'vux'
+
+Vue.use(animate);
+
+Vue.prototype.$startRequest = startRequest;
+
+Vue.use(LoadingPlugin);
+Vue.use(ToastPlugin);
+Vue.use(DatetimePlugin);
+Vue.use(ConfirmPlugin);
 const FastClick = require('fastclick');
 FastClick.attach(document.body);
 Vue.config.productionTip = false;
@@ -31,6 +34,6 @@ new Vue({
   el: '#app',
   router,
   store,
-  components: { App },
+  components: {App},
   template: '<App/>'
 });

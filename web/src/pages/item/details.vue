@@ -13,7 +13,7 @@
     </THeader>
     <TGroup class="group">
       <Cell label="事项名称:" :inline="true">
-        <input type="text" placeholder="事项名称" v-model="item.item_name" />
+        <input placeholder="事项名称" type="text" v-model="item.item_name"/>
       </Cell>
       <Cell label="重要程度:">
         <Label
@@ -116,262 +116,267 @@
   </div>
 </template>
 <script>
-import { mapGetters } from "vuex";
-import { Picker, PopupPicker, Group, Range } from "vux";
-import THeader from "../../components/THeader";
-import Label from "@/components/common/Label";
-import TGroup from "@/components/common/Group";
-import Cell from "@/components/common/Cell";
-import { TransferDom } from "vux";
+  import {mapGetters} from "vuex";
+  import {Group, PopupPicker, Range, TransferDom} from "vux";
+  import THeader from "../../components/THeader";
+  import Label from "@/components/common/Label";
+  import TGroup from "@/components/common/Group";
+  import Cell from "@/components/common/Cell";
 
-export default {
-  name: "HelloWorld",
+  export default {
+    name: "HelloWorld",
 
-  data() {
-    return {
-      showPopupPicker: false,
-      item: {},
-      defaultPicked: [1]
-    };
-  },
-  components: {
-    THeader,
-    Label,
-    PopupPicker,
-    Group,
-    TGroup,
-    Cell,
-    Range
-  },
-  mounted() {
-    this.$vux.loading.show({
-      text: ""
-    });
-    this.getItem();
-    this.getCategoryList();
-  },
-  computed: {
-    ...mapGetters(["categoryPickerList", "categoryMap", "tokenInfo"])
-  },
-  filters: {
-    calctomatoes(val) {
-      return val && val / 10;
-    }
-  },
-  methods: {
-    getCategoryList() {
-      let requestData = this.tokenInfo;
-      this.$startRequest(
-        "/category/getCategoryList",
-        requestData,
-        res => {
-          this.$store.commit("setCategoryList", res.data);
-        },
-        error => {
-          if (error.msg) {
-            this.$vux.toast.text(error.msg, "top");
-          } else {
-            this.$vux.toast.text("网络错误", "top");
-          }
-        }
-      );
+    data() {
+      return {
+        showPopupPicker: false,
+        item: {},
+        defaultPicked: [1]
+      };
     },
-    getItem() {
-      let item_sync_key = this.$route.params.syncKey;
-      if (!item_sync_key) {
-        this.$router.back();
-      }
-      let requestData = { item_sync_key, ...this.$store.getters.tokenInfo };
-      this.$startRequest(
-        "/item/getItem",
-        requestData,
-        res => {
-          this.item = res.data;
-          this.$vux.loading.hide();
-        },
-        error => {
-          this.$vux.loading.hide();
-          if (error.msg) {
-            this.$vux.toast.text(error.msg, "top");
-          } else {
-            this.$vux.toast.text("网络错误", "top");
-          }
-        }
-      );
+    components: {
+      THeader,
+      Label,
+      PopupPicker,
+      Group,
+      TGroup,
+      Cell,
+      Range
     },
-    updateItem() {
-      let requestData = { ...this.item, ...this.$store.getters.tokenInfo };
-      this.$startRequest(
-        "/item/updateItem",
-        requestData,
-        res => {
-          this.$vux.toast.text("保存成功", "top");
-          this.$router.back();
-        },
-        error => {
-          if (error.msg) {
-            this.$vux.toast.text(error.msg, "top");
-          } else {
-            this.$vux.toast.text("网络错误", "top");
-          }
-        }
-      );
-    },
-    goback() {
-      this.$router.back();
-    },
-    bindImportanceLevelActive() {
-      if (this.item.item_importance_level >= 5) {
-        this.item.item_importance_level = 2;
-      } else {
-        this.item.item_importance_level = 7;
-      }
-    },
-    bindEmergencyLevelActive() {
-      if (this.item.item_emergency_level >= 5) {
-        this.item.item_emergency_level = 2;
-      } else {
-        this.item.item_emergency_level = 7;
-      }
-    },
-    onCategoryPickerChange(val) {
-      this.item.category_id = val[0];
-    },
-    completeItem(item_sync_key) {
-      let item = this.todayTodoList[item_sync_key];
-      let requestData = { item_sync_key, ...this.$store.getters.tokenInfo };
-      this.$startRequest(
-        "/item/completeItem",
-        requestData,
-        res => {
-          this.item = res.data;
-        },
-        error => {
-          if (error.msg) {
-            this.$vux.toast.text(error.msg, "top");
-          } else {
-            this.$vux.toast.text("网络错误", "top");
-          }
-        }
-      );
-    },
-    confirmDeleteItem() {
-      this.$vux.confirm.show({
-        title: "确认删除",
-        content: "确定要删除吗？删除就没啦~",
-        onCancel: () => {},
-        onConfirm: () => {
-          this.deleteItem();
-        }
+    mounted() {
+      this.$vux.loading.show({
+        text: ""
       });
+      this.getItem();
+      this.getCategoryList();
     },
-    deleteItem() {
-      let item_sync_key = this.item.item_sync_key;
-      let requestData = { item_sync_key, ...this.$store.getters.tokenInfo };
-      this.$startRequest(
-        "/item/deleteItem",
-        requestData,
-        res => {
-          this.$vux.toast.text("删除成功", "top");
+    computed: {
+      ...mapGetters(["categoryPickerList", "categoryMap", "tokenInfo"])
+    },
+    filters: {
+      calctomatoes(val) {
+        return val && val / 10;
+      }
+    },
+    methods: {
+      getCategoryList() {
+        let requestData = this.tokenInfo;
+        this.$startRequest(
+          "/category/getCategoryList",
+          requestData,
+          res => {
+            this.$store.commit("setCategoryList", res.data);
+          },
+          error => {
+            if (error.msg) {
+              this.$vux.toast.text(error.msg, "top");
+            } else {
+              this.$vux.toast.text("网络错误", "top");
+            }
+          }
+        );
+      },
+      getItem() {
+        let item_sync_key = this.$route.params.syncKey;
+        if (!item_sync_key) {
           this.$router.back();
-        },
-        error => {
-          if (error.msg) {
-            this.$vux.toast.text(error.msg, "top");
-          } else {
-            this.$vux.toast.text("网络错误", "top");
-          }
         }
-      );
+        let requestData = {item_sync_key, ...this.$store.getters.tokenInfo};
+        this.$startRequest(
+          "/item/getItem",
+          requestData,
+          res => {
+            this.item = res.data;
+            this.$vux.loading.hide();
+          },
+          error => {
+            this.$vux.loading.hide();
+            if (error.msg) {
+              this.$vux.toast.text(error.msg, "top");
+            } else {
+              this.$vux.toast.text("网络错误", "top");
+            }
+          }
+        );
+      },
+      updateItem() {
+        let requestData = {...this.item, ...this.$store.getters.tokenInfo};
+        this.$startRequest(
+          "/item/updateItem",
+          requestData,
+          res => {
+            this.$vux.toast.text("保存成功", "top");
+            this.$router.back();
+          },
+          error => {
+            if (error.msg) {
+              this.$vux.toast.text(error.msg, "top");
+            } else {
+              this.$vux.toast.text("网络错误", "top");
+            }
+          }
+        );
+      },
+      goback() {
+        this.$router.back();
+      },
+      bindImportanceLevelActive() {
+        if (this.item.item_importance_level >= 5) {
+          this.item.item_importance_level = 2;
+        } else {
+          this.item.item_importance_level = 7;
+        }
+      },
+      bindEmergencyLevelActive() {
+        if (this.item.item_emergency_level >= 5) {
+          this.item.item_emergency_level = 2;
+        } else {
+          this.item.item_emergency_level = 7;
+        }
+      },
+      onCategoryPickerChange(val) {
+        this.item.category_id = val[0];
+      },
+      completeItem(item_sync_key) {
+        let item = this.todayTodoList[item_sync_key];
+        let requestData = {item_sync_key, ...this.$store.getters.tokenInfo};
+        this.$startRequest(
+          "/item/completeItem",
+          requestData,
+          res => {
+            this.item = res.data;
+          },
+          error => {
+            if (error.msg) {
+              this.$vux.toast.text(error.msg, "top");
+            } else {
+              this.$vux.toast.text("网络错误", "top");
+            }
+          }
+        );
+      },
+      confirmDeleteItem() {
+        this.$vux.confirm.show({
+          title: "确认删除",
+          content: "确定要删除吗？删除就没啦~",
+          onCancel: () => {
+          },
+          onConfirm: () => {
+            this.deleteItem();
+          }
+        });
+      },
+      deleteItem() {
+        let item_sync_key = this.item.item_sync_key;
+        let requestData = {item_sync_key, ...this.$store.getters.tokenInfo};
+        this.$startRequest(
+          "/item/deleteItem",
+          requestData,
+          res => {
+            this.$vux.toast.text("删除成功", "top");
+            this.$router.back();
+          },
+          error => {
+            if (error.msg) {
+              this.$vux.toast.text(error.msg, "top");
+            } else {
+              this.$vux.toast.text("网络错误", "top");
+            }
+          }
+        );
+      },
+      completeItem() {
+        let item_sync_key = this.item.item_sync_key;
+        let requestData = {item_sync_key, ...this.tokenInfo};
+        this.$startRequest(
+          "/item/completeItem",
+          requestData,
+          res => {
+            this.item = res.data;
+          },
+          error => {
+            if (error.msg) {
+              this.$vux.toast.text(error.msg, "top");
+            } else {
+              this.$vux.toast.text("网络错误", "top");
+            }
+          }
+        );
+      },
+      restartItem() {
+        let item_sync_key = this.item.item_sync_key;
+        let requestData = {item_sync_key, ...this.$store.getters.tokenInfo};
+        this.$startRequest(
+          "/item/restartItem",
+          requestData,
+          res => {
+            this.item = res.data;
+          },
+          error => {
+            if (error.msg) {
+              this.$vux.toast.text(error.msg, "top");
+            } else {
+              this.$vux.toast.text("网络错误", "top");
+            }
+          }
+        );
+      }
     },
-    completeItem() {
-      let item_sync_key = this.item.item_sync_key;
-      let requestData = { item_sync_key, ...this.tokenInfo };
-      this.$startRequest(
-        "/item/completeItem",
-        requestData,
-        res => {
-          this.item = res.data;
-        },
-        error => {
-          if (error.msg) {
-            this.$vux.toast.text(error.msg, "top");
-          } else {
-            this.$vux.toast.text("网络错误", "top");
-          }
-        }
-      );
-    },
-    restartItem() {
-      let item_sync_key = this.item.item_sync_key;
-      let requestData = { item_sync_key, ...this.$store.getters.tokenInfo };
-      this.$startRequest(
-        "/item/restartItem",
-        requestData,
-        res => {
-          this.item = res.data;
-        },
-        error => {
-          if (error.msg) {
-            this.$vux.toast.text(error.msg, "top");
-          } else {
-            this.$vux.toast.text("网络错误", "top");
-          }
-        }
-      );
+    directives: {
+      TransferDom
     }
-  },
-  directives: {
-    TransferDom
-  }
-};
+  };
 </script>
 
 <style lang="less" scoped>
-.page {
-  background: #343434;
-  color: #fff;
-  padding: 60px 0 0;
-  .group {
-    .forecast_time {
-      justify-content: center;
-      display: flex;
-      input {
-        text-align: right;
-        width: 80px;
-      }
-      .unit {
-        margin-left: 10px;
-        text-align: left;
-        width: 80px;
-      }
-    }
-    .category {
-      font-style: italic;
-    }
-  }
-  .bottom {
-    position: fixed;
-    bottom: 0;
-    right: 0;
-    left: 0;
-    display: flex;
-    color: #fff;
-    // border-top: 1px dashed rgba(255, 255, 255, 0.2);
-    box-shadow: 0px 0px 1px 1px rgba(255, 255, 255, 0.2);
-    font-size: 18px;
-    padding: 10px 20px;
-    z-index: 100;
+  .page {
     background: #343434;
+    color: #fff;
+    padding: 60px 0 0;
 
-    .text {
-      display: inline-block;
+    .group {
+      .forecast_time {
+        justify-content: center;
+        display: flex;
+
+        input {
+          text-align: right;
+          width: 80px;
+        }
+
+        .unit {
+          margin-left: 10px;
+          text-align: left;
+          width: 80px;
+        }
+      }
+
+      .category {
+        font-style: italic;
+      }
     }
 
-    .l,
-    .r {
-      font-size: 20px;
+    .bottom {
+      position: fixed;
+      bottom: 0;
+      right: 0;
+      left: 0;
+      display: flex;
+      color: #fff;
+      // border-top: 1px dashed rgba(255, 255, 255, 0.2);
+      box-shadow: 0px 0px 1px 1px rgba(255, 255, 255, 0.2);
+      font-size: 18px;
+      padding: 10px 20px;
+      z-index: 100;
+      background: #343434;
+
+      .text {
+        display: inline-block;
+      }
+
+      .l,
+      .r {
+        font-size: 20px;
+      }
     }
   }
-}
 </style>
