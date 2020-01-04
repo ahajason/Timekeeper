@@ -168,13 +168,13 @@
 
     .settings-list {
       width: 100%;
-      color: #fff;
+      color: @white;
 
       .setting-item {
         display: flex;
         align-items: center;
         padding: 6px 10px 6px 20px;
-        border-bottom: 1px solid #fff;
+        border-bottom: 1px solid @white;
         margin: 20px 0;
 
         .title {

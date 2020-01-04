@@ -5,7 +5,7 @@
         leave-active-class="animated slideOutDown"
     >
       <section class="todo" v-if="show">
-        <div class="headr">
+        <div class="header">
           <div class="title">今日待办</div>
         </div>
         <div class="body">
@@ -24,14 +24,14 @@
                   <div
                       @click="completeItem(index)"
                       class="l"
-                      v-if="item.item_state == 0"
+                      v-if="item.item_state === 0"
                   >
                     <i aria-hidden="true" class="fa fa-square-o"> </i>
                   </div>
                   <div
                       @click="restartItem(index)"
                       class="l"
-                      v-if="item.item_state != 0"
+                      v-if="item.item_state !== 0"
                   >
                     <i aria-hidden="true" class="fa fa-check-square-o"> </i>
                   </div>
@@ -51,12 +51,12 @@
                           text="不重要"
                           textActive="重要"
                           v-bind:active="item.item_importance_level >= 5"
-                      ></Label>
+                      />
                       <Label
                           size="sm"
                           textActive="紧急"
                           v-bind:active="item.item_emergency_level >= 5"
-                      ></Label>
+                      />
                     </div>
                   </div>
                   <div class="r">
@@ -67,10 +67,10 @@
             </div>
           </swipeout>
           <div>
-            <li class="nofound" v-if="todayTodoList.length == 0">
+            <div class="nofound" v-if="todayTodoList.length === 0">
               您已完成所有待办「事项」<br/>
               可通过「上方」或「管理页」的「创建」按钮添加更多「事项」
-            </li>
+            </div>
           </div>
         </div>
       </section>
@@ -111,7 +111,6 @@
         show: true
       };
     },
-    methods: {},
     computed: {
       ...mapGetters(["tokenInfo", "todayTodoList"])
     },
@@ -214,7 +213,7 @@
         );
       },
       ...mapMutations(["addItemList", "setItemList"])
-    }
+    },
   };
 </script>
 
@@ -232,8 +231,8 @@
         margin: 30px 15px 15px;
         padding: 15px;
         border-radius: 50px;
-        border: 2px solid #fff;
-        color: #fff;
+        border: @home-start-input-border;
+        color: @home-start-input-font-color;
         line-height: 1;
         font-size: 18px;
         vertical-align: middle;
@@ -259,9 +258,9 @@
       flex-direction: column;
       display: flex;
 
-      .headr {
+      .header {
         // background: #f5f5f5;
-        color: #fff;
+        color: @home-todo-list-title-color;
         flex: 0 0 auto;
         width: 100%;
         border-radius: 10px 10px 0 0;
@@ -273,7 +272,7 @@
           padding: 0 20px;
           font-size: 22px;
           text-indent: 20px;
-          border-bottom: 1px dashed #fff;
+          border-bottom: @input-font-color;
         }
       }
 
@@ -282,13 +281,13 @@
 
         .item {
           // margin-left: 20px;
-          background: #343434;
+          background: @dark-gray;
           text-align: center;
           padding: 6px 0;
           font-size: 25px;
           // border-radius: 40px 0 0 40px;
           // box-shadow: 0 0 5px 4px #f5f5f5;
-          color: #fff;
+          color: @home-todo-item-font-color;
 
           .l {
             padding: 10px 20px;
@@ -309,7 +308,7 @@
             .level-line {
               font-size: 16px;
               line-height: 1.2;
-              color: #fff;
+              color: @white;
               display: flex;
 
               .category-name {

@@ -97,8 +97,8 @@
 
 <style lang="less" scoped>
   .page {
-    background: #343434;
-    color: #fff;
+    background: @dark-gray;
+    color: @white;
 
     .top {
       position: fixed;
@@ -106,7 +106,7 @@
       right: 0;
       left: 0;
       display: flex;
-      color: #fff;
+      color: @white;
       border-bottom: 1px solid rgba(255, 255, 255);
       justify-content: space-between;
 

@@ -29,7 +29,7 @@
     .form {
       width: 100%;
       padding: 30px 0 100px;
-      color: #fff;
+      color: @white;
 
       .form-header {
         text-align: center;

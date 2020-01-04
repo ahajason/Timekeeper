@@ -30,7 +30,7 @@
 <style lang='less' scoped>
   #THeader {
     position: fixed;
-    background: #343434;
+    background: @dark-gray;
     top: 0;
     right: 0;
     left: 0;

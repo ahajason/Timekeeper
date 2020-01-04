@@ -35,12 +35,12 @@
     .label {
       flex: 0 0 120px;
       display: flex;
-      color: #fff;
+      color: @white;
       font-size: inherit;
     }
 
     .input {
-      color: #fff;
+      color: @white;
       flex: 1 1 auto;
       justify-content: center;
       align-items: center;
@@ -59,7 +59,7 @@
       textarea {
         width: 100%;
         font-size: inherit;
-        color: #fff;
+        color: @white;
         background: none;
         font-family: inherit;
 

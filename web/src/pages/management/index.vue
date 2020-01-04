@@ -555,7 +555,7 @@
       .type {
         font-size: 22px;
         line-height: 2;
-        border-bottom: 1px solid #fff;
+        border-bottom: 1px solid @white;
 
         ul {
           display: flex;
@@ -566,7 +566,7 @@
             text-align: center;
 
             &:not(:last-of-type) {
-              border-right: 1px dashed #fff;
+              border-right: 1px dashed @white;
             }
 
             i {
@@ -604,14 +604,14 @@
 
     .panel {
       line-height: 2;
-      border-bottom: 1px solid #fff;
+      border-bottom: 1px solid @white;
       border-radius: 10px;
 
       .selector-group {
         padding: 0 5px;
 
         .selector {
-          border-bottom: 1px dashed #fff;
+          border-bottom: 1px dashed @white;
           font-size: 18px;
         }
       }
@@ -641,8 +641,8 @@
 
       .nofound {
         padding: 6px 20px 6px 20px;
-        border-bottom: 1px dashed #fff;
-        border-top: 1px dashed #fff;
+        border-bottom: 1px dashed @white;
+        border-top: 1px dashed @white;
         font-style: italic;
         opacity: 0.8;
         font-size: 16px;
@@ -650,10 +650,10 @@
 
       .item {
         padding: 6px 0 6px 20px;
-        border-bottom: 1px dashed #fff;
+        border-bottom: 1px dashed @white;
 
         &:first-of-type {
-          border-top: 1px dashed #fff;
+          border-top: 1px dashed @white;
         }
 
         .name-line {
@@ -722,8 +722,8 @@
   }
 
   .popup {
-    background: #343434;
-    color: #fff;
+    background: @dark-gray;
+    color: @white;
     font: 20px/150% "仿宋", "FangSong", "FZFangSong", "楷书", Arial, Tahoma,
     "Hiragino Sans GB", "NSimSun", sans-serif;
 
@@ -765,7 +765,7 @@
         height: 35px;
         line-height: 35px;
         display: table;
-        border: 3px solid #fff;
+        border: 3px solid @white;
         border-radius: 50%;
         z-index: 1;
 
@@ -783,7 +783,7 @@
         line-height: 35px;
         display: table;
         background: #4026b4;
-        border: 3px solid #fff;
+        border: 3px solid @white;
         border-radius: 50%;
         z-index: 1;
 

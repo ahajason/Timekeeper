@@ -24,9 +24,9 @@
       font-size: 20px;
       padding: 12px 20px;
       border-radius: 50px;
-      color: #fff;
+      color: @white;
       background: none;
-      border: 2px solid #fff;
+      border: 2px solid @white;
       font-family: inherit;
 
       &::placeholder {

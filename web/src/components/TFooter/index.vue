@@ -30,8 +30,8 @@
     right: 0;
     left: 0;
     display: flex;
-    color: #fff;
-    background: #343434;
+    color: @white;
+    background: @dark-gray;
     border-top: 1px dashed rgba(255, 255, 255);
     font-size: 18px;
     padding: 10px;
@@ -53,8 +53,8 @@
         background: none;
         width: 100%;
         border-radius: 50px;
-        border: 2px solid #fff;
-        color: #fff;
+        border: 2px solid @white;
+        color: @white;
         padding: 10px 15px;
         font-size: 16px;
         line-height: 1.2;

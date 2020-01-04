@@ -772,7 +772,7 @@
 
 <style lang="less" scoped>
   .page {
-    background: #343434;
+    background: @dark-gray;
 
     .container {
       padding: 50px 0 80px;
@@ -789,7 +789,7 @@
 
       .content {
         .DigitalClock {
-          color: #fff;
+          color: @white;
         }
 
         .CircleGroup {
@@ -816,7 +816,7 @@
         .selectedTodo,
         .doing,
         .todo {
-          color: #fff;
+          color: @white;
           display: flex;
           flex-direction: column;
           align-items: center;
@@ -870,10 +870,10 @@
           button {
             display: inline-block;
             font-size: inherit;
-            color: #fff;
+            color: @white;
             background: none;
             font-family: inherit;
-            border: 1px solid #fff;
+            border: 1px solid @white;
             text-align: right;
             padding: 6px 20px;
             border-radius: 50px;
@@ -902,10 +902,10 @@
           input {
             display: inline-block;
             font-size: inherit;
-            color: #fff;
+            color: @white;
             background: none;
             font-family: inherit;
-            border-bottom: 2px solid #fff;
+            border-bottom: 2px solid @white;
             text-align: center;
             width: 60px;
 

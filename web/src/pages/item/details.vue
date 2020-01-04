@@ -329,8 +329,8 @@
 
 <style lang="less" scoped>
   .page {
-    background: #343434;
-    color: #fff;
+    background: @dark-gray;
+    color: @white;
     padding: 60px 0 0;
 
     .group {
@@ -361,13 +361,13 @@
       right: 0;
       left: 0;
       display: flex;
-      color: #fff;
+      color: @white;
       // border-top: 1px dashed rgba(255, 255, 255, 0.2);
       box-shadow: 0px 0px 1px 1px rgba(255, 255, 255, 0.2);
       font-size: 18px;
       padding: 10px 20px;
       z-index: 100;
-      background: #343434;
+      background: @dark-gray;
 
       .text {
         display: inline-block;

@@ -82,7 +82,7 @@
 
 <style lang="less" scoped>
   .list {
-    color: #fff;
+    color: @white;
     padding: 0 0 100px;
 
     .item {
@@ -107,7 +107,7 @@
           left: 15px;
           bottom: -100px;
           width: 4px;
-          background: #fff;
+          background: @white;
         }
 
         .icon {
@@ -119,7 +119,7 @@
           line-height: 35px;
           display: table;
           background: #4026b4;
-          border: 3px solid #fff;
+          border: 3px solid @white;
           border-radius: 50%;
           z-index: 1;
 
@@ -146,12 +146,12 @@
         .box {
           padding: 10px;
           margin-left: 50px;
-          color: #343434;
+          color: @dark-gray;
           background: #f5f5f5;
           border-radius: 6px;
 
           .name {
-            color: #000;
+            color: @black;
             font-weight: bold;
           }
 
@@ -168,7 +168,7 @@
     }
 
     .year {
-      border-bottom: 2px solid #fff;
+      border-bottom: 2px solid @white;
     }
   }
 </style>

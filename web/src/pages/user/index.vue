@@ -1,10 +1,10 @@
 <template>
   <div class="page">
-    <div @click="navToLogin" class="header-panel flex-box">
+    <div class="header-panel flex-box" @click="navToLogin">
       <div class="portrait l">
         <img
-            :src="userInfo.portrait && userInfo.portrait.portrait_url"
-            alt=""
+          :src="userInfo.portrait && userInfo.portrait.portrait_url"
+          alt=""
         />
       </div>
       <div class="c">
@@ -22,13 +22,13 @@
     <div class="settings-list">
       <div class="setting-item">
         <div class="title">
-          <div @click="goProfile" class="text">个人信息</div>
+          <div class="text" @click="goProfile">个人信息</div>
         </div>
         <div class="value">
           <div class="text"></div>
         </div>
         <div class="right-icon">
-          <i aria-hidden="true" class="fa fa-angle-right"></i>
+          <i class="fa fa-angle-right" aria-hidden="true"/>
         </div>
       </div>
       <div class="setting-item">
@@ -39,10 +39,10 @@
           <div class="text">v1.6.0</div>
         </div>
         <div class="right-icon">
-          <i aria-hidden="true" class="fa fa-angle-right"/>
+          <i class="fa fa-angle-right" aria-hidden="true"/>
         </div>
       </div>
-      <div @click="confirmLogout" class="setting-item">
+      <div class="setting-item" @click="confirmLogout">
         <div class="title">
           <div class="text">退出</div>
         </div>
@@ -50,7 +50,7 @@
           <div class="text"></div>
         </div>
         <div class="right-icon">
-          <i aria-hidden="true" class="fa fa-angle-right"/>
+          <i class="fa fa-angle-right" aria-hidden="true"/>
         </div>
       </div>
     </div>
@@ -73,10 +73,9 @@
     },
     methods: {
       navToLogin() {
-
-        // this.$router.push({
-        //   name: "login"
-        // });
+        this.$router.push({
+          name: "login"
+        });
       },
       goProfile() {
         this.$router.push({
@@ -84,23 +83,6 @@
         });
       },
       getUserInfo() {
-        let requestData = this.$store.getters.tokenInfo;
-        this.$startRequest(
-          "/user/getUserInfo",
-          requestData,
-          response => {
-            this.userInfo = response.data.user_info;
-          },
-          error => {
-            if (error.msg) {
-              this.$vux.toast.text(error.msg, "top");
-            } else {
-              this.$vux.toast.text("网络错误", "top");
-            }
-          }
-        );
-      },
-      logout() {
         let requestData = this.$store.getters.tokenInfo;
         this.$startRequest(
           "/user/getUserInfo",
@@ -152,12 +134,12 @@
   };
 </script>
 
-<style lang="less" scoped>
+<style scoped lang="less">
   .page {
     padding: 40px 20px;
 
     .header-panel {
-      color: #fff;
+      color: @white;
 
       .portrait {
         width: 80px;
@@ -167,7 +149,7 @@
         z-index: 1;
         flex: 0 0 auto;
         border-radius: 50%;
-        border: 4px solid #fff;
+        border: 4px solid @white;
 
         img {
           width: 100%;
@@ -185,7 +167,7 @@
           white-space: nowrap;
           text-overflow: ellipsis;
           padding: 0 10px 2px;
-          border-bottom: 2px solid #fff;
+          border-bottom: 2px solid @white;
         }
       }
 
@@ -196,14 +178,14 @@
 
     .settings-list {
       width: 100%;
-      color: #fff;
+      color: @white;
       padding: 40px 0;
 
       .setting-item {
         display: flex;
         align-items: center;
         padding: 6px 10px 6px 20px;
-        border-bottom: 1px solid #fff;
+        border-bottom: 1px solid @white;
         margin: 20px 0;
 
         .title {
